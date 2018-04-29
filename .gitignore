@@ -1,2 +1,4 @@
 \.idea/
 .idea/
+Server\__pycache__\
+Server/__pycache__/
