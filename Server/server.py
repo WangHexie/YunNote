@@ -1,7 +1,8 @@
+from .dataBase import *
 from flask import Flask, request, render_template
 
-app = Flask(__name__)
 
+app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -18,13 +19,6 @@ def store_doc():
     doc = request.args.get('doc')
     key = store_doc_to_database(doc)
     return key
-
-def get_doc_from_database(key):
-    return 0
-
-def store_doc_to_database(key):
-    return 0
-
 
 if __name__ == '__main__':
     app.run(host='::', threaded=True)
