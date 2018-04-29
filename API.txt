@@ -1,4 +1,4 @@
-Server£º
+Server:
 	Environment:
 		python3 (http://www.runoob.com/python/python-intro.html)
 			-flask (http://flask.pocoo.org/docs/1.0/)
@@ -10,8 +10,13 @@ Server£º
 			return json{"sentence":(sentence)}
 			
 		2.Set the document
-		HTTP post */set/   {"doc":(document)}
+		HTTP POST */set/   {"doc":(document)}
 			
 			return json{"key":(key)
 			
+		3.Get the document from database
+		getDoc(key):
+			return document
 			
+		To do later 
+			1.User system
