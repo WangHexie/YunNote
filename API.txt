@@ -15,8 +15,12 @@ Server:
 			return json{"key":(key)
 			
 		3.Get the document from database
-		getDoc(key):
+		get_doc_from_database(key):
 			return document
+			
+		4.Store the document to the datebase
+		store_doc_to_database(doc):
+			return key
 			
 		To do later 
 			1.User system
