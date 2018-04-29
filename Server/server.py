@@ -14,7 +14,7 @@ def get_doc():
     return key
 
 @app.route('/store', methods=['POST'])
-def get_doc():
+def store_doc():
     doc = request.args.get('doc')
     key = store_doc_to_database(doc)
     return key
