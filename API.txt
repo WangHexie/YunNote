@@ -1,0 +1,17 @@
+Server£º
+	use:
+		python3
+			-flask
+	API:
+		
+		1.Get the document
+		HTTP GET  */?key=(Key)   
+			
+			return json{"sentence":(sentence)}
+			
+		2.Set the document
+		HTTP post */set/   {"doc":(document)}
+			
+			return json{"key":(key)
+			
+			
