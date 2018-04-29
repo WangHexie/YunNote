@@ -1,3 +1,5 @@
+from .basic_function import *
+
 def get_doc_from_database(key):
     return 0
 
