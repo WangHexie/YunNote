@@ -5,7 +5,7 @@ Server:
 	API:
 		
 		1.Get the document
-		HTTP GET  */?key=(Key)   
+		HTTP GET  */get?key=(Key)   
 			
 			return json{"sentence":(sentence)}
 			
