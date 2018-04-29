@@ -1,7 +1,7 @@
 Server£º
 	Environment:
-		python3
-			-flask
+		python3 (http://www.runoob.com/python/python-intro.html)
+			-flask (http://flask.pocoo.org/docs/1.0/)
 	API:
 		
 		1.Get the document
