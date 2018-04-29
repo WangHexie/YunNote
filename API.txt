@@ -10,7 +10,7 @@ Server:
 			return json{"sentence":(sentence)}
 			
 		2.Set the document
-		HTTP POST */set/   {"doc":(document)}
+		HTTP POST */store   {"doc":(document)}
 			
 			return json{"key":(key)
 			
