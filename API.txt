@@ -103,6 +103,22 @@ Server:
 		2.add_user(username, password):
 			return cookies||0
 		
+		3.check_user_password(username,password):
+			return cookies||0
+			
+		4.get_user_by_cookies(cookies):
+			return user_id
+			
+		5.get_user_list(user_id):
+			return [doclist]
+			
+		6.add_into_list(user_id, doc):
+			return key
+		
+		7.delete_form_list(user_id, key):
+			return 0||1 
+		
+		
 		To do later 
 			1.User system
 			
@@ -114,6 +130,7 @@ Client:
 	Use:
 		Hash.hash(String password)
 		return String hash_result
+		
 	Class Login
 	    login(username,hash(password))
 	    return boolean
