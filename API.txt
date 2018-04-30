@@ -3,6 +3,7 @@ Server:
 		python3 (http://www.runoob.com/python/python-intro.html)
 			-flask (http://flask.pocoo.org/docs/1.0/)
 	API:
+		V0.1
 		
 		1.Get the document
 		HTTP GET  */get?key=(Key)   
@@ -26,10 +27,32 @@ Server:
 		create_key():
 			return String:key
 			
-		6.Convert chinese key to hash:
+		V0.2
+		1.Get the document by using chinese_key
+		HTTP GET  */getbyck?cnkey=(Key)   
+		
+			return json{"sentence":(sentence)}
+			
+		2.Set the document and return a chinese_key
+		HTTP POST */storeck   {"doc":(document)}
+			
+			return json{"cnkey":(key)}
+		
+		3.Convert chinese key to hash:
 		chinese_key_to_hash(chinese_key):
 			return hashkey[:lenth]
 			
-		
+		4.Conver hash to chinese key:
+		hash_to_chinese_key(hash, lenth=5):    
+		"""
+		lenth means lenth of chinese_key
+		"""
+			return chinese_key
+			
+		5.Get full key from part of key :
+		part_key_to_full_key(part_key):
+			return full_key
+			
+			
 		To do later 
 			1.User system
