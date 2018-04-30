@@ -1,4 +1,6 @@
 from flask import Flask, request, render_template
+
+from Server import basic_function
 from Server import database
 
 app = Flask(__name__)
@@ -20,6 +22,22 @@ def store_doc():
     doc = request.args.get('doc')
     key = database.store_doc_to_database(doc)
     return key
+
+
+@app.route('/getbyck', methods=['GET'])
+def get_doc():
+    cnkey = request.args.get('cnkey')
+    part_key = basic_function.chinese_key_to_hash(cnkey)
+    full_key = database.part_key_to_full_key(part_key)
+    return database.get_doc_from_database(full_key)
+
+
+@app.route('/storeck', methods=['POST'])
+def store_doc():
+    doc = request.args.get('doc')
+    key = database.store_doc_to_database(doc)
+    cnk = basic_function.hash_to_chinese_key(key)
+    return cnk
 
 
 if __name__ == '__main__':
