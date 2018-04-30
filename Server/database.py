@@ -29,7 +29,7 @@ def store_doc_to_database(doc):
         key = basic_function.create_key()
         with connection.cursor() as cursor:
             sql = "insert into key_doc value(%s, %s);"
-            cursor.execute(sql,[key, doc])
+            cursor.execute(sql, [key, doc])
             connection.commit()
     finally:
         connection.close()
@@ -57,6 +57,41 @@ def login_check(username, password):
         connection.close()
 
     return False
+
+def add_uid_and_cookies(uid,cookies):
+    return 0
+
+def check_user_exist(username):
+    return 1 | 0
+
+
+def add_user(username, password):
+    cookies = 0
+    return cookies | 0
+
+
+def check_user_password(username, password):
+    cookies = 0
+    return cookies | 0
+
+
+def get_user_by_cookies(cookies):
+    user_id = 0
+    return user_id
+
+
+def get_user_list(user_id):
+    doc_list = []
+    return doc_list
+
+
+def add_into_list(user_id, doc):
+    key = 0
+    return key
+
+
+def delete_form_list(user_id, key):
+    return 0 | 1
 
 
 if __name__ == '__main__':

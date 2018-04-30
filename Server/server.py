@@ -19,7 +19,7 @@ def get_doc():
 
 @app.route('/store', methods=['POST'])
 def store_doc():
-    doc = request.args.get('doc')
+    doc = request.form['doc']
     key = database.store_doc_to_database(doc)
     return key
 
@@ -34,23 +34,49 @@ def get_doc_by_cnkey():
 
 @app.route('/storeck', methods=['POST'])
 def store_doc_by_cnkey():
-    doc = request.args.get('doc')
+    doc = request.form['doc']
     key = database.store_doc_to_database(doc)
     cnk = basic_function.hash_to_chinese_key(key)
     return cnk
 
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['POST'])
 def login():
-    print("123")
-    username = request.args.get('username')
-    password = request.args.get('password')
-    if database.login_check(username, password):
-        print('login in')
-        return 'ok'
-    else:
-        return 'no'
+    username = request.form['username']
+    password = request.form['password']
+    return  database.login_check(username,password)
 
+
+@app.route('/check', methods=['GET'])
+def check():
+    username = request.args.get('username')
+    return  database.check_user_exist(username)
+
+@app.route('/signin', methods=['POST'])
+def signin():
+    username = request.form['username']
+    password = request.form['password']
+    return  database.add_user()
+
+@app.route('/storelist', methods=['POST'])
+def storelist():
+    doc = request.form['doc']
+    cookies = request.form['cookies']
+    uid = database.get_user_by_cookies(cookies)
+    return  database.add_into_list(user_id=uid,doc=doc)
+
+@app.route('/list', methods=['POST'])
+def list():
+    cookies = request.form['cookies']
+    uid = database.get_user_by_cookies(cookies)
+    return  database.get_user_list(user_id=uid)
+
+@app.route('/delete', methods=['POST'])
+def delete():
+    cookies = request.form['cookies']
+    key = request.form['key']
+    uid = database.get_user_by_cookies(cookies)
+    return  database.delete_form_list(user_id=uid, key=key)
 
 if __name__ == '__main__':
-    app.run(host='::', threaded=True)
+    app.run( threaded=True)

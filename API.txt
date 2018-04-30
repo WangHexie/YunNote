@@ -48,7 +48,7 @@ Protocol：
 			return key
 			
 		6.Delete a doc from User's list:
-		HTTP GET */delete?key=(key)&cookies=(cookies)
+		HTTP POST */delete   {"key":(key)","cookies:(cookies)}
 		"""
 		if_success:
 			1:success
