@@ -71,7 +71,7 @@ Client:
 	Class Login
 	    login(username,hash(password))
 	    return boolean
-	    
+
 	   true into next activity
 	
 	
