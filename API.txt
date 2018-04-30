@@ -68,5 +68,10 @@ Client:
 	Use:
 		Hash.hash(String password)
 		return String hash_result
+	Class Login
+	    login(username,hash(password))
+	    return boolean
+	    
+	   true into next activity
 	
 	
