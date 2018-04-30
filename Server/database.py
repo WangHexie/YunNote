@@ -49,8 +49,8 @@ def login_check(username, password):
                                  password="root", db="MobileAppDB", port=3306)
     try:
         with connection.cursor() as cursor:
-            sql = "select password from Account where username = '" + username + "';"
-            cursor.execute(sql)
+            sql = "select password from Account where username = %s;"
+            cursor.execute(sql, [username])
             if password == cursor.fetchone()[0]:
                 return True
     finally:
