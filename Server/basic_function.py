@@ -3,6 +3,7 @@ import random
 import time
 
 dic = {}
+reverse_dic = {}
 
 
 def create_key():
@@ -25,6 +26,24 @@ def get_dic():
     return dic
 
 
+def set_reverse_dic():
+    dic = get_dic()
+    global reverse_dic
+    reverse_dic = dict(zip(dic.values(), dic.keys()))
+
+
+def get_reverse_dic():
+    global reverse_dic
+    if reverse_dic == {}:
+        set_reverse_dic()
+    return reverse_dic
+
+
+def get_two_hex(character):
+    reverse_dic = get_reverse_dic()
+    return reverse_dic[character]
+
+
 def get_single_character(two_hex):  # need to rewrite
     dic = get_dic()
     return dic[two_hex]
@@ -33,9 +52,21 @@ def get_single_character(two_hex):  # need to rewrite
 def hash_to_chinese_key(hash, lenth=5):
     chinese_key = ""
     for i in range(lenth):
-        chinese_key += get_single_character(hash[i:i + 2])
+        chinese_key += get_single_character(hash[2 * i:2 * i + 2])
     return chinese_key
 
 
+def chinese_key_to_hash(chinese_key):
+    hash = ""
+    for i in chinese_key:
+        hash += get_two_hex(i)
+    return hash
+
+
 if __name__ == '__main__':
-    print(hash_to_chinese_key("8bfd6fb7e44396db8033cd6715a25432f1e370a6a9d7a2b6674024d3696baf5c"))
+    hash = "8bfd6fb7e44396db8033cd6715a25432f1e370a6a9d7a2b6674024d3696baf5c"
+    word = hash_to_chinese_key(hash)
+    hash2 = chinese_key_to_hash(word)
+    print(hash)
+    print(hash2)
+    print(word)
