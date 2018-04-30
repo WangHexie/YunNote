@@ -2,6 +2,8 @@ import hashlib
 import random
 import time
 
+dic = {}
+
 
 def create_key():
     hash_string = str(time.time()) + str(random.randrange(99999999))
@@ -9,10 +11,18 @@ def create_key():
     return final_key
 
 
-def get_dic():
+def set_dic():
     with open("dic.txt", "r") as f:
         dic_str = f.read()
-    return eval(dic_str)
+    global dic
+    dic = eval(dic_str)
+
+
+def get_dic():
+    global dic
+    if dic == {}:
+        set_dic()
+    return dic
 
 
 def get_single_character(two_hex):  # need to rewrite
