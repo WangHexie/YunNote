@@ -12,7 +12,7 @@ def home():
 @app.route('/get', methods=['GET'])
 def get_doc():
     key = request.args.get('key')
-    return key
+    return database.get_doc_from_database(key)
 
 
 @app.route('/store', methods=['POST'])
