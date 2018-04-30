@@ -1,4 +1,5 @@
 import pymysql.cursors
+
 from Server import basic_function
 
 
@@ -26,6 +27,14 @@ def store_doc_to_database(doc):
             connection.commit()
     finally:
         connection.close()
+    return 0
+
+
+def part_key_to_full_key(part_key):
+    return 0
+
+
+def store_full_key_and_part_key(full_key, part_key):
     return 0
 
 
