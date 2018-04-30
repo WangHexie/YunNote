@@ -33,17 +33,21 @@ Protocol：
 		
 		2.Sign in :
 		HTTP POST */signin {"username":(username),"password":(password)}
-			return cookies
+			return cookies||0
 		
-		3.Get a list of User's doc :
+		3.login in :
+		HTTP POST */login {"username":(username),"password":(password)}
+			return cookies||
+		
+		4.Get a list of User's doc :
 		HTTP POST */list {"cookies":(cookies)}
 			return json{"list":[user_doc]}
 		
-		4.Add a doc to User's list:
+		5.Add a doc to User's list:
 		HTTP POST */storelist {"doc":doc,"cookies":(cookies)}
 			return key
 			
-		5.Delete a doc from User's list:
+		6.Delete a doc from User's list:
 		HTTP GET */delete?key=(key)&cookies=(cookies)
 		"""
 		if_success:
@@ -52,6 +56,7 @@ Protocol：
 		"""
 			return if_success
 			
+		
 
 Server:
 	Environment:
@@ -91,7 +96,13 @@ Server:
 		4.Store full key and part key
 		store_full_key_and_part_key(full_key,part_key):
 			
-			
+		V0.3
+		1.check_user_exist(username):
+			return 1||0
+		
+		2.add_user(username, password):
+			return cookies||0
+		
 		To do later 
 			1.User system
 			
