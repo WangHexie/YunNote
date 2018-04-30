@@ -22,5 +22,8 @@ Server:
 		store_doc_to_database(doc):
 			return key
 			
+		5.Create key:
+		create_key():
+			return String:key
 		To do later 
 			1.User system
