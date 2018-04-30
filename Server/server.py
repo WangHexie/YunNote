@@ -25,7 +25,7 @@ def store_doc():
 
 
 @app.route('/getbyck', methods=['GET'])
-def get_doc():
+def get_doc_by_cnkey():
     cnkey = request.args.get('cnkey')
     part_key = basic_function.chinese_key_to_hash(cnkey)
     full_key = database.part_key_to_full_key(part_key)
@@ -33,7 +33,7 @@ def get_doc():
 
 
 @app.route('/storeck', methods=['POST'])
-def store_doc():
+def store_doc_by_cnkey():
     doc = request.args.get('doc')
     key = database.store_doc_to_database(doc)
     cnk = basic_function.hash_to_chinese_key(key)
