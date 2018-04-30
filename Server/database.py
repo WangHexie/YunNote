@@ -30,4 +30,4 @@ def store_doc_to_database(doc):
 
 
 if __name__ == '__main__':
-    print(basic_function.create_key())
+    print(get_doc_from_database('6c253648e0dfff00d6aa44566f34dae651f0d2191d5bf59dd74d8ce7314cb3e7'))
