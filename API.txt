@@ -53,9 +53,20 @@ Server:
 		part_key_to_full_key(part_key):
 			return full_key
 			
-		6Store full key and part key
+		6.Store full key and part key
 		store_full_key_and_part_key(full_key,part_key):
 			
 			
 		To do later 
 			1.User system
+			
+Client:
+	API:
+	v1.0
+	1.Hash password
+	Class Hash;
+	Use:
+		Hash.hash(String password)
+		return String hash_result
+	
+	
