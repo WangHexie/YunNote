@@ -8,8 +8,8 @@ def get_doc_from_database(key):
                                  password="root", db="MobileAppDB", port=3306)
     try:
         with connection.cursor() as cursor:
-            sql = "SELECT doc FROM key_doc where key_hash = '" + key + "'"
-            cursor.execute(sql)
+            sql = "SELECT doc FROM key_doc where key_hash=%s"
+            cursor.execute(sql, [key])
             fet = cursor.fetchone()
             if fet == None:
                 result = 'NOT Found'
@@ -28,8 +28,8 @@ def store_doc_to_database(doc):
     try:
         key = basic_function.create_key()
         with connection.cursor() as cursor:
-            sql = "insert into key_doc value('" + key + "','" + doc + "');"
-            cursor.execute(sql)
+            sql = "insert into key_doc value(%s, %s);"
+            cursor.execute(sql,[key, doc])
             connection.commit()
     finally:
         connection.close()
