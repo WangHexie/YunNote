@@ -40,11 +40,12 @@ def store_doc_by_cnkey():
     return cnk
 
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['POST'])
 def login():
-    print("123")
+
     username = request.args.get('username')
     password = request.args.get('password')
+    print(username + '  ' + password)
     if database.login_check(username, password):
         print('login in')
         return 'ok'
