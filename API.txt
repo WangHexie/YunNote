@@ -1,33 +1,16 @@
-Server:
-	Environment:
-		python3 (http://www.runoob.com/python/python-intro.html)
-			-flask (http://flask.pocoo.org/docs/1.0/)
-	API:
-		V0.1
-		
+Protocol：
+	V0.1
 		1.Get the document
 		HTTP GET  */get?key=(Key)   
 			
-			return json{"sentence":(sentence)}
+			return sentence
 			
 		2.Set the document
 		HTTP POST */store   {"doc":(document)}
 			
-			return json{"key":(key)
-			
-		3.Get the document from database
-		get_doc_from_database(key):
-			return document
-			
-		4.Store the document to the datebase
-		store_doc_to_database(doc):
 			return key
 			
-		5.Create key:
-		create_key():
-			return String:key
-			
-		V0.2
+	V0.2
 		1.Get the document by using chinese_key
 		HTTP GET  */getbyck?cnkey=(Key)   
 		
@@ -37,23 +20,75 @@ Server:
 		HTTP POST */storeck   {"doc":(document)}
 			
 			return json{"cnkey":(key)}
+	
+	V0.3
+		1.Check if username exists:
+		HTTP GET */check?username=(username)
+		"""
+		check_result: 
+			  1 -> exists,
+			  0 -> not exists
+		"""
+			return check_result
 		
-		3.Convert chinese key to hash:
+		2.Sign in :
+		HTTP POST */signin {"username":(username),"password":(password)}
+			return cookies
+		
+		3.Get a list of User's doc :
+		HTTP POST */list {"cookies":(cookies)}
+			return json{"list":[user_doc]}
+		
+		4.Add a doc to User's list:
+		HTTP POST */storelist {"doc":doc,"cookies":(cookies)}
+			return key
+			
+		5.Delete a doc from User's list:
+		HTTP GET */delete?key=(key)&cookies=(cookies)
+		"""
+		if_success:
+			1:success
+			0:fail
+		"""
+			return if_success
+			
+
+Server:
+	Environment:
+		python3 (http://www.runoob.com/python/python-intro.html)
+			-flask (http://flask.pocoo.org/docs/1.0/)
+	API:
+		
+		V0.1
+		1.Get the document from database
+		get_doc_from_database(key):
+			return document
+			
+		2.Store the document to the datebase
+		store_doc_to_database(doc):
+			return key
+			
+		3.Create key:
+		create_key():
+			return String:key
+			
+		V0.2
+		1.Convert chinese key to hash:
 		chinese_key_to_hash(chinese_key):
 			return hashkey[:lenth]
 			
-		4.Conver hash to chinese key:
+		2.Conver hash to chinese key:
 		hash_to_chinese_key(hash, lenth=5):    
 		"""
 		lenth means lenth of chinese_key
 		"""
 			return chinese_key
 			
-		5.Get full key from part of key :
+		3.Get full key from part of key :
 		part_key_to_full_key(part_key):
 			return full_key
 			
-		6.Store full key and part key
+		4.Store full key and part key
 		store_full_key_and_part_key(full_key,part_key):
 			
 			
