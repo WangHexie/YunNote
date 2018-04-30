@@ -25,5 +25,11 @@ Server:
 		5.Create key:
 		create_key():
 			return String:key
+			
+		6.Convert chinese key to hash:
+		chinese_key_to_hash(chinese_key):
+			return hashkey[:lenth]
+			
+		
 		To do later 
 			1.User system
