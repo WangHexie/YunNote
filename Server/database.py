@@ -26,13 +26,14 @@ def store_doc_to_database(doc):
     connection = pymysql.connect(host="45.76.223.233", user="root",
                                  password="root", db="MobileAppDB", port=3306)
     try:
+        key = basic_function.create_key()
         with connection.cursor() as cursor:
-            sql = "insert into key_doc value('" + basic_function.create_key() + "','" + doc + "');"
+            sql = "insert into key_doc value('" + key + "','" + doc + "');"
             cursor.execute(sql)
             connection.commit()
     finally:
         connection.close()
-    return 0
+    return key
 
 
 def part_key_to_full_key(part_key):
