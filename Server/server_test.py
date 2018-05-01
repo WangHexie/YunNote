@@ -2,7 +2,8 @@ import requests
 
 case = 0
 
-def server_test(server,case):
+
+def server_test(server, case):
     proxies = {
         "http": "http://127.0.0.1:8888",
     }
@@ -24,14 +25,14 @@ def server_test(server,case):
         print(response.text)
 
     if case == 3:
-        json1 = {'username': '123','password':"888"}
+        json1 = {'username': '123', 'password': "888"}
         response = requests.post(server + "login", data=json1)
-        print("cookies",response.text)
+        print("cookies", response.text)
 
     if case == 4:
-        json1 = {'username': '123','password':"8888"}
+        json1 = {'username': '123', 'password': "8888"}
         response = requests.post(server + "login", data=json1)
-        print("fail login test",response.text)
+        print("fail login test", response.text)
 
     if case == 5:
         json1 = {'cookies': 'b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c'}
@@ -41,9 +42,10 @@ def server_test(server,case):
         print(response.text)
         print(x[0])
 
+
 if __name__ == "__main__":
 
     url = "http://127.0.0.1:5000/"
     # server_test(url, 5)
     for i in range(6):
-        server_test(url,i)
+        server_test(url, i)

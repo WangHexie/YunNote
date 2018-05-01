@@ -1,4 +1,4 @@
-from Server import database
+import database
 
 
 def test_database(case):
@@ -24,6 +24,7 @@ def test_database(case):
         print(database.delete_useless_cookies())
     if case == 10:
         print(database.get_list_doc(database.get_user_list("123")))
+
 
 if __name__ == "__main__":
     test_database(10)
