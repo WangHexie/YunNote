@@ -1,8 +1,10 @@
-from flask import Flask, request, render_template
+import json
 import threading
+
+from flask import Flask, request, render_template
+
 from Server import basic_function
 from Server import database
-import json
 
 app = Flask(__name__)
 
@@ -45,20 +47,21 @@ def store_doc_by_cnkey():
 def login():
     username = request.form['username']
     password = request.form['password']
-    return  basic_function.check_result(database.check_user_password(username,password))
-
+    return basic_function.check_result(database.check_user_password(username, password))
 
 
 @app.route('/check', methods=['GET'])
 def check():
     username = request.args.get('username')
-    return  basic_function.check_result(database.check_user_exist(username))
+    return basic_function.check_result(database.check_user_exist(username))
+
 
 @app.route('/signin', methods=['POST'])
 def signin():
     username = request.form['username']
     password = request.form['password']
-    return  basic_function.check_result(database.add_user(username=username, password=password))
+    return basic_function.check_result(database.add_user(username=username, password=password))
+
 
 @app.route('/storelist', methods=['POST'])
 def storelist():
@@ -69,11 +72,12 @@ def storelist():
         return '0'
     else:
         database.add_cookies_live_time(cookies)
-        result = database.add_into_list(user_id=uid,doc=doc)
+        result = database.add_into_list(user_id=uid, doc=doc)
         if result == 0:
             return '0'
         else:
             return result
+
 
 @app.route('/list', methods=['POST'])
 def list():
@@ -84,11 +88,11 @@ def list():
     else:
         database.add_cookies_live_time(cookies)
         result = database.get_user_list(user_id=uid)
-        if result == 0 :
+        if result == 0:
             return '0'
         else:
             list_doc = database.get_list_doc(result)
-            re_dic = {"list":list_doc}
+            re_dic = {"list": list_doc}
             return json.dumps(re_dic, ensure_ascii=False)
 
 
@@ -106,4 +110,4 @@ def delete():
 
 if __name__ == '__main__':
     threading.Thread(target=database.delete_useless_cookies).start()
-    app.run( threaded=True)
+    app.run(host="0.0.0.0", threaded=True)
