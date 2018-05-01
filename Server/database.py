@@ -1,6 +1,7 @@
 import traceback
-
+import threading
 import pymysql
+import time
 
 from Server import basic_function
 
@@ -10,7 +11,7 @@ lenth_of_cookies = 70
 lenth_of_uid = 15
 lenth_of_doc = 65536
 lenth_of_key = 70
-
+expire_time = 60*60*24*7
 
 def get_doc_from_database(key):
     connection = pymysql.connect(host="45.76.223.233", user="root",
@@ -52,28 +53,33 @@ def part_key_to_full_key(part_key):
 def store_full_key_and_part_key(full_key, part_key):
     return 0
 
+def add_cookies_live_time(cookies):
+    def find_and_add_time(cookies):
+        if len(cookies) <= lenth_of_cookies:
+            with  pymysql.connect(host="45.76.223.233", user="root",
+                                  password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+                try:
+                    sql = "UPDATE COOKIES_LIST SET TIME=TIME+604800 where COOKIES = %s;"
+                    cursor.execute(sql, [cookies])
+                    cursor.connection.commit()
+                    return 1
+                except:
+                    print(traceback.format_exc())
+                    return 0
+        else:
+            return 0
+    th = threading.Thread(target=find_and_add_time,kwargs={"cookies":cookies}, name='add_time')
+    th.start()
+    return 0
 
-def login_check(username, password):
-    connection = pymysql.connect(host="45.76.223.233", user="root",
-                                 password="root", db="MobileAppDB", port=3306)
-    try:
-        with connection.cursor() as cursor:
-            sql = "select password from Account where username = %s;"
-            cursor.execute(sql, [username])
-            if password == cursor.fetchone()[0]:
-                return True
-    finally:
-        connection.close()
-
-    return False
 
 
 def add_uid_and_cookies(uid, cookies):
     with  pymysql.connect(host="45.76.223.233", user="root",
                           password="root", db="MobileAppDB", port=3306).cursor() as cursor:
         try:
-            sql = "INSERT INTO COOKIES_LIST (USER_NAME, COOKIES) VALUES (%s, %s);"
-            cursor.execute(sql, [uid, cookies])
+            sql = "INSERT INTO COOKIES_LIST (USER_NAME, COOKIES, TIME) VALUES (%s, %s, %s);"
+            cursor.execute(sql, [uid, cookies, basic_function.time_now()])
             cursor.connection.commit()
         except:
             print(traceback.format_exc())
@@ -125,9 +131,13 @@ def check_user_password(username, password):
         with  pymysql.connect(host="45.76.223.233", user="root",
                               password="root", db="MobileAppDB", port=3306).cursor() as cursor:
             try:
+                #check user and password
                 sql = "select * from NOTE_ACCOUNT where USER_NAME = %s AND USER_PASS = %s;"
+                #hash password into store form
                 cursor.execute(sql, [username, basic_function.real_password(password)])
+
                 if cursor.fetchone() != None:
+                    #if password is right,then create cookies and save cookies
                     cookies = basic_function.create_cookies()
                     if add_uid_and_cookies(username, cookies):
                         return cookies
@@ -175,10 +185,10 @@ def get_user_list(user_id):
                         doc_list.append(i[0])
                     return doc_list
                 else:
-                    return doc_list
+                    return 0
             except:
                 print(traceback.format_exc())
-                return 1
+                return 0
     else:
         return doc_list
 
@@ -219,7 +229,43 @@ def delete_form_list(user_id, key):
     else:
         return 0
 
+def delete_one_cookies(cookies):
+    with  pymysql.connect(host="45.76.223.233", user="root",
+                          password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+        try:
+            sql = "DELETE FROM COOKIES_LIST WHERE COOKIES = %s;"
+            cursor.execute(sql, [cookies])
+            cursor.connection.commit()
+            return 1
+        except:
+            print(traceback.format_exc())
+            return 0
+
+def delete_useless_cookies():
+    def delete_timeout_cookies():
+        with  pymysql.connect(host="45.76.223.233", user="root",
+                              password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+            try:
+                sql = "SELECT COOKIES,TIME FROM COOKIES_LIST ;"
+                cursor.execute(sql)
+                all_cookies = cursor.fetchall()
+                time_now = basic_function.time_now()
+                for one_cookies in all_cookies:
+                    if one_cookies[1] != "":
+                        if int(one_cookies[1]) < int(time_now):
+                            print("deleting",one_cookies[0])
+                            y = threading.Thread(target=delete_one_cookies,kwargs={"cookies":one_cookies[0]})
+                            y.start()
+                    else:
+                        print("deleting", one_cookies[0])
+                        y = threading.Thread(target=delete_one_cookies, kwargs={"cookies": one_cookies[0]})
+                        y.start()
+            except:
+                return 0
+
+    while True:
+        threading.Thread(target=delete_timeout_cookies).start()
+        time.sleep(1200)
 
 if __name__ == '__main__':
-    username = "1"
-    password = "000"
+    delete_useless_cookies()

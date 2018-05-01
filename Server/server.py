@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-
+import threading
 from Server import basic_function
 from Server import database
 
@@ -44,7 +44,7 @@ def store_doc_by_cnkey():
 def login():
     username = request.form['username']
     password = request.form['password']
-    return  database.check_user_password(username,password)
+    return  str(database.check_user_password(username,password))
 
 
 @app.route('/check', methods=['GET'])
@@ -63,20 +63,33 @@ def storelist():
     doc = request.form['doc']
     cookies = request.form['cookies']
     uid = database.get_user_by_cookies(cookies)
-    return  database.add_into_list(user_id=uid,doc=doc)
+    if uid == None:
+        return 0
+    else:
+        database.add_cookies_live_time(cookies)
+        return  database.add_into_list(user_id=uid,doc=doc)
 
 @app.route('/list', methods=['POST'])
 def list():
     cookies = request.form['cookies']
     uid = database.get_user_by_cookies(cookies)
-    return  database.get_user_list(user_id=uid)
+    if uid == None:
+        return 0
+    else:
+        database.add_cookies_live_time(cookies)
+        return  database.get_user_list(user_id=uid)
 
 @app.route('/delete', methods=['POST'])
 def delete():
     cookies = request.form['cookies']
     key = request.form['key']
     uid = database.get_user_by_cookies(cookies)
-    return  database.delete_form_list(user_id=uid, key=key)
+    if uid == None:
+        return 0
+    else:
+        database.add_cookies_live_time(cookies)
+        return  database.delete_form_list(user_id=uid, key=key)
 
 if __name__ == '__main__':
+    threading.Thread(target=database.delete_useless_cookies).start()
     app.run( threaded=True)
