@@ -1,6 +1,7 @@
 import json
 import threading
 
+
 import basic_function
 import database
 from flask import Flask, request, render_template
@@ -16,14 +17,14 @@ def home():
 @app.route('/get', methods=['GET'])
 def get_doc():
     key = request.args.get('key')
-    return database.get_doc_from_database(key)
+    return basic_function.check_result(database.get_doc_from_database(key))
 
 
 @app.route('/store', methods=['POST'])
 def store_doc():
     doc = request.form['doc']
     key = database.store_doc_to_database(doc)
-    return key
+    return basic_function.check_result(key)
 
 
 @app.route('/getbyck', methods=['GET'])
@@ -83,7 +84,7 @@ def list():
     cookies = request.form['cookies']
     uid = database.get_user_by_cookies(cookies)
     if uid == None:
-        return 0
+        return '0'
     else:
         database.add_cookies_live_time(cookies)
         result = database.get_user_list(user_id=uid)

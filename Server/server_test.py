@@ -14,6 +14,7 @@ def server_test(server, case):
 
     if case == 2:
         # Test Get
+        print("inject test")
         json2 = {'key': '6c253648e0dfff00d6aa44566f34dae651f0d2191d5bf59dd74d8ce7314cb3e7'}
         json_sql_inject = {'key': "' or '1'='1"}
         response = requests.get(server + "get", params=json_sql_inject)
@@ -46,6 +47,7 @@ def server_test(server, case):
 if __name__ == "__main__":
 
     url = "http://127.0.0.1:5000/"
-    # server_test(url, 5)
+    # url = "http://ipv4.dfen.xyz:5000/"
+    # server_test(url, 2)
     for i in range(6):
         server_test(url, i)
