@@ -24,10 +24,9 @@ public class LoginActivity extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("123");
+
                 try{
-                    System.out.println(username.getText().toString() + password.getText().toString());
-                    Login.loginpost(username.getText().toString() , password.getText().toString());
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
