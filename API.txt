@@ -41,7 +41,9 @@ Protocol：
 		
 		4.Get a list of User's doc :
 		HTTP POST */list {"cookies":(cookies)}
-			return json{"list":[user_doc]} ||0
+
+			return json{"list":[user_doc]}||0
+
 		
 		5.Add a doc to User's list:
 		HTTP POST */storelist {"doc":doc,"cookies":(cookies)}
