@@ -21,7 +21,7 @@ public class Login {
                 .add("password", password)
                 .build();
         Request request = new Request.Builder()
-                .url("http://10.0.2.2:5000/login")
+                .url("http://ipv4.dfen.xyz:5000/login")
                 .post(body)
                 .build();
         try{

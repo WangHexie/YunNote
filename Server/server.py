@@ -80,7 +80,7 @@ def list():
     cookies = request.form['cookies']
     uid = database.get_user_by_cookies(cookies)
     if uid == None:
-        return 0
+        return '0'
     else:
         database.add_cookies_live_time(cookies)
         result = database.get_user_list(user_id=uid)
@@ -106,4 +106,4 @@ def delete():
 
 if __name__ == '__main__':
     threading.Thread(target=database.delete_useless_cookies).start()
-    app.run( threaded=True)
+    app.run(host='0.0.0.0', threaded=True)

@@ -19,7 +19,7 @@ public class CookieCheck {
                 .add("cookies", cookie )
                 .build();
         Request request = new Request.Builder()
-                .url("http://10.0.2.2:5000/list")
+                .url("http://ipv4.dfen.xyz:5000/list")
                 .post(body)
                 .build();
         Response response = null;

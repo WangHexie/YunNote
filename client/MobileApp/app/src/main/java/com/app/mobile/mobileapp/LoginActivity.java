@@ -39,16 +39,13 @@ public class LoginActivity extends AppCompatActivity {
                 .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
                 .penaltyLog().penaltyDeath().build());
 
-        SharedPreferences pref = LoginActivity.this.getSharedPreferences("cookiesRW",MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("cookies","123");
-        editor.commit();
+
 
 
         sharedPreferences = getSharedPreferences("cookiesRW", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         final String cookie = sharedPreferences.getString("cookies","");
-        System.out.println("kanxiaxia" + cookie);
+        if(cookie != null)
         new Thread() {
             @Override
             public void run() {
@@ -63,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         }.start();
+
 
 
 
