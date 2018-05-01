@@ -26,15 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        sharedPreferences = getSharedPreferences("jzc", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        String cookie = sharedPreferences.getString("cookie","");
-        String cookiecheck_result = CookieCheck.check(cookie);
-        if(!cookiecheck_result.equals("0")){
-            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-            intent.putExtra("cookiecheck_result",cookiecheck_result);
-            startActivity(intent);
-        }
+
 
 
         super.onCreate(savedInstanceState);
@@ -47,9 +39,33 @@ public class LoginActivity extends AppCompatActivity {
                 .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
                 .penaltyLog().penaltyDeath().build());
 
+        SharedPreferences pref = LoginActivity.this.getSharedPreferences("cookiesRW",MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("cookies","123");
+        editor.commit();
 
 
-        
+        sharedPreferences = getSharedPreferences("cookiesRW", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        final String cookie = sharedPreferences.getString("cookies","");
+        System.out.println("kanxiaxia" + cookie);
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String cookiecheck_result = CookieCheck.check(cookie);
+                if(!cookiecheck_result.equals("0")){
+                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    intent.putExtra("cookiecheck_result",cookiecheck_result);
+                    startActivity(intent);
+                }
+            }
+
+
+        }.start();
+
+
+
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
         login_btn = (Button)findViewById(R.id.login_btn);
@@ -65,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             String loginGetCookie = Login.login_check(username.getText().toString(), password.getText().toString());
                             if (!loginGetCookie.equals("0")) {
-                                editor.putString("cookie",loginGetCookie);
+
                                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                                 intent.putExtra("cookiecheck_result",CookieCheck.check(loginGetCookie));
                                 startActivity(intent);
