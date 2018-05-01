@@ -73,6 +73,15 @@ def real_password(password):
         hash_string = hashlib.sha256(hash_string.encode('utf-8')).hexdigest()
     return hash_string
 
+def time_now():
+    return str(int(time.time()))
+
+def check_result(result):
+    if result == 0 or result == 1:
+        return str(result)
+    else:
+        return result
+
 if __name__ == '__main__':
     hash = "8bfd6fb7e44396db8033cd6715a25432f1e370a6a9d7a2b6674024d3696baf5c"
     word = hash_to_chinese_key(hash)
@@ -82,3 +91,4 @@ if __name__ == '__main__':
     print(word)
 
     print(real_password("16513"))
+    print(time_now())

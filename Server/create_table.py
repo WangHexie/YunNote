@@ -27,6 +27,6 @@ if __name__ == '__main__':
 
     modify4 = "ALTER TABLE NOTE_ACCOUNT MODIFY COLUMN USER_PASS VARCHAR(70);"
 
-    modify5 = "ALTER TABLE COOKIES_LIST MODIFY COLUMN COOKIES VARCHAR(70);"
+    modify5 = "ALTER TABLE COOKIES_LIST ADD  TIME  VARCHAR(20) NOT NULL;"
 
-    excute_sql(modify4)
+    excute_sql(modify5)
