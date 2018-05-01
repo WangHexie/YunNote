@@ -13,6 +13,7 @@ lenth_of_doc = 65536
 lenth_of_key = 70
 expire_time = 60*60*24*7
 
+
 def get_doc_from_database(key):
     connection = pymysql.connect(host="45.76.223.233", user="root",
                                  password="root", db="MobileAppDB", port=3306)
@@ -22,14 +23,15 @@ def get_doc_from_database(key):
             cursor.execute(sql, [key])
             fet = cursor.fetchone()
             if fet == None:
-                result = 'NOT Found'
+                result = 0
             else:
-                result = fet[0]
+                result = fet
 
     finally:
         connection.close()
 
     return result
+
 
 
 def store_doc_to_database(doc):
@@ -52,6 +54,26 @@ def part_key_to_full_key(part_key):
 
 def store_full_key_and_part_key(full_key, part_key):
     return 0
+
+def get_list_doc(list_keys):
+    list_doc = []
+    def append_list(list_doc,key):
+        doc = get_doc_from_database(key)
+        list_doc.append(doc)
+
+    with  pymysql.connect(host="45.76.223.233", user="root",
+                          password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+        try:
+            thread_list = []
+            for i in list_keys:
+                thread_list.append(threading.Thread(target=append_list,kwargs={"key":i,"list_doc":list_doc}))
+            for i in thread_list:
+                i.start()
+            for i in thread_list:
+                i.join()
+            return list_doc
+        except:
+            return list_doc
 
 def add_cookies_live_time(cookies):
     def find_and_add_time(cookies):
