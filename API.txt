@@ -26,11 +26,11 @@ Protocol：
 		HTTP GET */check?username=(username)
 		"""
 		check_result: 
-			  1 -> exists,
+
+		 1 -> exists,
 			  0 -> not exists
 		"""
 			return check_result
-		
 		2.Sign in :
 		HTTP POST */signin {"username":(username),"password":(password)}
 			return cookies||0

@@ -21,18 +21,18 @@ public class Login {
                 .add("password", password)
                 .build();
         Request request = new Request.Builder()
-                .url("http://ipv4.dfen.xyz:5000/login")
+                .url("http://10.0.2.2:5000/login")
                 .post(body)
                 .build();
         try{
             Response response = client.newCall(request).execute();
-            System.out.println();
-            if(!response.body().string().equals("0")){
-                System.out.println(response.body().string());
-                return response.body().string();
+            String result = response.body().string(); //这吊玩意只能用一次   body.string
+            if(!result.equals("0")){
+
+                return result;
             }
             else {
-                return response.body().string();
+                return result;
             }
 
         }catch (Exception e){

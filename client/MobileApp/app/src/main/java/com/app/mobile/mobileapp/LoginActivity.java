@@ -1,6 +1,9 @@
 package com.app.mobile.mobileapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Message;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import mobileapp.Function.CookieCheck;
 import mobileapp.Function.Login;
 
 public class LoginActivity extends AppCompatActivity {
@@ -17,9 +21,22 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private Button login_btn;
-
+    SharedPreferences sharedPreferences;
+    Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        sharedPreferences = getSharedPreferences("jzc", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        String cookie = sharedPreferences.getString("cookie","");
+        String cookiecheck_result = CookieCheck.check(cookie);
+        if(!cookiecheck_result.equals("0")){
+            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+            intent.putExtra("cookiecheck_result",cookiecheck_result);
+            startActivity(intent);
+        }
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -30,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
                 .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
                 .penaltyLog().penaltyDeath().build());
 
+
+
+        
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
         login_btn = (Button)findViewById(R.id.login_btn);
@@ -43,12 +63,12 @@ public class LoginActivity extends AppCompatActivity {
                     public void run() {
                         super.run();
                         try {
-
-                            if (!Login.login_check(username.getText().toString(), password.getText().toString()).equals("0")) {
-
+                            String loginGetCookie = Login.login_check(username.getText().toString(), password.getText().toString());
+                            if (!loginGetCookie.equals("0")) {
+                                editor.putString("cookie",loginGetCookie);
                                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                intent.putExtra("cookiecheck_result",CookieCheck.check(loginGetCookie));
                                 startActivity(intent);
-
                             } else System.out.println("sb");
                         } catch (Exception e) {
                             e.printStackTrace();
