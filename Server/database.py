@@ -59,8 +59,8 @@ def add_cookies_live_time(cookies):
             with  pymysql.connect(host="45.76.223.233", user="root",
                                   password="root", db="MobileAppDB", port=3306).cursor() as cursor:
                 try:
-                    sql = "UPDATE COOKIES_LIST SET TIME=TIME+604800 where COOKIES = %s;"
-                    cursor.execute(sql, [cookies])
+                    sql = "UPDATE COOKIES_LIST SET TIME=%s where COOKIES = %s;"
+                    cursor.execute(sql, [str(int(basic_function.time_now())+expire_time),cookies])
                     cursor.connection.commit()
                     return 1
                 except:
@@ -79,7 +79,7 @@ def add_uid_and_cookies(uid, cookies):
                           password="root", db="MobileAppDB", port=3306).cursor() as cursor:
         try:
             sql = "INSERT INTO COOKIES_LIST (USER_NAME, COOKIES, TIME) VALUES (%s, %s, %s);"
-            cursor.execute(sql, [uid, cookies, basic_function.time_now()])
+            cursor.execute(sql, [uid, cookies, str(int(basic_function.time_now())+expire_time)])
             cursor.connection.commit()
         except:
             print(traceback.format_exc())
@@ -159,7 +159,7 @@ def get_user_by_cookies(cookies):
             try:
                 sql = "select USER_NAME from COOKIES_LIST where COOKIES = %s;"
                 cursor.execute(sql, [cookies])
-                user_id = cursor.fetchone()[0]
+                user_id = cursor.fetchone()
                 if user_id != None:
                     return user_id
                 else:

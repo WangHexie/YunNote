@@ -2,6 +2,7 @@ from flask import Flask, request, render_template
 import threading
 from Server import basic_function
 from Server import database
+import json
 
 app = Flask(__name__)
 
@@ -77,7 +78,13 @@ def list():
         return 0
     else:
         database.add_cookies_live_time(cookies)
-        return  database.get_user_list(user_id=uid)
+        result = database.get_user_list(user_id=uid)
+        if result == 0 :
+            return '0'
+        else:
+            re_dic = {"list":result}
+            return json.dumps(re_dic, ensure_ascii=False)
+
 
 @app.route('/delete', methods=['POST'])
 def delete():
