@@ -44,7 +44,7 @@ def store_doc_by_cnkey():
 def login():
     username = request.form['username']
     password = request.form['password']
-    return  database.login_check(username,password)
+    return  database.check_user_password(username,password)
 
 
 @app.route('/check', methods=['GET'])
