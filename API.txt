@@ -37,15 +37,15 @@ Protocol：
 		
 		3.login in :
 		HTTP POST */login {"username":(username),"password":(password)}
-			return cookies||
+			return cookies||0
 		
 		4.Get a list of User's doc :
 		HTTP POST */list {"cookies":(cookies)}
-			return json{"list":[user_doc]}
+			return json{"list":[user_doc]}||0
 		
 		5.Add a doc to User's list:
 		HTTP POST */storelist {"doc":doc,"cookies":(cookies)}
-			return key
+			return key||0
 			
 		6.Delete a doc from User's list:
 		HTTP POST */delete   {"key":(key)","cookies:(cookies)}

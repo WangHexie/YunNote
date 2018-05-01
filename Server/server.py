@@ -56,7 +56,7 @@ def check():
 def signin():
     username = request.form['username']
     password = request.form['password']
-    return  database.add_user()
+    return  database.add_user(username=username, password=password)
 
 @app.route('/storelist', methods=['POST'])
 def storelist():
