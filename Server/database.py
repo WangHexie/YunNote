@@ -16,20 +16,18 @@ expire_time = 60 * 60 * 24 * 7
 
 
 def get_doc_from_database(key):
-    connection = pymysql.connect(host="45.76.223.233", user="root",
-                                 password="root", db="MobileAppDB", port=3306)
-    try:
-        with connection.cursor() as cursor:
+    with  pymysql.connect(host="45.76.223.233", user="root",
+                          password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+        try:
             sql = "SELECT doc FROM key_doc where key_hash=%s"
             cursor.execute(sql, [key])
             fet = cursor.fetchone()
             if fet == None:
                 result = 0
             else:
-                result = fet
-
-    finally:
-        connection.close()
+                result = fet[0]
+        except:
+            print(traceback.format_exc())
 
     return result
 
