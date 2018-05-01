@@ -1,8 +1,10 @@
+package com.app.mobile.mobileapp;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-class Hash{
+public class Hash{
     public static String hash(String password) {
         String hashResult = password;
         for(int i=0;i<800;i++){
