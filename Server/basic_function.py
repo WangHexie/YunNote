@@ -62,6 +62,16 @@ def chinese_key_to_hash(chinese_key):
         hash += get_two_hex(i)
     return hash
 
+def create_cookies():
+    hash_string =  str(random.randrange(99999999)) + str(time.time())
+    final_cookies = hashlib.sha256(hash_string.encode('utf-8')).hexdigest()
+    return final_cookies
+
+def real_password(password):
+    hash_string = password + "db_salt"
+    for i in range(200):
+        hash_string = hashlib.sha256(hash_string.encode('utf-8')).hexdigest()
+    return hash_string
 
 if __name__ == '__main__':
     hash = "8bfd6fb7e44396db8033cd6715a25432f1e370a6a9d7a2b6674024d3696baf5c"
@@ -70,3 +80,5 @@ if __name__ == '__main__':
     print(hash)
     print(hash2)
     print(word)
+
+    print(real_password("16513"))
