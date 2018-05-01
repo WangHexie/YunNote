@@ -13,6 +13,7 @@ lenth_of_doc = 65536
 lenth_of_key = 70
 expire_time = 60*60*24*7
 
+
 def get_doc_from_database(key):
     connection = pymysql.connect(host="45.76.223.233", user="root",
                                  password="root", db="MobileAppDB", port=3306)
@@ -22,14 +23,15 @@ def get_doc_from_database(key):
             cursor.execute(sql, [key])
             fet = cursor.fetchone()
             if fet == None:
-                result = 'NOT Found'
+                result = 0
             else:
-                result = fet[0]
+                result = fet
 
     finally:
         connection.close()
 
     return result
+
 
 
 def store_doc_to_database(doc):
@@ -53,14 +55,34 @@ def part_key_to_full_key(part_key):
 def store_full_key_and_part_key(full_key, part_key):
     return 0
 
+def get_list_doc(list_keys):
+    list_doc = []
+    def append_list(list_doc,key):
+        doc = get_doc_from_database(key)
+        list_doc.append(doc)
+
+    with  pymysql.connect(host="45.76.223.233", user="root",
+                          password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+        try:
+            thread_list = []
+            for i in list_keys:
+                thread_list.append(threading.Thread(target=append_list,kwargs={"key":i,"list_doc":list_doc}))
+            for i in thread_list:
+                i.start()
+            for i in thread_list:
+                i.join()
+            return list_doc
+        except:
+            return list_doc
+
 def add_cookies_live_time(cookies):
     def find_and_add_time(cookies):
         if len(cookies) <= lenth_of_cookies:
             with  pymysql.connect(host="45.76.223.233", user="root",
                                   password="root", db="MobileAppDB", port=3306).cursor() as cursor:
                 try:
-                    sql = "UPDATE COOKIES_LIST SET TIME=TIME+604800 where COOKIES = %s;"
-                    cursor.execute(sql, [cookies])
+                    sql = "UPDATE COOKIES_LIST SET TIME=%s where COOKIES = %s;"
+                    cursor.execute(sql, [str(int(basic_function.time_now())+expire_time),cookies])
                     cursor.connection.commit()
                     return 1
                 except:
@@ -79,7 +101,7 @@ def add_uid_and_cookies(uid, cookies):
                           password="root", db="MobileAppDB", port=3306).cursor() as cursor:
         try:
             sql = "INSERT INTO COOKIES_LIST (USER_NAME, COOKIES, TIME) VALUES (%s, %s, %s);"
-            cursor.execute(sql, [uid, cookies, basic_function.time_now()])
+            cursor.execute(sql, [uid, cookies, str(int(basic_function.time_now())+expire_time)])
             cursor.connection.commit()
         except:
             print(traceback.format_exc())
@@ -159,7 +181,7 @@ def get_user_by_cookies(cookies):
             try:
                 sql = "select USER_NAME from COOKIES_LIST where COOKIES = %s;"
                 cursor.execute(sql, [cookies])
-                user_id = cursor.fetchone()[0]
+                user_id = cursor.fetchone()
                 if user_id != None:
                     return user_id
                 else:
