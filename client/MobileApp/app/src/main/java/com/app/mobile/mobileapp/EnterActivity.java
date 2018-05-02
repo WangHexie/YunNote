@@ -41,16 +41,17 @@ public class EnterActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
         cookie = preferences.getString("cookieRW", "0");
         System.out.println("cookie = " + cookie);
-        if (!cookie.equals("0"))
-            mhandler.sendEmptyMessageDelayed(GO_LOGIN, 2000);
+        if (cookie.equals("0"))
+            mhandler.sendEmptyMessage(GO_LOGIN);
         else {
             new Thread() {
                 @Override
                 public void run() {
                     super.run();
-
-                    if (!CookieCheck.check(cookie).equals("0")) {
-                        mhandler.sendEmptyMessageDelayed(GO_MAIN, 2000);
+                    String a = CookieCheck.check(cookie);
+                    System.out.println("hh  " + a);
+                    if (!a.equals("0")) {
+                        mhandler.sendEmptyMessage(GO_MAIN);
                     }
 
 
