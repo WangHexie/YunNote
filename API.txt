@@ -136,8 +136,15 @@ Client:
 		
 	Class Login
 	    login(username,hash(password))
-	    return boolean
+	    return String (0 || cookie)
 
 	   true into next activity
 	
-	
+	 Class CookieCheck
+	  cookie_check(String cookie)
+	    return String (json(list)|| 0 )
+
+     function to be done
+
+
+

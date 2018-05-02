@@ -20,4 +20,5 @@
         completions."
     </string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_enter">EnterActivity</string>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button login_btn;
     SharedPreferences sharedPreferences;
     Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -42,24 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        sharedPreferences = getSharedPreferences("cookiesRW", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        final String cookie = sharedPreferences.getString("cookies","");
-        if(cookie != null)
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                String cookiecheck_result = CookieCheck.check(cookie);
-                if(!cookiecheck_result.equals("0")){
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    intent.putExtra("cookiecheck_result",cookiecheck_result);
-                    startActivity(intent);
-                }
-            }
 
-
-        }.start();
 
 
 
@@ -98,4 +83,6 @@ public class LoginActivity extends AppCompatActivity {
 
         });
     }
+
+
 }

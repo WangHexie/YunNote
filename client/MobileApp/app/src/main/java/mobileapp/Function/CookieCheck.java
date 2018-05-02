@@ -19,7 +19,7 @@ public class CookieCheck {
                 .add("cookies", cookie )
                 .build();
         Request request = new Request.Builder()
-                .url("http://ipv4.dfen.xyz:5000/list")
+                .url("http://10.0.2.2:5000/list")
                 .post(body)
                 .build();
         Response response = null;
@@ -31,6 +31,11 @@ public class CookieCheck {
         }
         return "0";
 
+    }
+
+
+    public static void main(String [] args) {
+        System.out.println(check("123"));
     }
 
 }
