@@ -10,7 +10,7 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 
-public class network {
+public class Network {
     static String url = "http://ipv4.dfen.xyz:5000/";
 
     public static String getDoc(String key) {
