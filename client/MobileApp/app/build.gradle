@@ -29,4 +29,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation files('libs/okhttp-3.10.0 (1).jar')
     implementation files('libs/okio-1.14.1.jar')
+    implementation files('libs/json-simple-1.1.1.jar')
 }
