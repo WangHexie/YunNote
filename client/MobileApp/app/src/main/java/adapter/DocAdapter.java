@@ -19,11 +19,12 @@ public class DocAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private String[] mdoclist;
-     public DocAdapter(Context context ,String[] doclist){
-         mContext = context;
-         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-         mdoclist = doclist;
-     }
+
+    public DocAdapter(Context context, String[] doclist) {
+        mContext = context;
+        mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mdoclist = doclist;
+    }
 
 
     @Override

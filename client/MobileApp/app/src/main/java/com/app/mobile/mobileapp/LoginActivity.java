@@ -1,15 +1,11 @@
 package com.app.mobile.mobileapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.Handler;
-import android.os.Message;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,16 +15,14 @@ import mobileapp.Function.Login;
 
 public class LoginActivity extends AppCompatActivity {
 
+    SharedPreferences sharedPreferences;
+    Editor editor;
     private EditText username;
     private EditText password;
     private Button login_btn;
-    SharedPreferences sharedPreferences;
-    Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
 
 
         super.onCreate(savedInstanceState);
@@ -42,21 +36,14 @@ public class LoginActivity extends AppCompatActivity {
                 .penaltyLog().penaltyDeath().build());
 
 
-
-
-
-
-
-
-
-        username = (EditText)findViewById(R.id.username);
-        password = (EditText)findViewById(R.id.password);
-        login_btn = (Button)findViewById(R.id.login_btn);
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
+        login_btn = (Button) findViewById(R.id.login_btn);
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                new Thread(){
+                new Thread() {
 
                     @Override
                     public void run() {
@@ -65,8 +52,8 @@ public class LoginActivity extends AppCompatActivity {
                             String loginGetCookie = Login.login_check(username.getText().toString(), password.getText().toString());
                             if (!loginGetCookie.equals("0")) {
 
-                                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                intent.putExtra("cookiecheck_result",CookieCheck.check(loginGetCookie));
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("cookiecheck_result", CookieCheck.check(loginGetCookie));
                                 startActivity(intent);
                             } else System.out.println("sb");
                         } catch (Exception e) {
@@ -74,8 +61,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 }.start();
-
-
 
 
             }

@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        String[] list ={"123","456","789"};
+        String[] list = {"123", "456", "789"};
         listView = (ListView) findViewById(R.id.listview);
-        DocAdapter docAdapter = new DocAdapter(MainActivity.this,list);
+        DocAdapter docAdapter = new DocAdapter(MainActivity.this, list);
         listView.setAdapter(docAdapter);
     }
 

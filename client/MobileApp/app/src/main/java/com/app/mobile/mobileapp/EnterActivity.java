@@ -5,23 +5,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import mobileapp.Function.CookieCheck;
 
 public class EnterActivity extends AppCompatActivity {
-    private String cookie;
     private static final int GO_LOGIN = 1000;
     private static final int GO_MAIN = 1001;
-
-    private Handler mhandler = new Handler(){
+    private String cookie;
+    private Handler mhandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case GO_LOGIN:
                     goLogin();
                     break;
@@ -29,7 +24,9 @@ public class EnterActivity extends AppCompatActivity {
                     goMain();
                     break;
             }
-        };
+        }
+
+        ;
     };
 
     @Override
@@ -38,23 +35,22 @@ public class EnterActivity extends AppCompatActivity {
         init();
 
 
-
     }
 
-    private void init(){
-        SharedPreferences preferences = getSharedPreferences("cookieRW",MODE_PRIVATE);
-        cookie = preferences.getString("cookieRW","0");
+    private void init() {
+        SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
+        cookie = preferences.getString("cookieRW", "0");
         System.out.println("cookie = " + cookie);
-        if(!cookie.equals("0"))
-            mhandler.sendEmptyMessageDelayed(GO_LOGIN,2000);
+        if (!cookie.equals("0"))
+            mhandler.sendEmptyMessageDelayed(GO_LOGIN, 2000);
         else {
-            new Thread(){
+            new Thread() {
                 @Override
                 public void run() {
                     super.run();
 
-                    if(!CookieCheck.check(cookie).equals("0")){
-                        mhandler.sendEmptyMessageDelayed(GO_MAIN,2000);
+                    if (!CookieCheck.check(cookie).equals("0")) {
+                        mhandler.sendEmptyMessageDelayed(GO_MAIN, 2000);
                     }
 
 
@@ -66,14 +62,14 @@ public class EnterActivity extends AppCompatActivity {
 
     }
 
-    private void goLogin(){
-        Intent intent = new Intent(EnterActivity.this,LoginActivity.class);
+    private void goLogin() {
+        Intent intent = new Intent(EnterActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void goMain(){
-        Intent intent = new Intent(EnterActivity.this,MainActivity.class);
+    private void goMain() {
+        Intent intent = new Intent(EnterActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

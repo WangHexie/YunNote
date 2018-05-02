@@ -13,10 +13,10 @@ import okhttp3.Response;
 
 public class CookieCheck {
 
-    public static String check(String cookie){
+    public static String check(String cookie) {
         OkHttpClient client = new OkHttpClient();
         FormBody body = new FormBody.Builder()
-                .add("cookies", cookie )
+                .add("cookies", cookie)
                 .build();
         Request request = new Request.Builder()
                 .url("http://10.0.2.2:5000/list")
@@ -34,7 +34,7 @@ public class CookieCheck {
     }
 
 
-    public static void main(String [] args) {
+    public static void main(String[] args) {
         System.out.println(check("123"));
     }
 
