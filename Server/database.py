@@ -38,8 +38,8 @@ def store_doc_to_database(doc):
     try:
         key = basic_function.create_key()
         with connection.cursor() as cursor:
-            sql = "insert into key_doc value(%s, %s);"
-            cursor.execute(sql, [key, doc])
+            sql = "insert into key_doc(key_hash, doc, MODIFY_TIME)  value(%s, %s, %s);"
+            cursor.execute(sql, [key, doc, float(basic_function.time_now())])
             connection.commit()
     finally:
         connection.close()
@@ -56,24 +56,31 @@ def store_full_key_and_part_key(full_key, part_key):
 
 def get_list_doc(list_keys):
     list_doc = []
+    list_key = []
+    lock = threading.Lock()
 
-    def append_list(list_doc, key):
+    def append_list(list_doc, list_keys, key):
         doc = get_doc_from_database(key)
+        lock.acquire()
         list_doc.append(doc)
+        list_keys.append(key)
+        lock.release()
 
     with  pymysql.connect(host="45.76.223.233", user="root",
                           password="root", db="MobileAppDB", port=3306).cursor() as cursor:
         try:
             thread_list = []
             for i in list_keys:
-                thread_list.append(threading.Thread(target=append_list, kwargs={"key": i, "list_doc": list_doc}))
+                thread_list.append(threading.Thread(target=append_list,
+                                                    kwargs={"key": i, "list_doc": list_doc, "list_keys": list_key}))
             for i in thread_list:
                 i.start()
             for i in thread_list:
                 i.join()
-            return list_doc
+            return list_doc, list_keys
         except:
-            return list_doc
+            print(traceback.format_exc())
+            return list_doc, list_keys
 
 
 def add_cookies_live_time(cookies):
@@ -195,7 +202,7 @@ def get_user_by_cookies(cookies):
 
 
 def get_user_list(user_id):
-    doc_list = []
+    key_list = []
     if len(user_id) <= lenth_of_uid:
         with  pymysql.connect(host="45.76.223.233", user="root",
                               password="root", db="MobileAppDB", port=3306).cursor() as cursor:
@@ -205,15 +212,15 @@ def get_user_list(user_id):
                 result = cursor.fetchall()
                 if result != None:
                     for i in result:
-                        doc_list.append(i[0])
-                    return doc_list
+                        key_list.append(i[0])
+                    return key_list
                 else:
                     return 0
             except:
                 print(traceback.format_exc())
                 return 0
     else:
-        return doc_list
+        return 0
 
 
 def add_into_list(user_id, doc):
