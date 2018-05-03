@@ -10,13 +10,9 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
-public class network {
-    static String url = "http://10.0.2.2:5000/";
+public class Network {
+    static String url = "http://ipv4.dfen.xyz:5000/";
 
     public static String getDoc(String key) {
         String doc = sendGet(url + "get", "key=" + key);
@@ -37,6 +33,11 @@ public class network {
         }
         String key = sendPost(url + "storelist", "doc=" + encodedUrl + "&" + "cookies=" + cookies);
         return key;
+    }
+
+    public static String getList(String cookies){
+        String jsonList = sendPost(url + "list", "cookies=" + cookies);
+        return jsonList;
     }
 
     public static String deleteDoc(String key, String cookies) {
@@ -219,5 +220,6 @@ public class network {
 //        print(deleteDoc("d1e9052456c98c1b624b31def8aea3e3fdaf5e578825b13ac7035dda9cd9631c","002e7e436441939758c41ed393257d2cea503d0dfb234201af1bfc21bfbc6d55"));
 //        print(ifNameExist("1234"));
         print(signIn("1234", "123"));
+        print(getList("b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c"));
     }
 }

@@ -9,10 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import mobileapp.Function.network;
+import mobileapp.Function.Network;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -64,12 +63,12 @@ public class RegisterActivity extends AppCompatActivity {
                         public void run() {
                             super.run();
                             System.out.println("进来了");
-                            String nameExistCheckResult = network.ifNameExist(username.getText().toString());
+                            String nameExistCheckResult = Network.ifNameExist(username.getText().toString());
                             System.out.println(nameExistCheckResult);
                             if (nameExistCheckResult.equals("1"))
                                 mhandler.sendEmptyMessage(SIGN_FAILED);
                             else if (nameExistCheckResult.equals("0")){
-                                String signResult = network.signIn(username.getText().toString() , password.getText().toString());
+                                String signResult = Network.signIn(username.getText().toString() , password.getText().toString());
                                 System.out.println(signResult);
                                 if (!signResult.equals("0")){
                                     SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);

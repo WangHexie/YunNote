@@ -4,7 +4,6 @@
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -22,18 +21,25 @@
             android:exported="true"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
+        <!--<activity-->
+            <!--android:name=".doc_list_Activity"-->
+            <!--android:label="@string/title_activity_doc_list_"-->
+            <!--android:theme="@style/AppTheme.NoActionBar"></activity>-->
         <activity
-            android:name=".EnterActivity"
-            android:exported="true"
-            android:label="@string/title_activity_enter"
+            android:name=".doc_list_Activity"
+            android:label="@string/title_activity_doc_list_"
             android:theme="@style/AppTheme.NoActionBar">
+            <!--android:exported="true"-->
+            <!--android:label="@string/title_activity_enter"-->
+            <!--android:theme="@style/AppTheme.NoActionBar">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+
     </application>
 
 </manifest>
