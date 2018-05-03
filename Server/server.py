@@ -88,7 +88,6 @@ def list():
     else:
         database.add_cookies_live_time(cookies)
         list_key = database.get_user_list(user_id=uid)
-        print(list_key)
         if list_key == 0:
             return '0'
         else:
