@@ -13,7 +13,9 @@
         android:label="YunNote"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+
+        >
         <activity
             android:name=".LoginActivity"
             android:exported="true" />
@@ -41,7 +43,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".DocModifyActivity"></activity>
+        <activity android:name=".DocModifyActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"
+
+            ></activity>
         <activity android:name=".EnterActivity"></activity>
     </application>
 

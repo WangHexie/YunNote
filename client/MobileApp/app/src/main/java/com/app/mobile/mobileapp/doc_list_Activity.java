@@ -36,6 +36,7 @@ public class doc_list_Activity extends AppCompatActivity {
     private Handler mhandler;
     private Button test_btn;
     private Handler handler;
+    private static final int MODIFY_COMPLETE = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,14 @@ public class doc_list_Activity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {
-                    case 1:
-                        System.out.println("copy that");
+                    case MODIFY_COMPLETE:
+
+                        /*
+                        * 在这里写编辑完成的代码
+                        * */
+
+                        yunNoteApplication.getModifyResult();
+
                         break;
 
                 }
