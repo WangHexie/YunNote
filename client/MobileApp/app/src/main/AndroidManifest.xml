@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".YunNoteApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="YunNote"
@@ -21,17 +22,18 @@
             android:exported="true"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <!--<activity-->
-            <!--android:name=".doc_list_Activity"-->
-            <!--android:label="@string/title_activity_doc_list_"-->
-            <!--android:theme="@style/AppTheme.NoActionBar"></activity>-->
+        <!-- <activity -->
+        <!-- android:name=".doc_list_Activity" -->
+        <!-- android:label="@string/title_activity_doc_list_" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"></activity> -->
         <activity
             android:name=".doc_list_Activity"
             android:label="@string/title_activity_doc_list_"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--android:exported="true"-->
-            <!--android:label="@string/title_activity_enter"-->
-            <!--android:theme="@style/AppTheme.NoActionBar">-->
+
+            <!-- android:exported="true" -->
+            <!-- android:label="@string/title_activity_enter" -->
+            <!-- android:theme="@style/AppTheme.NoActionBar"> -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,7 +41,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-
+        <activity android:name=".DocModifyActivity"></activity>
+        <activity android:name=".EnterActivity"></activity>
     </application>
 
 </manifest>

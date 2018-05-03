@@ -7,7 +7,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
-import mobileapp.Function.network;
+import mobileapp.Function.Network;
+
 
 public class EnterActivity extends AppCompatActivity {
     private static final int GO_LOGIN = 1000;
@@ -26,7 +27,7 @@ public class EnterActivity extends AppCompatActivity {
             }
         }
 
-        ;
+
     };
 
     @Override
@@ -48,7 +49,7 @@ public class EnterActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     super.run();
-                    String a = network.check(cookie);
+                    String a = Network.check(cookie);
                     System.out.println("hh  " + a);
                     if (!a.equals("0")) {
                         mhandler.sendEmptyMessage(GO_MAIN);

@@ -1,8 +1,11 @@
 package com.app.mobile.mobileapp;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +33,10 @@ import static android.view.ViewGroup.*;
 
 public class doc_list_Activity extends AppCompatActivity {
 
+    private Handler mhandler;
+    private Button test_btn;
+    private Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,16 +46,50 @@ public class doc_list_Activity extends AppCompatActivity {
 //        addView("中国崛起啦",0);
 //        addView("中国人民站起来了,中国人民不死，中国人民永不失败，中华人民共和国万岁，美帝国主义终将倒下人民的决心是永不啦啦啦的，我们呀就要这样行的。狐狸洞里有什么，我们就有什么",3);
 //        addView("中国人民站起来了,中国人民不死，中国人民永不失败，中华人民共和国万岁，美帝国主义终将倒下人民的决心是永不啦啦啦的，我们呀就要这样行的。狐狸洞里有什么，我们就有什么",4);
+
+
+        /*
+        *
+        * 测试两个Act 之间共享Handler
+        *
+        * */
+
+        final YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 1:
+                        System.out.println("copy that");
+                        break;
+
+                }
+            }
+        };
+        test_btn = findViewById(R.id.btn_test);
+        test_btn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                yunNoteApplication.setHandler(handler);
+                Intent intent = new Intent(doc_list_Activity.this , DocModifyActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
         List<String> futureResult;
 
         try {
-            ExecutorService threadPool = Executors.newCachedThreadPool();
-            Future<List<String>> future = threadPool.submit(new Callable<List<String>>() {
+                            ExecutorService threadPool = Executors.newCachedThreadPool();
+                    Future<List<String>> future = threadPool.submit(new Callable<List<String>>() {
 
-                @Override
-                public List<String> call() throws Exception {
-                    List<String> result;
-                    result = StringReformat.toDocList(Network.getList("b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c"));
+                        @Override
+                        public List<String> call() throws Exception {
+                            List<String> result;
+                            result = StringReformat.toDocList(Network.getList("b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c"));
                     return result;
 
                 }
@@ -116,5 +158,6 @@ public class doc_list_Activity extends AppCompatActivity {
 //        linear.addView(addV);
 
     }
+
 
 }

@@ -13,7 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import mobileapp.Function.network;
+import mobileapp.Function.Network;
+
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -87,14 +88,14 @@ public class LoginActivity extends AppCompatActivity {
                     public void run() {
                         super.run();
                         try {
-                            String loginGetCookie = network.login_check(username.getText().toString(), password.getText().toString());
+                            String loginGetCookie = Network.login_check(username.getText().toString(), password.getText().toString());
                             if (!loginGetCookie.equals("0")) {
                                 SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
                                 Editor editor = preferences.edit();
                                 editor.putString("cookieRW",loginGetCookie);
                                 editor.commit();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("cookiecheck_result", network.check(loginGetCookie));
+                                intent.putExtra("cookiecheck_result", Network.check(loginGetCookie));
                                 startActivity(intent);
                             } else {
                                 mhandler.sendEmptyMessage(LOGIN_FAILED);

@@ -18,6 +18,12 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <Button
+            android:id="@+id/btn_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CLICK ME" />
+
     </android.support.design.widget.AppBarLayout>
 
     <include
