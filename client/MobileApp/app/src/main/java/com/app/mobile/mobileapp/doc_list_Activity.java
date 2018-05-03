@@ -47,6 +47,7 @@ public class doc_list_Activity extends AppCompatActivity {
     private Handler handler;
     private Map docAndKey;
     private static int id = 0;
+
     private static final int MODIFY_COMPLETE = 1000;
 
 
@@ -82,9 +83,11 @@ public class doc_list_Activity extends AppCompatActivity {
 
                 switch (msg.what) {
                     case MODIFY_COMPLETE:
+
                         TextView textV =(TextView) findViewById(doc_list_Activity.getID());
-//                        List<String> docAndKey = yunNoteApplication.getModifyResult();
-//                        textV.setText(docAndKey.get(0));
+                        List<String> docAndKey = yunNoteApplication.getModifyResult();
+                        textV.setText(docAndKey.get(0));
+
                         break;
 
                 }
