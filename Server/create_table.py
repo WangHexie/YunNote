@@ -29,4 +29,6 @@ if __name__ == '__main__':
 
     modify5 = "ALTER TABLE COOKIES_LIST ADD  TIME  VARCHAR(20) NOT NULL;"
 
-    excute_sql(modify5)
+    modify6 = "ALTER TABLE key_doc MODIFY MODIFY_TIME float;"
+
+    excute_sql(modify6)

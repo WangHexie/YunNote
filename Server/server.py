@@ -1,7 +1,6 @@
 import json
 import threading
 
-
 import basic_function
 import database
 from flask import Flask, request, render_template
@@ -83,16 +82,18 @@ def storelist():
 def list():
     cookies = request.form['cookies']
     uid = database.get_user_by_cookies(cookies)
+
     if uid == None:
         return '0'
     else:
         database.add_cookies_live_time(cookies)
-        result = database.get_user_list(user_id=uid)
-        if result == 0:
+        list_key = database.get_user_list(user_id=uid)
+        print(list_key)
+        if list_key == 0:
             return '0'
         else:
-            list_doc = database.get_list_doc(result)
-            re_dic = {"list": list_doc}
+            list_doc, list_key = database.get_list_doc(list_key)
+            re_dic = {"list": list_doc, "key": list_key}
             return json.dumps(re_dic, ensure_ascii=False)
 
 
@@ -111,3 +112,4 @@ def delete():
 if __name__ == '__main__':
     threading.Thread(target=database.delete_useless_cookies).start()
     app.run(host="::", threaded=True)
+

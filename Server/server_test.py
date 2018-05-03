@@ -9,7 +9,7 @@ def server_test(server, case):
     }
     if case == 1:
         json1 = {'doc': 'oldpig'}
-        response = requests.post(server + "store", data=json1, proxies=proxies)
+        response = requests.post(server + "store", data=json1)
         print(response.text)
 
     if case == 2:
@@ -36,18 +36,16 @@ def server_test(server, case):
         print("fail login test", response.text)
 
     if case == 5:
-        json1 = {'cookies': 'b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c'}
+        json1 = {'cookies': '002e7e436441939758c41ed393257d2cea503d0dfb234201af1bfc21bfbc6d55'}
         response = requests.post(server + "list", data=json1)
         import json
-        x = json.loads(response.text)["list"]
-        print(response.text)
-        print(x[0])
+        x = json.loads(response.text)
+        print(x)
 
 
 if __name__ == "__main__":
-
     url = "http://127.0.0.1:5000/"
     # url = "http://ipv4.dfen.xyz:5000/"
-    # server_test(url, 2)
-    for i in range(6):
-        server_test(url, i)
+    server_test(url, 5)
+    # for i in range(6):
+    #     server_test(url, i)
