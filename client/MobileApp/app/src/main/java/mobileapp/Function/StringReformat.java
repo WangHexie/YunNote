@@ -30,7 +30,7 @@ public class StringReformat {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String y = sc.nextLine();
-        network.print(StringReformat.toDocList(y));
+        Network.print(StringReformat.toDocList(y));
         //{"list": ["879546", "879546", "879546", "879546", "879546", "879546", "879546", "879546", "879546", "879546", "879546", "879546", "big"]}
     }
 }

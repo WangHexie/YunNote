@@ -21,4 +21,7 @@
     </string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_enter">EnterActivity</string>
+    <string name="title_activity_doc_list_">doc_list_Activity</string>
+    <string name="linearlay_1">linearlay_1</string>
+    <string name="loading">loading-2</string>
 </resources>
