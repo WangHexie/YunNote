@@ -10,8 +10,13 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class network {
-    static String url = "http://ipv4.dfen.xyz:5000/";
+    static String url = "http://10.0.2.2:5000/";
 
     public static String getDoc(String key) {
         String doc = sendGet(url + "get", "key=" + key);
@@ -156,6 +161,55 @@ public class network {
             }
         }
         return result;
+    }
+
+    public static String login_check(String username, String password) {
+
+        OkHttpClient client = new OkHttpClient();
+        FormBody body = new FormBody.Builder()
+                .add("username", username)
+                .add("password", password)
+                .build();
+        Request request = new Request.Builder()
+                .url(url + "login")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String result = response.body().string(); //这吊玩意只能用一次   body.string
+            if (!result.equals("0")) {
+
+                return result;
+            } else {
+                return result;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "0";
+
+    }
+
+    public static String check(String cookie) {
+        OkHttpClient client = new OkHttpClient();
+        FormBody body = new FormBody.Builder()
+                .add("cookies", cookie)
+                .build();
+        Request request = new Request.Builder()
+                .url(url + "list")
+                .post(body)
+                .build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "0";
+
     }
 
     public static void main(String[] args) {
