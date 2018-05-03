@@ -48,7 +48,7 @@ public class EnterActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     super.run();
-                    String a = Network.check(cookie);
+                    String a = network.check(cookie);
                     System.out.println("hh  " + a);
                     if (!a.equals("0")) {
                         mhandler.sendEmptyMessage(GO_MAIN);
