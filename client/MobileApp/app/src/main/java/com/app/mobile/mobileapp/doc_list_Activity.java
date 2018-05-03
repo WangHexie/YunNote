@@ -136,7 +136,7 @@ public class doc_list_Activity extends AppCompatActivity {
                     List<String> docList = (List<String>)docAndKey.get("doc");
                     List<String> keyList = (List<String>)docAndKey.get("key");
                     for(int i = 0;i<docList.size();i++){
-                        addView(keyList.get(i),i);
+                        addView(docList.get(i),i);
                     }
                     flag = false;
                 }
