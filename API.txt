@@ -1,4 +1,4 @@
-Protocol：
+﻿Protocol：
 	V0.1
 		1.Get the document
 		HTTP GET  */get?key=(Key)   
@@ -42,7 +42,7 @@ Protocol：
 		4.Get a list of User's doc :
 		HTTP POST */list {"cookies":(cookies)}
 
-			return json{"list":[user_doc]}||0
+			return json{"list":[user_doc],"key":[key_list]}||0
 
 		
 		5.Add a doc to User's list:
