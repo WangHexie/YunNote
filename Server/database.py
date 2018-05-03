@@ -194,7 +194,7 @@ def get_user_by_cookies(cookies):
 
 
 def get_user_list(user_id):
-    doc_list = []
+    key_list = []
     if len(user_id) <= lenth_of_uid:
         with  pymysql.connect(host="45.76.223.233", user="root",
                               password="root", db="MobileAppDB", port=3306).cursor() as cursor:
@@ -204,15 +204,15 @@ def get_user_list(user_id):
                 result = cursor.fetchall()
                 if result != None:
                     for i in result:
-                        doc_list.append(i[0])
-                    return doc_list
+                        key_list.append(i[0])
+                    return key_list
                 else:
                     return 0
             except:
                 print(traceback.format_exc())
                 return 0
     else:
-        return doc_list
+        return 0
 
 
 def add_into_list(user_id, doc):

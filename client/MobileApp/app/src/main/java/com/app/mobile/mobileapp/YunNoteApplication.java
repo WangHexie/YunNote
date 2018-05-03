@@ -7,6 +7,7 @@ public class YunNoteApplication extends Application {
 
     private Handler handler = null;
 
+
     // set方法
     public void setHandler(Handler handler) {
         this.handler = handler;
@@ -16,4 +17,6 @@ public class YunNoteApplication extends Application {
     public Handler getHandler() {
         return handler;
     }
+
+
 }

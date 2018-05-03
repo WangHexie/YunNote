@@ -27,6 +27,22 @@ public class StringReformat {
         return docList;
     }
 
+    public static List<String> toKeyList(String jsonString) {
+        List<String> docList = new ArrayList();
+        JSONParser parser = new JSONParser();
+        Object obj = null;
+        try {
+            obj = parser.parse(jsonString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        JSONObject obj2 = (JSONObject) obj;
+        JSONArray array = (JSONArray) obj2.get("key");
+        for (int i = 0; i < array.size(); i++) {
+            docList.add((String) array.get(i));
+        }
+        return docList;
+    }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String y = sc.nextLine();
