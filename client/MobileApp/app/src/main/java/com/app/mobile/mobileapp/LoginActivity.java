@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import mobileapp.Function.CookieIO;
 import mobileapp.Function.Network;
 
 
@@ -93,9 +94,10 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
                                 Editor editor = preferences.edit();
                                 editor.putString("cookieRW",loginGetCookie);
+                                CookieIO.setCookie(loginGetCookie);
                                 editor.commit();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("cookiecheck_result", Network.check(loginGetCookie));
+                                CookieIO.setResponse(Network.check(loginGetCookie));
                                 startActivity(intent);
                             } else {
                                 mhandler.sendEmptyMessage(LOGIN_FAILED);

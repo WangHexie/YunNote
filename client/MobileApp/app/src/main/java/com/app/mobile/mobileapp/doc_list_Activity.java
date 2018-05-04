@@ -164,20 +164,10 @@ public class doc_list_Activity extends AppCompatActivity {
 
         Handler mHandler = new Handler(){
 
-<<<<<<< HEAD
-                        @Override
-                        public Map call() throws Exception {
-                            List<String> resultDoc, resultKey;
-                            String jsonString = Network.getList(getIntent().getStringExtra("cookie"));
-                            resultDoc = StringReformat.toDocList(jsonString);
-                            resultKey = StringReformat.toKeyList(jsonString);
-                            Map docAndKey = new HashMap();
-                            docAndKey.put("doc",resultDoc);
-                            docAndKey.put("key",resultKey);
-=======
+
         @Override
         public void handleMessage (Message msg){
->>>>>>> doc_list
+
 
             if (msg.what == 1) {
                 moveProgress();

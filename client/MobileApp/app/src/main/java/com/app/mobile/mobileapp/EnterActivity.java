@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
+import mobileapp.Function.CookieIO;
 import mobileapp.Function.Network;
 
 
@@ -39,8 +40,10 @@ public class EnterActivity extends AppCompatActivity {
     }
 
     private void init() {
+
         SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
         cookie = preferences.getString("cookieRW", "0");
+        CookieIO.setCookie(cookie);
         System.out.println("cookie = " + cookie);
         if (cookie.equals("0"))
             mhandler.sendEmptyMessage(GO_LOGIN);
@@ -52,6 +55,7 @@ public class EnterActivity extends AppCompatActivity {
                     String a = Network.check(cookie);
                     System.out.println("hh  " + a);
                     if (!a.equals("0")) {
+                        CookieIO.setResponse(a);
                         mhandler.sendEmptyMessage(GO_MAIN);
                     }
 

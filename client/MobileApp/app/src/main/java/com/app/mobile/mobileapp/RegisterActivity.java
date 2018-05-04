@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import mobileapp.Function.CookieIO;
 import mobileapp.Function.Network;
 
 import static android.widget.Toast.LENGTH_LONG;
@@ -29,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
             switch (msg.what) {
                 case SIGN_SUCCESS:
                     Toast.makeText(RegisterActivity.this, "OK", LENGTH_LONG).show();
-                    Intent intent = new Intent(RegisterActivity.this , MainActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this , doc_list_Activity.class);
                     startActivity(intent);
                     break;
                 case SIGN_FAILED:
@@ -74,6 +75,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = preferences.edit();
                                     editor.putString("cookieRW",signResult);
+                                    CookieIO.setCookie(signResult);
+                                    CookieIO.setResponse("0");
                                     editor.commit();
                                     mhandler.sendEmptyMessage(SIGN_SUCCESS);
                                 }

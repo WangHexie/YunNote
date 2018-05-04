@@ -1,6 +1,7 @@
 package com.app.mobile.mobileapp;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.Handler;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ public class YunNoteApplication extends Application {
 
     private Handler handler = null;
     private List<String> list = new ArrayList<>();
+
 
 
     // set方法
@@ -34,5 +36,9 @@ public class YunNoteApplication extends Application {
     public  void cleanList(){
         list = new ArrayList<>();
     }
+
+
+
+
 
 }
