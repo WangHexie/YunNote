@@ -18,7 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -33,6 +37,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import mobileapp.Function.DownloadThread;
 import mobileapp.Function.Network;
 import mobileapp.Function.StringReformat;
 
@@ -46,8 +51,29 @@ public class doc_list_Activity extends AppCompatActivity {
     private Handler mhandler;
     private Button test_btn;
     private Handler handler;
-    private Map docAndKey;
+    private static Map docAndKey;
     private static int id = 0;
+    private boolean modifying = false;
+
+    public static Map getDocAndKey(){
+        return docAndKey;
+    }
+
+    public static void setDocAndKey(Map docAndKey1){
+        docAndKey = docAndKey1;
+    }
+
+    private boolean modifying(){
+        return modifying;
+    }
+
+    private void setModifying(){
+        modifying = true;
+    }
+
+    private void cancelModifying(){
+        modifying = false;
+    }
 
     private static final int MODIFY_COMPLETE = 1000;
 
@@ -60,8 +86,24 @@ public class doc_list_Activity extends AppCompatActivity {
         return id;
     }
 
+    public void addPross(){
+        ScrollView sv =(ScrollView) findViewById(R.id.scrollView3);
+        ProgressBar pb = new ProgressBar(doc_list_Activity.this);
+        pb.setId(R.id.progressBar);
+        ((ViewGroup)sv.getChildAt(0)).addView(pb,0);
+//        View addV = LayoutInflater.from(doc_list_Activity.this).inflate((XmlPullParser) pb,sv,true);
+    }
+
+    public void moveProgress(){
+        ProgressBar pb = (ProgressBar)findViewById(R.id.progressBar);
+        ((ViewGroup) pb.getParent()).removeView(pb);
+    }
 
     public void sendMessage(View view) {
+        if (modifying()){
+            return;
+        }
+        setModifying();
         Intent intent = new Intent(this, DocModifyActivity.class);
 
         View CL = ((ViewGroup)view).getChildAt(0);
@@ -74,13 +116,8 @@ public class doc_list_Activity extends AppCompatActivity {
         }catch (Exception e){
             Log.d("e",e.toString());
         }
-
         intent.putExtra(EXTRA_MESSAGEDOC,doc);
-
-        intent.putExtra("key",(String) ((List<String>)this.docAndKey.get("key")).get(doc_list_Activity.getID()));
-
-
-
+        intent.putExtra("key",(String) ((List<String>)getDocAndKey().get("key")).get( doc_list_Activity.getID()));
 
         handler = new Handler(){
 
@@ -89,23 +126,22 @@ public class doc_list_Activity extends AppCompatActivity {
 
                 if(msg.what == 1000) {
                     Log.d("Error", "啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦");
-//                    try {
+
                         YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
                         TextView textV = (TextView) findViewById(doc_list_Activity.getID());
                         List<String> docAndKey = yunNoteApplication.getModifyResult();
                         textV.setText(docAndKey.get(0));
-//                        addView(docAndKey.get(0),0);
+                        moveProgress();
                         Log.d("E", docAndKey.get(0));
-//                    } catch (Exception e) {
-//                        Log.d("E",e.toString());
-//                    }
+                        cancelModifying();
+
                 }
             }
         };
         YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
         yunNoteApplication.setHandler(handler);
-
         startActivity(intent);
+        addPross();
     }
 
 
@@ -126,10 +162,9 @@ public class doc_list_Activity extends AppCompatActivity {
             }
         });
 
-        try {
-                    ExecutorService threadPool = Executors.newCachedThreadPool();
-                    Future<Map> future = threadPool.submit(new Callable<Map>() {
+        Handler mHandler = new Handler(){
 
+<<<<<<< HEAD
                         @Override
                         public Map call() throws Exception {
                             List<String> resultDoc, resultKey;
@@ -139,37 +174,74 @@ public class doc_list_Activity extends AppCompatActivity {
                             Map docAndKey = new HashMap();
                             docAndKey.put("doc",resultDoc);
                             docAndKey.put("key",resultKey);
+=======
+        @Override
+        public void handleMessage (Message msg){
+>>>>>>> doc_list
 
-                    return docAndKey;
-
+            if (msg.what == 1) {
+                moveProgress();
+                setDocAndKey((Map)msg.obj);
+                Map docAndKey = getDocAndKey();
+                List<String> docList = (List<String>)docAndKey.get("doc");
+                List<String> keyList = (List<String>)docAndKey.get("key");
+                for(int i = 0;i<docList.size();i++){
+                    addView(docList.get(i),i);
                 }
 
-            });
-
-            boolean flag = true;
-            while(flag){
-                //异步任务完成并且未被取消，则获取返回的结果
-                if(future.isDone() && !future.isCancelled()){
-                    this.docAndKey = new HashMap();
-                    this.docAndKey = future.get();
-                    List<String> docList = (List<String>)docAndKey.get("doc");
-                    List<String> keyList = (List<String>)docAndKey.get("key");
-                    for(int i = 0;i<docList.size();i++){
-                        addView(docList.get(i),i);
-                    }
-                    flag = false;
-                }
             }
-
-            //关闭线程池
-            if(!threadPool.isShutdown()){
-                threadPool.shutdown();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
         }
+        };
+
+        DownloadThread dt= new DownloadThread(mHandler);
+
+        dt.start();
+        addPross();
+
+//        try {
+//                    ExecutorService threadPool = Executors.newCachedThreadPool();
+//                    Future<Map> future = threadPool.submit(new Callable<Map>() {
+//
+//                        @Override
+//                        public Map call() throws Exception {
+//                            List<String> resultDoc, resultKey;
+//                            String jsonString = Network.getList("b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c");
+//                            resultDoc = StringReformat.toDocList(jsonString);
+//                            resultKey = StringReformat.toKeyList(jsonString);
+//                            Map docAndKey = new HashMap();
+//                            docAndKey.put("doc",resultDoc);
+//                            docAndKey.put("key",resultKey);
+//
+//                    return docAndKey;
+//
+//                }
+//
+//            });
+//
+//            boolean flag = true;
+//            while(flag){
+//                //异步任务完成并且未被取消，则获取返回的结果
+//                if(future.isDone() && !future.isCancelled()){
+//                    this.docAndKey = new HashMap();
+//                    this.docAndKey = future.get();
+//                    List<String> docList = (List<String>)docAndKey.get("doc");
+//                    List<String> keyList = (List<String>)docAndKey.get("key");
+//                    for(int i = 0;i<docList.size();i++){
+//                        addView(docList.get(i),i);
+//                    }
+//                    flag = false;
+//                }
+//            }
+//
+//            //关闭线程池
+//            if(!threadPool.isShutdown()){
+//                threadPool.shutdown();
+//            }
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
 
 
 

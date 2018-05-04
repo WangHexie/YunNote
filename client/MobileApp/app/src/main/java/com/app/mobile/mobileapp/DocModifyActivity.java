@@ -38,7 +38,6 @@ public class DocModifyActivity extends AppCompatActivity {
         Variable.setKey(getIntent().getStringExtra("key"));
         textarea.setText(Variable.getDoc());
 
-
     }
 
 
