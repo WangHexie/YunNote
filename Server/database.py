@@ -77,10 +77,10 @@ def get_list_doc(list_keys):
                 i.start()
             for i in thread_list:
                 i.join()
-            return list_doc, list_keys
+            return list_doc, list_key
         except:
             print(traceback.format_exc())
-            return list_doc, list_keys
+            return list_doc, list_key
 
 
 def add_cookies_live_time(cookies):
