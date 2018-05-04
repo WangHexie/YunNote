@@ -32,4 +32,6 @@ dependencies {
     implementation files('libs/okio-1.14.1.jar')
     implementation files('libs/json-simple-1.1.1.jar')
     implementation 'com.android.support:cardview-v7:26.1.0'
+
+
 }

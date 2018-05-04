@@ -22,7 +22,7 @@ public class EnterActivity extends AppCompatActivity {
                     goLogin();
                     break;
                 case GO_MAIN:
-                    goMain();
+                    goMain(cookie);
                     break;
             }
         }
@@ -70,8 +70,9 @@ public class EnterActivity extends AppCompatActivity {
         finish();
     }
 
-    private void goMain() {
-        Intent intent = new Intent(EnterActivity.this, MainActivity.class);
+    private void goMain(String cookie) {
+        Intent intent = new Intent(EnterActivity.this, doc_list_Activity.class);
+        intent.putExtra("cookie",cookie);
         startActivity(intent);
         finish();
     }

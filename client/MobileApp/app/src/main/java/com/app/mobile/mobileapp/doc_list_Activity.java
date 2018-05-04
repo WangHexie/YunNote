@@ -133,7 +133,7 @@ public class doc_list_Activity extends AppCompatActivity {
                         @Override
                         public Map call() throws Exception {
                             List<String> resultDoc, resultKey;
-                            String jsonString = Network.getList("b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c");
+                            String jsonString = Network.getList(getIntent().getStringExtra("cookie"));
                             resultDoc = StringReformat.toDocList(jsonString);
                             resultKey = StringReformat.toKeyList(jsonString);
                             Map docAndKey = new HashMap();

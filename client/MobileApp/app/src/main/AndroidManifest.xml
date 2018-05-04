@@ -36,11 +36,7 @@
             <!-- android:exported="true" -->
             <!-- android:label="@string/title_activity_enter" -->
             <!-- android:theme="@style/AppTheme.NoActionBar"> -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".DocModifyActivity"
@@ -48,7 +44,18 @@
             android:windowSoftInputMode="adjustPan"
 
             ></activity>
-        <activity android:name=".EnterActivity"></activity>
+        <activity android:name=".EnterActivity"
+
+            android:exported="true"
+            >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>
