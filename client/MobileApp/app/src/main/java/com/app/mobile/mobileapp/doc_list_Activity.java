@@ -77,7 +77,7 @@ public class doc_list_Activity extends AppCompatActivity {
 
         intent.putExtra(EXTRA_MESSAGEDOC,doc);
 
-        intent.putExtra("key",(String) ((List<String>)this.docAndKey.get("key")).get(((List<String>) this.docAndKey.get("key")).size()- doc_list_Activity.getID()-1));
+        intent.putExtra("key",(String) ((List<String>)this.docAndKey.get("key")).get( doc_list_Activity.getID()));
 
 
 
