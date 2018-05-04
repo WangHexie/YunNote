@@ -25,7 +25,7 @@ def get_doc_from_database(key):
             if fet == None:
                 result = 0
             else:
-                result = fet
+                result = fet[0]
 
     finally:
         connection.close()

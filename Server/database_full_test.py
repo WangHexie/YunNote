@@ -26,6 +26,7 @@ def test_database(case):
         print(database.get_list_doc(database.get_user_list("123")))
 
 if __name__ == "__main__":
-    test_database(10)
+    # test_database(10)
     # for i in range(11):
     #     test_database(i)
+    print(database.get_doc_from_database("77eace86fae7bc6a9ecd3c9776fa4d445a24d8f9794f034fd34fa77c8c73ffe4"))
