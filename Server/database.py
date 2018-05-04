@@ -14,10 +14,12 @@ lenth_of_doc = 65536
 lenth_of_key = 70
 expire_time = 60 * 60 * 24 * 7
 
+def connectDatabase():
+    return pymysql.connect(host="45.76.223.233", user="root",
+                          password="root", db="MobileAppDB", port=3306,  charset="utf8")
 
 def get_doc_from_database(key):
-    with  pymysql.connect(host="45.76.223.233", user="root",
-                          password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+    with  connectDatabase().cursor() as cursor:
         try:
             sql = "SELECT doc FROM key_doc where key_hash=%s"
             cursor.execute(sql, [key])
@@ -33,8 +35,7 @@ def get_doc_from_database(key):
 
 
 def store_doc_to_database(doc):
-    connection = pymysql.connect(host="45.76.223.233", user="root",
-                                 password="root", db="MobileAppDB", port=3306)
+    connection = connectDatabase()
     try:
         key = basic_function.create_key()
         with connection.cursor() as cursor:
@@ -66,8 +67,7 @@ def get_list_doc(list_keys):
         list_keys.append(key)
         lock.release()
 
-    with  pymysql.connect(host="45.76.223.233", user="root",
-                          password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+    with  connectDatabase().cursor() as cursor:
         try:
             thread_list = []
             for i in list_keys:
@@ -86,8 +86,7 @@ def get_list_doc(list_keys):
 def add_cookies_live_time(cookies):
     def find_and_add_time(cookies):
         if len(cookies) <= lenth_of_cookies:
-            with  pymysql.connect(host="45.76.223.233", user="root",
-                                  password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+            with  connectDatabase().cursor() as cursor:
                 try:
                     sql = "UPDATE COOKIES_LIST SET TIME=%s where COOKIES = %s;"
                     cursor.execute(sql, [str(int(basic_function.time_now()) + expire_time), cookies])
@@ -105,8 +104,7 @@ def add_cookies_live_time(cookies):
 
 
 def add_uid_and_cookies(uid, cookies):
-    with  pymysql.connect(host="45.76.223.233", user="root",
-                          password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+    with  connectDatabase().cursor() as cursor:
         try:
             sql = "INSERT INTO COOKIES_LIST (USER_NAME, COOKIES, TIME) VALUES (%s, %s, %s);"
             cursor.execute(sql, [uid, cookies, str(int(basic_function.time_now()) + expire_time)])
@@ -119,8 +117,7 @@ def add_uid_and_cookies(uid, cookies):
 
 def check_user_exist(username):
     if len(username) <= lenth_of_username:
-        with  pymysql.connect(host="45.76.223.233", user="root",
-                              password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+        with  connectDatabase().cursor() as cursor:
             try:
                 sql = "select * from NOTE_ACCOUNT where USER_NAME = %s;"
                 cursor.execute(sql, [username])
@@ -139,8 +136,7 @@ def add_user(username, password):
     if len(username) <= lenth_of_username and len(password) <= lenth_of_password and not check_user_exist(username):
 
         try:
-            with  pymysql.connect(host="45.76.223.233", user="root",
-                                  password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+            with  connectDatabase().cursor() as cursor:
                 insert = "INSERT INTO NOTE_ACCOUNT (USER_NAME, USER_PASS) VALUES (%s, %s);"
                 ps_hash = basic_function.real_password(password)
                 cursor.execute(insert, (username, ps_hash))
@@ -158,8 +154,7 @@ def add_user(username, password):
 
 def check_user_password(username, password):
     if len(username) <= lenth_of_username and len(password) <= lenth_of_password:
-        with  pymysql.connect(host="45.76.223.233", user="root",
-                              password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+        with  connectDatabase().cursor() as cursor:
             try:
                 # check user and password
                 sql = "select * from NOTE_ACCOUNT where USER_NAME = %s AND USER_PASS = %s;"
@@ -184,8 +179,7 @@ def check_user_password(username, password):
 
 def get_user_by_cookies(cookies):
     if len(cookies) <= lenth_of_cookies:
-        with  pymysql.connect(host="45.76.223.233", user="root",
-                              password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+        with  connectDatabase().cursor() as cursor:
             try:
                 sql = "select USER_NAME from COOKIES_LIST where COOKIES = %s;"
                 cursor.execute(sql, [cookies])
@@ -204,8 +198,7 @@ def get_user_by_cookies(cookies):
 def get_user_list(user_id):
     key_list = []
     if len(user_id) <= lenth_of_uid:
-        with  pymysql.connect(host="45.76.223.233", user="root",
-                              password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+        with  connectDatabase().cursor() as cursor:
             try:
                 sql = "select NOTE_KEY from NOTE_LIST where USER_NAME = %s;"
                 cursor.execute(sql, [user_id])
@@ -225,8 +218,7 @@ def get_user_list(user_id):
 
 def add_into_list(user_id, doc):
     if len(user_id) <= lenth_of_uid and len(doc) < lenth_of_doc:
-        with  pymysql.connect(host="45.76.223.233", user="root",
-                              password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+        with  connectDatabase().cursor() as cursor:
             try:
                 key = store_doc_to_database(doc)
 
@@ -243,8 +235,7 @@ def add_into_list(user_id, doc):
 
 def delete_form_list(user_id, key):
     if len(user_id) <= lenth_of_uid and len(key) <= lenth_of_key:
-        with  pymysql.connect(host="45.76.223.233", user="root",
-                              password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+        with  connectDatabase().cursor() as cursor:
             try:
                 sql = "DELETE FROM NOTE_LIST WHERE USER_NAME = %s AND NOTE_KEY = %s;"
                 cursor.execute(sql, [user_id, key])
@@ -261,8 +252,7 @@ def delete_form_list(user_id, key):
 
 
 def delete_one_cookies(cookies):
-    with  pymysql.connect(host="45.76.223.233", user="root",
-                          password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+    with  connectDatabase().cursor() as cursor:
         try:
             sql = "DELETE FROM COOKIES_LIST WHERE COOKIES = %s;"
             cursor.execute(sql, [cookies])
@@ -275,8 +265,7 @@ def delete_one_cookies(cookies):
 
 def delete_useless_cookies():
     def delete_timeout_cookies():
-        with  pymysql.connect(host="45.76.223.233", user="root",
-                              password="root", db="MobileAppDB", port=3306).cursor() as cursor:
+        with  connectDatabase().cursor() as cursor:
             try:
                 sql = "SELECT COOKIES,TIME FROM COOKIES_LIST ;"
                 cursor.execute(sql)
