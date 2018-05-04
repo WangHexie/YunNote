@@ -224,7 +224,9 @@ public class Network {
 //        System.out.println(addDocToList("big 2","002e7e436441939758c41ed393257d2cea503d0dfb234201af1bfc21bfbc6d55"));
 //        print(deleteDoc("d1e9052456c98c1b624b31def8aea3e3fdaf5e578825b13ac7035dda9cd9631c","002e7e436441939758c41ed393257d2cea503d0dfb234201af1bfc21bfbc6d55"));
 //        print(ifNameExist("1234"));
-        print(signIn("1234", "123"));
-        print(getList("b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c"));
+//        print(signIn("1234", "123"));
+//        print(getList("b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c"));
+        print(Network.deleteDoc("17980a24eac0a090325295ebd5e7ddf2d2d9e1d1104b1f9e4f4e2fa8c6e8429b" , "b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c"));
+//        print(Network.addDocToList("狗蛋" ,"002e7e436441939758c41ed393257d2cea503d0dfb234201af1bfc21bfbc6d55"));
     }
 }

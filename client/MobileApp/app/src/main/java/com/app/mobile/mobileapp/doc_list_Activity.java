@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,9 +60,6 @@ public class doc_list_Activity extends AppCompatActivity {
         return id;
     }
 
-    final YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
-
-
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DocModifyActivity.class);
@@ -71,28 +69,41 @@ public class doc_list_Activity extends AppCompatActivity {
 
         TextView realTextV = (TextView) textV;
         String doc = (String)realTextV.getText();
-        doc_list_Activity.setID(realTextV.getId());
+        try{
+            doc_list_Activity.setID(realTextV.getId());
+        }catch (Exception e){
+            Log.d("e",e.toString());
+        }
+
         intent.putExtra(EXTRA_MESSAGEDOC,doc);
-        intent.putExtra(EXTRA_MESSAGEKEY,((List<String>)this.docAndKey.get("key")).get(doc_list_Activity.getID()));
-        intent.putExtra("index",doc_list_Activity.getID());
+
+        intent.putExtra("key",(String) ((List<String>)this.docAndKey.get("key")).get(doc_list_Activity.getID()));
+
+
+
 
         handler = new Handler(){
 
             @Override
             public void handleMessage(Message msg) {
 
-                switch (msg.what) {
-                    case MODIFY_COMPLETE:
-
-                        TextView textV =(TextView) findViewById(doc_list_Activity.getID());
+                if(msg.what == 1000) {
+                    Log.d("Error", "啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦");
+//                    try {
+                        YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
+                        TextView textV = (TextView) findViewById(doc_list_Activity.getID());
                         List<String> docAndKey = yunNoteApplication.getModifyResult();
                         textV.setText(docAndKey.get(0));
-
-                        break;
-
+//                        addView(docAndKey.get(0),0);
+                        Log.d("E", docAndKey.get(0));
+//                    } catch (Exception e) {
+//                        Log.d("E",e.toString());
+//                    }
                 }
             }
         };
+        YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
+        yunNoteApplication.setHandler(handler);
 
         startActivity(intent);
     }
@@ -106,9 +117,17 @@ public class doc_list_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_doc_list_);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         try {
-                            ExecutorService threadPool = Executors.newCachedThreadPool();
+                    ExecutorService threadPool = Executors.newCachedThreadPool();
                     Future<Map> future = threadPool.submit(new Callable<Map>() {
 
                         @Override
@@ -155,14 +174,7 @@ public class doc_list_Activity extends AppCompatActivity {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
     }
 
     @SuppressLint("ResourceType")
@@ -176,10 +188,17 @@ public class doc_list_Activity extends AppCompatActivity {
         TextView x = (TextView) v2;
         x.setId(index);
         x.setText(doc);
-//        View add2 = LinearLayout.inflate(R.layout.card_view,null);
+    }
 
-//        linear.addView(addV);
+    private void modifyView(String doc,int index){
+        LinearLayout linear=(LinearLayout) findViewById(R.id.linearlay_1);
+        View v = linear.getChildAt(index);
+        View v3 = ((ViewGroup)v).getChildAt(0);
+        View v2 = ((ViewGroup)v3).getChildAt(0);
 
+        TextView x = (TextView) v2;
+        x.setId(index);
+        x.setText(doc);
     }
 
 

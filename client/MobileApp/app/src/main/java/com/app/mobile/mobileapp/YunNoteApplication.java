@@ -3,12 +3,13 @@ package com.app.mobile.mobileapp;
 import android.app.Application;
 import android.os.Handler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class YunNoteApplication extends Application {
 
     private Handler handler = null;
-    private List<String> list;
+    private List<String> list = new ArrayList<>();
 
 
     // set方法
@@ -28,6 +29,10 @@ public class YunNoteApplication extends Application {
 
     public void ListAdd(String add){ //先加 doc 后key
         list.add(add);
+    }
+
+    public  void cleanList(){
+        list = new ArrayList<>();
     }
 
 }
