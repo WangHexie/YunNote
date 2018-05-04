@@ -1,10 +1,9 @@
 import json
 import threading
 
+import basic_function
+import database
 from flask import Flask, request, render_template
-
-from Server import basic_function
-from Server import database
 
 app = Flask(__name__)
 
@@ -89,7 +88,6 @@ def list():
     else:
         database.add_cookies_live_time(cookies)
         list_key = database.get_user_list(user_id=uid)
-        print(list_key)
         if list_key == 0:
             return '0'
         else:
@@ -112,4 +110,5 @@ def delete():
 
 if __name__ == '__main__':
     threading.Thread(target=database.delete_useless_cookies).start()
-    app.run(threaded=True)
+    app.run(host="::", threaded=True)
+

@@ -1,4 +1,4 @@
-from Server import database
+import database
 
 
 def test_database(case):
