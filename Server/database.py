@@ -3,7 +3,7 @@ import time
 import traceback
 
 
-import basic_function
+from Server import basic_function
 import pymysql
 
 lenth_of_username = 15
@@ -60,10 +60,10 @@ def get_list_doc(list_keys):
     list_key = []
     lock = threading.Lock()
 
-    def append_list(list_doc, list_keys, key):
+    def append_list(list_docs, list_keys, key):
         doc = get_doc_from_database(key)
         lock.acquire()
-        list_doc.append(doc)
+        list_docs.append(doc)
         list_keys.append(key)
         lock.release()
 
@@ -77,7 +77,7 @@ def get_list_doc(list_keys):
                 i.start()
             for i in thread_list:
                 i.join()
-            return list_doc, list_keys
+            return list_doc, list_key
         except:
             print(traceback.format_exc())
             return list_doc, list_keys
