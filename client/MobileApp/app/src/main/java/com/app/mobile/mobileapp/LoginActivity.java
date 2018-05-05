@@ -88,13 +88,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (modifying){
+                if (modifying()){
                     return;
                 }
                 setModifying();

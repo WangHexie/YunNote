@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -183,10 +184,27 @@ public class doc_list_Activity extends AppCompatActivity {
         setAllCard();
 
     }
+    private void initializeDocAndKey(){
+        Map docAndKey = new HashMap();
+        docAndKey.put("doc", new ArrayList<String>());
+        docAndKey.put("key", new ArrayList<String>());
+        setDocAndKey(docAndKey);
+    }
+
+//    public void onBackPressed()
+//    {
+//        android.os.Process.killProcess(android.os.Process.myPid());
+//        System.exit(0);
+//
+//    }
 
     private void setAllCard() {
 //        loadList();
         String response = CookieIO.getResponse();
+        if(response=="0"){
+            initializeDocAndKey();
+            return;
+        }
         List<String> docList = StringReformat.toDocList(response);
         List<String> keyList = StringReformat.toKeyList(response);
         Map docAndKey = new HashMap();

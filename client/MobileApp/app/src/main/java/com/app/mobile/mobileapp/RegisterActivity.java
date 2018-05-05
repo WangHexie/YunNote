@@ -24,6 +24,20 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btn;
     private final static int SIGN_SUCCESS = 1000;
     private final static int SIGN_FAILED = 1001;
+    private boolean modifying = false;
+
+    private boolean modifying() {
+        return modifying;
+    }
+
+    private void setModifying() {
+        modifying = true;
+    }
+
+    private void cancelModifying() {
+        modifying = false;
+    }
+
     private Handler mhandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -32,9 +46,11 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "OK", LENGTH_LONG).show();
                     Intent intent = new Intent(RegisterActivity.this , doc_list_Activity.class);
                     startActivity(intent);
+                    finish();
                     break;
                 case SIGN_FAILED:
                     Toast.makeText(RegisterActivity.this, "注册失败", LENGTH_LONG).show();
+                    cancelModifying();
                     break;
             }
         }
@@ -56,7 +72,10 @@ public class RegisterActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(modifying()){
+                    return;
+                }
+                setModifying();
                 if (!username.getText().toString().equals("") && password.getText().toString().equals(pass_confirm.getText().toString())){
 
                     new Thread(){
