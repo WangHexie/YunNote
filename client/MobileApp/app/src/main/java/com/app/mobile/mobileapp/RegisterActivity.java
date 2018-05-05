@@ -2,10 +2,10 @@ package com.app.mobile.mobileapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
             switch (msg.what) {
                 case SIGN_SUCCESS:
                     Toast.makeText(RegisterActivity.this, "OK", LENGTH_LONG).show();
-                    Intent intent = new Intent(RegisterActivity.this , doc_list_Activity.class);
+                    Intent intent = new Intent(RegisterActivity.this, doc_list_Activity.class);
                     startActivity(intent);
                     finish();
                     break;
@@ -72,13 +72,13 @@ public class RegisterActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(modifying()){
+                if (modifying()) {
                     return;
                 }
                 setModifying();
-                if (!username.getText().toString().equals("") && password.getText().toString().equals(pass_confirm.getText().toString())){
+                if (!username.getText().toString().equals("") && password.getText().toString().equals(pass_confirm.getText().toString())) {
 
-                    new Thread(){
+                    new Thread() {
                         @Override
                         public void run() {
                             super.run();
@@ -87,13 +87,13 @@ public class RegisterActivity extends AppCompatActivity {
                             System.out.println(nameExistCheckResult);
                             if (nameExistCheckResult.equals("1"))
                                 mhandler.sendEmptyMessage(SIGN_FAILED);
-                            else if (nameExistCheckResult.equals("0")){
-                                String signResult = Network.signIn(username.getText().toString() , password.getText().toString());
+                            else if (nameExistCheckResult.equals("0")) {
+                                String signResult = Network.signIn(username.getText().toString(), password.getText().toString());
                                 System.out.println(signResult);
-                                if (!signResult.equals("0")){
+                                if (!signResult.equals("0")) {
                                     SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = preferences.edit();
-                                    editor.putString("cookieRW",signResult);
+                                    editor.putString("cookieRW", signResult);
                                     CookieIO.setCookie(signResult);
                                     CookieIO.setResponse("0");
                                     editor.commit();

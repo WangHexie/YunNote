@@ -9,7 +9,6 @@ import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import com.yalantis.phoenix.PullToRefreshView;
 
 import java.util.ArrayList;
@@ -112,10 +112,10 @@ public class doc_list_Activity extends AppCompatActivity {
         ((ViewGroup) pb.getParent()).removeView(pb);
     }
 
-    public void cleanCookiesAndGoToLogin(View view){
+    public void cleanCookiesAndGoToLogin(View view) {
         SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("cookieRW","0");
+        editor.putString("cookieRW", "0");
         editor.commit();
 
         Intent intent = new Intent(this, LoginActivity.class);
@@ -212,7 +212,8 @@ public class doc_list_Activity extends AppCompatActivity {
         });
 
     }
-    private void initializeDocAndKey(){
+
+    private void initializeDocAndKey() {
         Map docAndKey = new HashMap();
         docAndKey.put("doc", new ArrayList<String>());
         docAndKey.put("key", new ArrayList<String>());
@@ -230,7 +231,7 @@ public class doc_list_Activity extends AppCompatActivity {
 //        loadList();
         String response = CookieIO.getResponse();
 
-        if(response.equals("0")){
+        if (response.equals("0")) {
             initializeDocAndKey();
             return;
         }

@@ -1,5 +1,6 @@
 package mobileapp.Function;
-import 	android.os.Handler;
+
+import android.os.Handler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +27,8 @@ public class DownloadThread extends Thread {
         resultDoc = StringReformat.toDocList(jsonString);
         resultKey = StringReformat.toKeyList(jsonString);
         Map docAndKey = new HashMap();
-        docAndKey.put("doc",resultDoc);
-        docAndKey.put("key",resultKey);
-        mHandler.obtainMessage(SUCCESS_MSG,docAndKey).sendToTarget();
+        docAndKey.put("doc", resultDoc);
+        docAndKey.put("key", resultKey);
+        mHandler.obtainMessage(SUCCESS_MSG, docAndKey).sendToTarget();
     }
 }

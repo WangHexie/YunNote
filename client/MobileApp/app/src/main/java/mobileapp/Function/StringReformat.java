@@ -43,6 +43,7 @@ public class StringReformat {
         }
         return docList;
     }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String y = sc.nextLine();

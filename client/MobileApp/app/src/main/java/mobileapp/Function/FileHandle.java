@@ -2,16 +2,17 @@ package mobileapp.Function;
 
 import android.content.Context;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
-import java.io.FileInputStream;
 
 public class FileHandle {
     private static String FILENAME = "docList";
-    public void storeDocList(List<String> docList, Context ctx){
+
+    public void storeDocList(List<String> docList, Context ctx) {
 
 
         FileOutputStream fos = null;
@@ -25,7 +26,7 @@ public class FileHandle {
         }
     }
 
-    public static List<String> getDocList(Context ctx){
+    public static List<String> getDocList(Context ctx) {
         List<String> docList = null;
         try {
             FileInputStream fos = ctx.openFileInput(FILENAME);

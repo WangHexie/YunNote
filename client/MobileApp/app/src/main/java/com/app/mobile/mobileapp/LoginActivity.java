@@ -16,7 +16,6 @@ import android.widget.Toast;
 import mobileapp.Function.CookieIO;
 import mobileapp.Function.Network;
 
-
 import static android.widget.Toast.LENGTH_LONG;
 
 public class LoginActivity extends AppCompatActivity {
@@ -86,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         sign_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -95,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (modifying()){
+                if (modifying()) {
                     return;
                 }
                 setModifying();
@@ -109,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (!loginGetCookie.equals("0")) {
                                 SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
                                 Editor editor = preferences.edit();
-                                editor.putString("cookieRW",loginGetCookie);
+                                editor.putString("cookieRW", loginGetCookie);
                                 CookieIO.setCookie(loginGetCookie);
                                 editor.commit();
                                 Intent intent = new Intent(LoginActivity.this, doc_list_Activity.class);

@@ -9,12 +9,12 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
- 
+
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
- 
+
 
 public class Network {
     static String url = "http://ipv4.dfen.xyz:5000/";
@@ -40,7 +40,7 @@ public class Network {
         return key;
     }
 
-    public static String getList(String cookies){
+    public static String getList(String cookies) {
         String jsonList = sendPost(url + "list", "cookies=" + cookies);
         return jsonList;
     }
@@ -228,7 +228,7 @@ public class Network {
         String li = getList("b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c");
         print(StringReformat.toDocList(li));
         print(StringReformat.toKeyList(li));
-        print(Network.deleteDoc("17980a24eac0a090325295ebd5e7ddf2d2d9e1d1104b1f9e4f4e2fa8c6e8429b" , "b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c"));
+        print(Network.deleteDoc("17980a24eac0a090325295ebd5e7ddf2d2d9e1d1104b1f9e4f4e2fa8c6e8429b", "b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c"));
 //        print(Network.addDocToList("狗蛋" ,"002e7e436441939758c41ed393257d2cea503d0dfb234201af1bfc21bfbc6d55"));
     }
 }
