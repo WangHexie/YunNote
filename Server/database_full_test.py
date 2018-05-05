@@ -23,12 +23,12 @@ def test_database(case):
     if case == 9:
         print(database.delete_useless_cookies())
     if case == 10:
-        print(database.get_list_doc(database.get_user_list("123")))
+        print(database.get_list_doc("123"))
     if case == 11:
         print(database.get_doc_from_database("50096d5f9a1c1eb7689acbb441dbd3d9c1053a02215893744544f46eca094bf9"))
 
 
 if __name__ == "__main__":
-    test_database(11)
+    test_database(10)
     # for i in range(11):
     #     test_database(i)

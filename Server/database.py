@@ -3,7 +3,7 @@ import time
 import traceback
 
 
-from Server import basic_function
+import basic_function
 import pymysql
 
 lenth_of_username = 15
@@ -54,34 +54,57 @@ def part_key_to_full_key(part_key):
 def store_full_key_and_part_key(full_key, part_key):
     return 0
 
+#
+# def get_list_doc(list_keys):
+#     list_doc = []
+#     list_key = []
+#     lock = threading.Lock()
+#
+#     def append_list(list_docs, list_keys, key):
+#         doc = get_doc_from_database(key)
+#         lock.acquire()
+#         list_docs.append(doc)
+#         list_keys.append(key)
+#         lock.release()
+#
+#     with  connectDatabase().cursor() as cursor:
+#         try:
+#             thread_list = []
+#             for i in list_keys:
+#                 thread_list.append(threading.Thread(target=append_list,
+#                                                     kwargs={"key": i, "list_doc": list_doc, "list_keys": list_key}))
+#             for i in thread_list:
+#                 i.start()
+#             for i in thread_list:
+#                 i.join()
+#             return list_doc, list_key
+#         except:
+#             print(traceback.format_exc())
+#             return list_doc, list_key
 
-def get_list_doc(list_keys):
-    list_doc = []
-    list_key = []
-    lock = threading.Lock()
-
-    def append_list(list_docs, list_keys, key):
-        doc = get_doc_from_database(key)
-        lock.acquire()
-        list_docs.append(doc)
-        list_keys.append(key)
-        lock.release()
-
-    with  connectDatabase().cursor() as cursor:
-        try:
-            thread_list = []
-            for i in list_keys:
-                thread_list.append(threading.Thread(target=append_list,
-                                                    kwargs={"key": i, "list_doc": list_doc, "list_keys": list_key}))
-            for i in thread_list:
-                i.start()
-            for i in thread_list:
-                i.join()
-            return list_doc, list_key
-        except:
-            print(traceback.format_exc())
-            return list_doc, list_key
-
+def get_list_doc(user_id):
+    doc_list = []
+    time_list = []
+    key_list = []
+    if len(user_id) <= lenth_of_uid:
+        with  connectDatabase().cursor() as cursor:
+            try:
+                sql = "select  doc,MODIFY_TIME,key_hash from key_doc,NOTE_LIST where key_doc.key_hash = NOTE_LIST.NOTE_KEY and USER_NAME = %s"
+                cursor.execute(sql, [user_id])
+                result = cursor.fetchall()
+                if result != None:
+                    for i in result:
+                        doc_list.append(i[0])
+                        time_list.append(i[1])
+                        key_list.append(i[2])
+                    return doc_list,key_list,time_list
+                else:
+                    return 0
+            except:
+                print(traceback.format_exc())
+                return 0
+    else:
+        return 0
 
 def add_cookies_live_time(cookies):
     def find_and_add_time(cookies):

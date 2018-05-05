@@ -86,14 +86,9 @@ def list():
     if uid == None:
         return '0'
     else:
-        database.add_cookies_live_time(cookies)
-        list_key = database.get_user_list(user_id=uid)
-        if list_key == 0:
-            return '0'
-        else:
-            list_doc, list_key = database.get_list_doc(list_key)
-            re_dic = {"list": list_doc, "key": list_key}
-            return json.dumps(re_dic, ensure_ascii=False)
+        list_doc, list_key,list_time = database.get_list_doc(uid)
+        re_dic = {"list": list_doc, "key": list_key,"time":list_time}
+        return json.dumps(re_dic, ensure_ascii=False)
 
 
 @app.route('/delete', methods=['POST'])
