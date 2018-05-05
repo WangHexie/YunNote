@@ -17,14 +17,12 @@
        android:background="@drawable/shape"
        android:enabled="true"
        android:gravity="top"
-       android:maxLines="10"
-       android:minLines="8"
        android:scrollbars="vertical"
        app:layout_constraintBottom_toBottomOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintTop_toTopOf="parent"
        app:layout_constraintVertical_bias="0.181"
-       android:inputType="textMultiLine" />
+   />
 
 </android.support.constraint.ConstraintLayout>

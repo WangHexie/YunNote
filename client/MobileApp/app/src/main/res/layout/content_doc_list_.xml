@@ -8,6 +8,11 @@
     tools:context=".doc_list_Activity"
     tools:showIn="@layout/activity_doc_list">
 
+    <com.yalantis.phoenix.PullToRefreshView
+        android:id="@+id/pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="368dp"
@@ -21,6 +26,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
+
         <LinearLayout
             android:id="@+id/linearlay_1"
             android:layout_width="match_parent"
@@ -29,6 +36,7 @@
             android:orientation="vertical"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="231dp">
+
 
 
             <!--<android.support.v7.widget.CardView-->
@@ -76,6 +84,9 @@
             <!--</android.support.v7.widget.CardView>-->
 
         </LinearLayout>
+
     </ScrollView>
+
+    </com.yalantis.phoenix.PullToRefreshView>
 
 </android.support.constraint.ConstraintLayout>

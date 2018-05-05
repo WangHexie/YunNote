@@ -66,8 +66,8 @@
         android:layout_marginBottom="116dp"
         android:layout_marginEnd="16dp"
         android:text="sign in"
-        android:textColor="#63B8FF"
-        android:background=""
+
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
