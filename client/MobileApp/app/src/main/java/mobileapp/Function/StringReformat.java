@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StringReformat {
-    public static List<String> toDocList(String jsonString) {
+
+    private static List<String> listFormat(String keyWord,String jsonString){
         List<String> docList = new ArrayList();
         JSONParser parser = new JSONParser();
         Object obj = null;
@@ -20,15 +21,15 @@ public class StringReformat {
             e.printStackTrace();
         }
         JSONObject obj2 = (JSONObject) obj;
-        JSONArray array = (JSONArray) obj2.get("list");
+        JSONArray array = (JSONArray) obj2.get(keyWord);
         for (int i = 0; i < array.size(); i++) {
             docList.add((String) array.get(i));
         }
         return docList;
     }
 
-    public static List<String> toKeyList(String jsonString) {
-        List<String> docList = new ArrayList();
+    private static List<Long> listFormatInLong(String keyWord,String jsonString){
+        List<Long> docList = new ArrayList();
         JSONParser parser = new JSONParser();
         Object obj = null;
         try {
@@ -37,17 +38,32 @@ public class StringReformat {
             e.printStackTrace();
         }
         JSONObject obj2 = (JSONObject) obj;
-        JSONArray array = (JSONArray) obj2.get("key");
+        JSONArray array = (JSONArray) obj2.get(keyWord);
         for (int i = 0; i < array.size(); i++) {
-            docList.add((String) array.get(i));
+            docList.add((Long) array.get(i));
         }
         return docList;
+    }
+
+    public static List<String> toDocList(String jsonString) {
+        return listFormat("list",jsonString);
+
+    }
+
+
+
+    public static List<Long> toTimeList(String jsonString) {
+        return listFormatInLong("time",jsonString);
+    }
+
+    public static List<String> toKeyList(String jsonString) {
+        return listFormat("key",jsonString);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String y = sc.nextLine();
-        Network.print(StringReformat.toDocList(y));
+        Network.print(StringReformat.toTimeList(y));
         //{"list": ["879546", "879546", "879546", "879546", "879546", "879546", "879546", "879546", "879546", "879546", "879546", "879546", "big"]}
     }
 }
