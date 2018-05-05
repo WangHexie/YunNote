@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
             switch (msg.what) {
                 case LOGIN_FAILED:
                     Toast.makeText(LoginActivity.this, "登陆失败", LENGTH_LONG).show();
+                    finish();
                     break;
                 case LOGIN_SUCCESS:
 
@@ -97,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, doc_list_Activity.class);
                                 CookieIO.setResponse(Network.check(loginGetCookie));
                                 startActivity(intent);
+                                finish();
                             } else {
                                 mhandler.sendEmptyMessage(LOGIN_FAILED);
                             }

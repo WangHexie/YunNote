@@ -85,7 +85,6 @@ public class doc_list_Activity extends AppCompatActivity {
         ProgressBar pb = new ProgressBar(doc_list_Activity.this);
         pb.setId(R.id.progressBar);
         ((ViewGroup) sv.getChildAt(0)).addView(pb, 0);
-//        View addV = LayoutInflater.from(doc_list_Activity.this).inflate((XmlPullParser) pb,sv,true);
     }
 
     public View getTopCardView() {

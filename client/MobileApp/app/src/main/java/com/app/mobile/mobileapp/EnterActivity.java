@@ -5,7 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 
 import mobileapp.Function.CookieIO;
 import mobileapp.Function.Network;
@@ -34,6 +38,7 @@ public class EnterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.content_enter);
         init();
     }
 
@@ -70,6 +75,13 @@ public class EnterActivity extends AppCompatActivity {
         Intent intent = new Intent(EnterActivity.this, doc_list_Activity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void addProgress() {
+        ConstraintLayout cl = (ConstraintLayout) findViewById(R.id.enterLayout);
+        ProgressBar pb = new ProgressBar(EnterActivity.this);
+        pb.setId(R.id.enterProgressBar);
+        cl.addView(pb);
     }
 
 }
