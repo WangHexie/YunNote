@@ -22,6 +22,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.yalantis.phoenix.PullToRefreshView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,7 +168,7 @@ public class doc_list_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
 
@@ -198,12 +199,29 @@ public class doc_list_Activity extends AppCompatActivity {
         });
 
     }
+    private void initializeDocAndKey(){
+        Map docAndKey = new HashMap();
+        docAndKey.put("doc", new ArrayList<String>());
+        docAndKey.put("key", new ArrayList<String>());
+        setDocAndKey(docAndKey);
+    }
+
+//    public void onBackPressed()
+//    {
+//        android.os.Process.killProcess(android.os.Process.myPid());
+//        System.exit(0);
+//
+//    }
 
     private void setAllCard() {
 //        loadList();
         String response = CookieIO.getResponse();
-        if(response.equals("0"))
+
+        if(response.equals("0")){
+            initializeDocAndKey();
             return;
+        }
+
         List<String> docList = StringReformat.toDocList(response);
         List<String> keyList = StringReformat.toKeyList(response);
         Map docAndKey = new HashMap();

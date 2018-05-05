@@ -19,6 +19,8 @@ public class EnterActivity extends AppCompatActivity {
     private static final int GO_LOGIN = 1000;
     private static final int GO_MAIN = 1001;
     private String cookie;
+
+
     private Handler mhandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
