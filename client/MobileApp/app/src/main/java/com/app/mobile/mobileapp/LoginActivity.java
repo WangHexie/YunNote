@@ -28,7 +28,19 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private Button login_btn;
     private Button sign_btn;
+    private boolean modifying = false;
 
+    private boolean modifying() {
+        return modifying;
+    }
+
+    private void setModifying() {
+        modifying = true;
+    }
+
+    private void cancelModifying() {
+        modifying = false;
+    }
 
 
     private Handler mhandler = new Handler() {
@@ -37,10 +49,11 @@ public class LoginActivity extends AppCompatActivity {
             switch (msg.what) {
                 case LOGIN_FAILED:
                     Toast.makeText(LoginActivity.this, "登陆失败", LENGTH_LONG).show();
-                    finish();
+                    cancelModifying();
+
                     break;
                 case LOGIN_SUCCESS:
-
+                    finish();
                     break;
             }
         }
@@ -81,7 +94,10 @@ public class LoginActivity extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (modifying){
+                    return;
+                }
+                setModifying();
                 new Thread() {
 
                     @Override

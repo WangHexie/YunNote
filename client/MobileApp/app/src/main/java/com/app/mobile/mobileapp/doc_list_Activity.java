@@ -38,8 +38,9 @@ public class doc_list_Activity extends AppCompatActivity {
     private Handler handler;
     private static Map docAndKey;
     private static int id = 0;
-    private boolean modifying = false;
+
     private static final int MODIFY_COMPLETE = 1000;
+    private boolean modifying = false;
 
     public static void addKey(String key, int x) {
         List<String> keyList = (List<String>) getDocAndKey().get("key");
