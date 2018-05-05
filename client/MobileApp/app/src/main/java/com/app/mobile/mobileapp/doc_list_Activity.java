@@ -2,6 +2,7 @@ package com.app.mobile.mobileapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -111,6 +112,18 @@ public class doc_list_Activity extends AppCompatActivity {
         ((ViewGroup) pb.getParent()).removeView(pb);
     }
 
+    public void cleanCookiesAndGoToLogin(View view){
+        SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("cookieRW","0");
+        editor.commit();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+
+    }
+
     public void sendMessage(View view) {
         if (modifying()) {
             return;
@@ -167,7 +180,7 @@ public class doc_list_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 

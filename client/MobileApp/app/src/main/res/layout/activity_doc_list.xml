@@ -12,13 +12,15 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
 
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="55dp"
+            android:layout_height="56dp"
+            android:layout_gravity="right"
+            android:onClick="cleanCookiesAndGoToLogin"
+            android:clickable="true"
+            android:text="\nLogout   " />
+            />
 
 
     </android.support.design.widget.AppBarLayout>
