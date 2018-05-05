@@ -31,7 +31,6 @@ public class DocModifyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_modify);
-
         final YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
         textarea = findViewById(R.id.textarea);
         Variable.setDoc(getIntent().getStringExtra("doc"));
