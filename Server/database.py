@@ -54,6 +54,7 @@ def part_key_to_full_key(part_key):
 def store_full_key_and_part_key(full_key, part_key):
     return 0
 
+
 #
 # def get_list_doc(list_keys):
 #     list_doc = []
@@ -105,6 +106,7 @@ def get_list_doc(user_id):
                 return 0
     else:
         return 0
+
 
 def add_cookies_live_time(cookies):
     def find_and_add_time(cookies):
