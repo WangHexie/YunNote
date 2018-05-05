@@ -3,6 +3,7 @@ package com.app.mobile.mobileapp;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.EditText;
 
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import mobileapp.Function.CookieIO;
 import mobileapp.Function.Network;
 import mobileapp.Function.Variable;
 
@@ -33,6 +35,37 @@ public class DocModifyActivity extends AppCompatActivity {
         textarea.setText(Variable.getDoc());
 
     }
+    public void delete(View view){
+        finish();
+        try {
+            ExecutorService threadPool = Executors.newCachedThreadPool();
+            Future<Map> future = threadPool.submit(new Callable<Map>() {
+                @Override
+                public Map call() throws Exception {
+                    String deleteReply = Network.deleteDoc(Variable.getKey(), CookieIO.getCookie());
+                    if (deleteReply.equals("1")) {
+                            YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
+                            yunNoteApplication.cleanList();
+                            yunNoteApplication.getHandler().sendEmptyMessage(1001);
+                    }
+                    return new HashMap<>();
+                }
+
+            });
+
+            boolean flag = true;
+            if (!threadPool.isShutdown()) {
+                threadPool.shutdown();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+
 
 
     @Override
@@ -47,10 +80,9 @@ public class DocModifyActivity extends AppCompatActivity {
                 @Override
                 public Map call() throws Exception {
                     SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
-                    String deleteReply = Network.deleteDoc(Variable.getKey(), "b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c");
+                    String deleteReply = Network.deleteDoc(Variable.getKey(), CookieIO.getCookie());
                     if (deleteReply.equals("1")) {
-                        String newkey = Network.addDocToList(textarea.getText().toString(), "b4373a57ae6b094ab2e9837fe2a79f1f247dd2bfb04083f6aba15a0d90b2cf4c");
-//            String newkey = Network.addDocToList(textarea.getText().toString() ,preferences.getString("cookieRW","0") );
+                        String newkey = Network.addDocToList(textarea.getText().toString(), CookieIO.getCookie());
                         if (!newkey.equals("0")) {
                             YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
                             yunNoteApplication.cleanList();
@@ -83,4 +115,6 @@ public class DocModifyActivity extends AppCompatActivity {
 
 
     }
+
+
 }

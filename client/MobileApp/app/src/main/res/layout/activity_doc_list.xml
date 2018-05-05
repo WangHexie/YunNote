@@ -16,24 +16,18 @@
             android:id="@+id/toolbar_title"
             android:layout_width="55dp"
             android:layout_height="56dp"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:onClick="cleanCookiesAndGoToLogin"
             android:clickable="true"
             android:text="\nLogout   " />
-            />
+
 
 
     </android.support.design.widget.AppBarLayout>
 
-
-
-
     <include
         android:id="@+id/include"
         layout="@layout/content_doc_list_" />
-
-
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

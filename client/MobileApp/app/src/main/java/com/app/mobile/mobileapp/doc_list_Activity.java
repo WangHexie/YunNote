@@ -57,6 +57,11 @@ public class doc_list_Activity extends AppCompatActivity {
         keyList.add(x, key);
     }
 
+    public static void deleteXthkey(int x){
+        List<String> keyList = (List<String>) getDocAndKey().get("key");
+        keyList.remove(x);
+    }
+
     public static Map getDocAndKey() {
         return docAndKey;
     }
@@ -124,6 +129,11 @@ public class doc_list_Activity extends AppCompatActivity {
 
     }
 
+    private void removeXthCard(int x){
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearlay_1);
+        linearLayout.removeViewAt(x);
+    }
+
     public void sendMessage(View view) {
         if (modifying()) {
             return;
@@ -162,6 +172,13 @@ public class doc_list_Activity extends AppCompatActivity {
 //                    textV.setText();
 
                     Log.d("E", docAndKey.get(0));
+                    cancelModifying();
+                }
+
+                if(msg.what == 1001){
+                    removeProgress();
+                    removeXthCard(doc_list_Activity.getID());
+                    deleteXthkey(doc_list_Activity.getID());
                     cancelModifying();
 
                 }
@@ -277,6 +294,7 @@ public class doc_list_Activity extends AppCompatActivity {
         TextView x = (TextView) v2;
         x.setText(doc);
     }
+
 
     private void blinkView(View view) {
         Animation anim = new AlphaAnimation(0.0f, 1.0f);
