@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.yalantis.phoenix.PullToRefreshView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +39,7 @@ public class doc_list_Activity extends AppCompatActivity {
     private Handler handler;
     private static Map docAndKey;
     private static int id = 0;
+    private PullToRefreshView mPullToRefreshView;
 
     private static final int MODIFY_COMPLETE = 1000;
     private boolean modifying = false;
@@ -182,11 +184,26 @@ public class doc_list_Activity extends AppCompatActivity {
         });
         setAllCard();
 
+        mPullToRefreshView = (PullToRefreshView) findViewById(R.id.pull_to_refresh);
+        mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPullToRefreshView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPullToRefreshView.setRefreshing(false);
+                    }
+                }, 500);
+            }
+        });
+
     }
 
     private void setAllCard() {
 //        loadList();
         String response = CookieIO.getResponse();
+        if(response.equals("0"))
+            return;
         List<String> docList = StringReformat.toDocList(response);
         List<String> keyList = StringReformat.toKeyList(response);
         Map docAndKey = new HashMap();

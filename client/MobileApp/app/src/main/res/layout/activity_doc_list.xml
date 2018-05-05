@@ -19,10 +19,17 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+    <com.yalantis.phoenix.PullToRefreshView
+        android:id="@+id/pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <include
         android:id="@+id/include"
         layout="@layout/content_doc_list_" />
+
+    </com.yalantis.phoenix.PullToRefreshView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -31,6 +38,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="?android:attr/fingerprintAuthDrawable" />
+
+
 
 
 
