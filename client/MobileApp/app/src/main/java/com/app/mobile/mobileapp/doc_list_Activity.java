@@ -21,10 +21,13 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mobileapp.Function.CookieIO;
 import mobileapp.Function.DownloadThread;
+import mobileapp.Function.StringReformat;
 
 public class doc_list_Activity extends AppCompatActivity {
 
@@ -38,7 +41,7 @@ public class doc_list_Activity extends AppCompatActivity {
     private boolean modifying = false;
     private static final int MODIFY_COMPLETE = 1000;
 
-    public static void addKey(String key,int x){
+    public static void addKey(String key, int x) {
         List<String> keyList = (List<String>) getDocAndKey().get("key");
         keyList.add(x, key);
     }
@@ -85,12 +88,12 @@ public class doc_list_Activity extends AppCompatActivity {
 //        View addV = LayoutInflater.from(doc_list_Activity.this).inflate((XmlPullParser) pb,sv,true);
     }
 
-    public View getTopCardView(){
+    public View getTopCardView() {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearlay_1);
         return linearLayout.getChildAt(0);
     }
 
-    public View getXthCardView(int x){
+    public View getXthCardView(int x) {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearlay_1);
         return linearLayout.getChildAt(x);
     }
@@ -160,7 +163,7 @@ public class doc_list_Activity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doc_list_);
+        setContentView(R.layout.activity_doc_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -169,11 +172,11 @@ public class doc_list_Activity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(modifying()){
+                if (modifying()) {
                     return;
                 }
                 addCardViewToTop("");
-                addKey("",0);
+                addKey("", 0);
                 sendMessage(getTopCardView());
             }
         });
@@ -182,17 +185,17 @@ public class doc_list_Activity extends AppCompatActivity {
     }
 
     private void setAllCard() {
-        loadList();
-//        String response = CookieIO.getResponse();
-//        List<String> docList = StringReformat.toDocList(response);
-//        List<String> keyList = StringReformat.toKeyList(response);
-//        Map docAndKey = new HashMap();
-//        docAndKey.put("doc", docList);
-//        docAndKey.put("key", keyList);
-//        setDocAndKey(docAndKey);
-//        for (int i = 0; i < docList.size(); i++) {
-//            addCardViewToEnd(docList.get(i));
-//        }
+//        loadList();
+        String response = CookieIO.getResponse();
+        List<String> docList = StringReformat.toDocList(response);
+        List<String> keyList = StringReformat.toKeyList(response);
+        Map docAndKey = new HashMap();
+        docAndKey.put("doc", docList);
+        docAndKey.put("key", keyList);
+        setDocAndKey(docAndKey);
+        for (int i = 0; i < docList.size(); i++) {
+            addCardViewToEnd(docList.get(i));
+        }
     }
 
     @SuppressLint("ResourceType")
@@ -226,13 +229,13 @@ public class doc_list_Activity extends AppCompatActivity {
         x.setText(doc);
     }
 
-    private void blinkView(View view){
+    private void blinkView(View view) {
         Animation anim = new AlphaAnimation(0.0f, 1.0f);
         anim.setDuration(300); //You can manage the time of the blink with this parameter
         anim.setStartOffset(20);
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(2);
-       view.startAnimation(anim);
+        view.startAnimation(anim);
     }
 
     private void loadList() {

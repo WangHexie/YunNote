@@ -35,12 +35,9 @@ public class EnterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-
-
     }
 
     private void init() {
-
         SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
         cookie = preferences.getString("cookieRW", "0");
         CookieIO.setCookie(cookie);
@@ -58,14 +55,9 @@ public class EnterActivity extends AppCompatActivity {
                         CookieIO.setResponse(a);
                         mhandler.sendEmptyMessage(GO_MAIN);
                     }
-
-
                 }
             }.start();
-
         }
-
-
     }
 
     private void goLogin() {
@@ -76,7 +68,6 @@ public class EnterActivity extends AppCompatActivity {
 
     private void goMain(String cookie) {
         Intent intent = new Intent(EnterActivity.this, doc_list_Activity.class);
-        intent.putExtra("cookie",cookie);
         startActivity(intent);
         finish();
     }

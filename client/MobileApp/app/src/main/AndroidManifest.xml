@@ -32,11 +32,6 @@
             android:name=".doc_list_Activity"
             android:label="@string/title_activity_doc_list_"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity android:name=".RegisterActivity" />
@@ -50,7 +45,11 @@
             android:exported="true"
             >
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
     </application>

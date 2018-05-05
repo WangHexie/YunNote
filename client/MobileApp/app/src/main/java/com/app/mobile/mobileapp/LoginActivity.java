@@ -63,8 +63,6 @@ public class LoginActivity extends AppCompatActivity {
                 .penaltyLog().penaltyDeath().build());
 
 
-
-
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         login_btn = (Button) findViewById(R.id.login_btn);
@@ -96,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("cookieRW",loginGetCookie);
                                 CookieIO.setCookie(loginGetCookie);
                                 editor.commit();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, doc_list_Activity.class);
                                 CookieIO.setResponse(Network.check(loginGetCookie));
                                 startActivity(intent);
                             } else {
