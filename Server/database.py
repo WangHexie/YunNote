@@ -90,7 +90,7 @@ def get_list_doc(user_id):
     if len(user_id) <= lenth_of_uid:
         with  connectDatabase().cursor() as cursor:
             try:
-                sql = "select  doc,MODIFY_TIME,key_hash from key_doc,NOTE_LIST where key_doc.key_hash = NOTE_LIST.NOTE_KEY and USER_NAME = %s"
+                sql = "select  doc,MODIFY_TIME,key_hash from key_doc,NOTE_LIST where key_doc.key_hash = NOTE_LIST.NOTE_KEY and USER_NAME = %s order by MODIFY_TIME desc "
                 cursor.execute(sql, [user_id])
                 result = cursor.fetchall()
                 if result != None:
