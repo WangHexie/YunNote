@@ -60,8 +60,8 @@
 
     <Button
         android:id="@+id/sign_btn"
-        android:layout_width="114dp"
-        android:layout_height="35dp"
+        android:layout_width="101dp"
+        android:layout_height="38dp"
         android:layout_marginBottom="76dp"
         android:text="sign up"
 
