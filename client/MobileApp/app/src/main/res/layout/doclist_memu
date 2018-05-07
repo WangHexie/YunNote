@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.app.mobile.mobileapp.DocModifyActivity" android:layout_height="match_parent" android:layout_width="match_parent">
+    <item
+        android:id="@+id/keydoc"
+        android:orderInCategory="0"
+        android:title="KeyDoc"
+        />
+    <item
+        android:id="@+id/logoutMenu"
+        android:orderInCategory="0"
+        android:title="logout"
+        />
+
+</menu>

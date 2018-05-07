@@ -93,9 +93,9 @@ public class DocModifyActivity extends AppCompatActivity {
     }
 
 
-    //废弃
 
-//    public void delete(View view){
+
+//   //废弃 public void delete(View view){
 //        finish();
 //        try {
 //            ExecutorService threadPool = Executors.newCachedThreadPool();

@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -47,6 +50,7 @@ public class doc_list_Activity extends AppCompatActivity {
     private PullToRefreshView mPullToRefreshView;
     private TextView tv_time;
     private Boolean pullToRefreshIsSuccess;
+    private ActionBar actionBar;
 
     private static final int MODIFY_COMPLETE = 1000;
     private boolean modifying = false;
@@ -122,7 +126,7 @@ public class doc_list_Activity extends AppCompatActivity {
         ((ViewGroup) pb.getParent()).removeView(pb);
     }
 
-    public void cleanCookiesAndGoToLogin(View view) {
+    public void cleanCookiesAndGoToLogin() {
         SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("cookieRW", "0");
@@ -206,6 +210,11 @@ public class doc_list_Activity extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
+        actionBar = getSupportActionBar();
+
+
+
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,6 +271,30 @@ public class doc_list_Activity extends AppCompatActivity {
         });
 
     }
+
+
+
+    @SuppressLint("ResourceType")
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.layout.doclist_memu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.logoutMenu){
+            cleanCookiesAndGoToLogin();
+            return true;
+        }
+
+        if (item.getItemId() == R.id.keydoc){
+            Intent intent = new Intent(doc_list_Activity.this,)
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private void initializeDocAndKey() {
         Map docAndKey = new HashMap();
