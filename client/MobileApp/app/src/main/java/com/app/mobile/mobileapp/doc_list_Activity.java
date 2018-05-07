@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yalantis.phoenix.PullToRefreshView;
 
@@ -32,6 +33,8 @@ import mobileapp.Function.CookieIO;
 import mobileapp.Function.DownloadThread;
 import mobileapp.Function.StringReformat;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 public class doc_list_Activity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGEDOC = "doc";
@@ -42,6 +45,8 @@ public class doc_list_Activity extends AppCompatActivity {
     private static Map docAndKey;
     private static int id = 0;
     private PullToRefreshView mPullToRefreshView;
+    private TextView tv_time;
+    private Boolean pullToRefreshIsSuccess;
 
     private static final int MODIFY_COMPLETE = 1000;
     private boolean modifying = false;
@@ -169,7 +174,7 @@ public class doc_list_Activity extends AppCompatActivity {
                     blinkView(getXthCardView(doc_list_Activity.getID()));
 
 //                    TextView textV = (TextView) findViewById(doc_list_Activity.getID());
-//                    textV.setText();
+////                    textV.setText();
 
                     Log.d("E", docAndKey.get(0));
                     cancelModifying();
@@ -215,16 +220,44 @@ public class doc_list_Activity extends AppCompatActivity {
         });
         setAllCard();
 
+
         mPullToRefreshView = (PullToRefreshView) findViewById(R.id.pull_to_refresh);
         mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                pullToRefreshIsSuccess = false;
+                Handler handler = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        if(msg.what == 1){
+                            mPullToRefreshView.setRefreshing(false);
+                            Toast.makeText(doc_list_Activity.this, "刷新成功", Toast.LENGTH_SHORT).show();
+                            pullToRefreshIsSuccess = true;
+                        }
+                    }
+                };
+
+                PullToRefreshLoadList(handler);
+                Toast.makeText(doc_list_Activity.this, "正在刷新", Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+
+
+
                 mPullToRefreshView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mPullToRefreshView.setRefreshing(false);
+                        if (!pullToRefreshIsSuccess)
+                        Toast.makeText(doc_list_Activity.this, "刷新失败", Toast.LENGTH_SHORT).show();
+
                     }
-                }, 500);
+                }, 5000);
+
             }
         });
 
@@ -322,7 +355,39 @@ public class doc_list_Activity extends AppCompatActivity {
                     for (int i = 0; i < docList.size(); i++) {
                         addCardViewToEnd(docList.get(i));
                     }
+                }
+            }
+        };
 
+        DownloadThread dt = new DownloadThread(mHandler);
+        dt.start();
+        addProgress();
+    }
+
+    private void PullToRefreshLoadList(Handler m){
+        final Handler handler = m;
+        Handler mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+
+
+                if (msg.what == 1) {
+
+                    LinearLayout linear = (LinearLayout) findViewById(R.id.linearlay_1);
+                    int index = linear.getChildCount();
+
+                    for (int i = 0;i<index;i++){
+                        removeXthCard(0);
+                    }
+
+                    setDocAndKey((Map) msg.obj);
+                    Map docAndKey = getDocAndKey();
+                    List<String> docList = (List<String>) docAndKey.get("doc");
+                    List<String> keyList = (List<String>) docAndKey.get("key");
+                    for (int i = 0; i < docList.size(); i++) {
+                        addCardViewToEnd(docList.get(i));
+                    }
+                    handler.sendEmptyMessage(1);
                 }
             }
         };

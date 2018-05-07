@@ -61,9 +61,9 @@
     <Button
         android:id="@+id/sign_btn"
         android:layout_width="114dp"
-        android:layout_height="39dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="76dp"
-        android:text="sign in"
+        android:text="sign up"
 
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -83,5 +83,21 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_btn" />
+
+    <ProgressBar
+        android:id="@+id/loginprocess"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
+        tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>
