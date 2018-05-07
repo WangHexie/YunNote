@@ -32,6 +32,10 @@ public class DocModifyActivity extends AppCompatActivity {
     private static String oldKey;
     private ActionBar actionBar;
 
+    public static String getOldOne(){
+        return oldOne;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,9 @@ public class DocModifyActivity extends AppCompatActivity {
         textarea = findViewById(R.id.textarea);
         Variable.setDoc(getIntent().getStringExtra("doc"));
         Variable.setKey(getIntent().getStringExtra("key"));
+
+        oldOne = Variable.getDoc();
+
         textarea.setText(Variable.getDoc());
         actionBar = getSupportActionBar();
 
@@ -66,6 +73,7 @@ public class DocModifyActivity extends AppCompatActivity {
                 Future<Map> future = threadPool.submit(new Callable<Map>() {
                     @Override
                     public Map call() throws Exception {
+
                         String deleteReply = Network.deleteDoc(Variable.getKey(), CookieIO.getCookie());
                         if (deleteReply.equals("1")) {
                             YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
@@ -140,24 +148,36 @@ public class DocModifyActivity extends AppCompatActivity {
                 @Override
                 public Map call() throws Exception {
                     SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
-                    String deleteReply = Network.deleteDoc(Variable.getKey(), CookieIO.getCookie());
-                    if (deleteReply.equals("1")) {
-                        String newkey = Network.addDocToList(textarea.getText().toString(), CookieIO.getCookie());
-                        if (!newkey.equals("0")) {
-                            YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
-                            yunNoteApplication.cleanList();
-                            yunNoteApplication.ListAdd(textarea.getText().toString());
-                            yunNoteApplication.ListAdd(newkey);
-                            yunNoteApplication.getHandler().sendEmptyMessage(1000);
+                    String deleteReply;
+                    if (getOldOne().equals(textarea.getText().toString())){
+                        deleteReply = "1";
+                        YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
+                        yunNoteApplication.cleanList();
+                        yunNoteApplication.ListAdd(textarea.getText().toString());
+                        yunNoteApplication.ListAdd(Variable.getKey());
+                        yunNoteApplication.getHandler().sendEmptyMessage(1000);
+                    }else {
+                        deleteReply = Network.deleteDoc(Variable.getKey(), CookieIO.getCookie());
+                        if (deleteReply.equals("1")) {
+                            String newkey = Network.addDocToList(textarea.getText().toString(), CookieIO.getCookie());
+                            if (!newkey.equals("0")) {
+                                YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
+                                yunNoteApplication.cleanList();
+                                yunNoteApplication.ListAdd(textarea.getText().toString());
+                                yunNoteApplication.ListAdd(newkey);
+                                yunNoteApplication.getHandler().sendEmptyMessage(1000);
+                            }
                         }
                     }
+
+
                     return new HashMap<>();
 
                 }
 
             });
 
-            boolean flag = true;
+//            boolean flag = true;
 //            while(flag){
 //                //异步任务完成并且未被取消，则获取返回的结果
 //                if(future.isDone() && !future.isCancelled()){
