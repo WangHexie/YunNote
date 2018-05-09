@@ -14,12 +14,12 @@
 		1.Get the document by using chinese_key
 		HTTP GET  */getbyck?cnkey=(Key)   
 		
-			return json{"sentence":(sentence)}
+			return sentence||0
 			
 		2.Set the document and return a chinese_key
 		HTTP POST */storeck   {"doc":(document)}
 			
-			return json{"cnkey":(key)}
+			return key
 	
 	V0.3
 		1.Check if username exists:

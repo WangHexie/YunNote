@@ -29,7 +29,7 @@ def store_doc():
 @app.route('/getbyck', methods=['GET'])
 def get_doc_by_cnkey():
     cnkey = request.args.get('cnkey')
-    
+
     if len(cnkey)>60:
         return "0"
     part_key = basic_function.chinese_key_to_hash(cnkey)
