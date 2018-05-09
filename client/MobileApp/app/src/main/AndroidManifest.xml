@@ -13,13 +13,11 @@
         android:label="YunNote"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-
-        >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <!-- <activity -->
         <!-- android:name=".doc_list_Activity" -->
         <!-- android:label="@string/title_activity_doc_list_" -->
@@ -27,27 +25,24 @@
         <activity
             android:name=".doc_list_Activity"
             android:label="@string/title_activity_doc_list_"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".DocModifyActivity"
+        <activity
+            android:name=".DocModifyActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"
-
-            ></activity>
-        <activity android:name=".EnterActivity"
-
-            android:exported="true"
-            >
-
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".EnterActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".dockey_inputKeyActivity" />
+        <activity android:name=".ShareDocDisplayAcitivity"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

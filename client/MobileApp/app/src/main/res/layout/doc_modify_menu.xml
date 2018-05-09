@@ -5,7 +5,12 @@
     <item
         android:id="@+id/deleteMenuItem"
         android:orderInCategory="0"
-        android:title="delete"
+        android:title="Delete"
          />
+    <item
+        android:id="@+id/share"
+        android:orderInCategory="1"
+        android:title="Share"
+        />
 
 </menu>

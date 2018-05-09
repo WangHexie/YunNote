@@ -1,17 +1,14 @@
 package com.app.mobile.mobileapp;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
-
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,11 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
-
 import com.yalantis.phoenix.PullToRefreshView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -300,7 +293,8 @@ public class doc_list_Activity extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.keydoc){
-           // Intent intent = new Intent(doc_list_Activity.this,)
+            Intent intent = new Intent(doc_list_Activity.this,dockey_inputKeyActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

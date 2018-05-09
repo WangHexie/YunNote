@@ -7,13 +7,18 @@
     tools:context=".doc_list_Activity">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:background="@color/colorPrimary"
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></android.support.v7.widget.Toolbar>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.Toolbar>
     <include
         android:id="@+id/include"
         layout="@layout/content_doc_list_"
@@ -27,6 +32,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="?android:attr/fingerprintAuthDrawable" />
+
+    </LinearLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

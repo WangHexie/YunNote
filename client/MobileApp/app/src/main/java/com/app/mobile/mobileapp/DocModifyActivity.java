@@ -1,9 +1,16 @@
 package com.app.mobile.mobileapp;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +34,7 @@ import static android.widget.Toast.LENGTH_LONG;
 public class DocModifyActivity extends AppCompatActivity {
 
     private EditText textarea;
-
+    private Handler shareHandler;
     private static String oldOne;
     private static String oldKey;
     private ActionBar actionBar;
@@ -94,6 +101,52 @@ public class DocModifyActivity extends AppCompatActivity {
             }
 
             return true;
+        }
+
+        if (item.getItemId() == R.id.share){
+
+            shareHandler = new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    final String keyresult = (String)msg.obj;
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(DocModifyActivity.this);
+                    builder.setTitle("Shared Key");
+                    builder.setMessage(keyresult);
+                    builder.setPositiveButton("复制", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                            // 将文本内容放到系统剪贴板里。
+                            ClipData clipData = ClipData.newPlainText(null, keyresult);
+                            cm.setPrimaryClip(clipData);
+                            Toast.makeText(DocModifyActivity.this, "复制成功", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+
+                        }
+                    });
+                    builder.show();
+                }
+            };
+
+
+            new Thread(){
+                @Override
+                public void run() {
+                    String keyresult = Network.setDocAndGetCnKey(getIntent().getStringExtra("doc"));
+                    Message msg = shareHandler.obtainMessage();
+                    msg.obj = keyresult;
+                    shareHandler.sendMessage(msg);
+                }
+            }.start();
         }
 
 
@@ -195,6 +248,8 @@ public class DocModifyActivity extends AppCompatActivity {
 
 
     }
+
+
 
 
 }
