@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -47,8 +49,8 @@ public class Network {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String key = sendGet(url + "getbyck", "cnkey=" + encodedUrl);
-        return key;
+        String docJson = sendGet(url + "getbyck", "cnkey=" + encodedUrl);
+        return StringReformat.toDoc(docJson);
     }
 
     public static String addDocToList(String doc, String cookies) {
@@ -152,6 +154,7 @@ public class Network {
         String result = "";
         BufferedReader in = null;
         try {
+//            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 8888));
             String urlNameString = url + "?" + param;
             URL realUrl = new URL(urlNameString);
             // 打开和URL之间的连接
@@ -242,7 +245,7 @@ public class Network {
 
     public static void main(String[] args) {
 //        print(setDocAndGetCnKey("123"));
-        print(getDocByCnKey("国克儿行员"));
+        print(getDocByCnKey("之比东平公"));
 //        System.out.println(getDoc("6c253648e0dfff00d6aa44566f34dae651f0d2191d5bf59dd74d8ce7314cb3e7"));
 //        System.out.println(setDoc("23333"));
 //        System.out.println(addDocToList("big 2","002e7e436441939758c41ed393257d2cea503d0dfb234201af1bfc21bfbc6d55"));

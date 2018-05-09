@@ -47,9 +47,11 @@ public class StringReformat {
 
     public static List<String> toDocList(String jsonString) {
         return listFormat("list",jsonString);
-
     }
 
+    public static String toDoc(String jsonString) {
+        return listFormat("doc",jsonString).get(0);
+    }
 
 
     public static List<Long> toTimeList(String jsonString) {
