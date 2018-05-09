@@ -45,11 +45,27 @@ public class StringReformat {
         return docList;
     }
 
-    public static List<String> toDocList(String jsonString) {
-        return listFormat("list",jsonString);
-
+    private static String formatToString(String keyWord, String jsonString){
+        List<Long> docList = new ArrayList();
+        JSONParser parser = new JSONParser();
+        Object obj = null;
+        try {
+            obj = parser.parse(jsonString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        JSONObject obj2 = (JSONObject) obj;
+        String doc = (String) obj2.get(keyWord);
+        return doc;
     }
 
+    public static List<String> toDocList(String jsonString) {
+        return listFormat("list",jsonString);
+    }
+
+    public static String toDoc(String jsonString) {
+        return formatToString("doc",jsonString);
+    }
 
 
     public static List<Long> toTimeList(String jsonString) {
