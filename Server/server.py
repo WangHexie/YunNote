@@ -42,7 +42,10 @@ def get_doc_by_cnkey():
 
     if full_key == 0:
         return "0"
-    return basic_function.check_result(database.get_doc_from_database(full_key))
+    doc = basic_function.check_result(database.get_doc_from_database(full_key))
+    re_dic = {"doc":doc}
+    result = json.dumps(re_dic, ensure_ascii=False)
+    return result
 
 
 @app.route('/storeck', methods=['POST'])
