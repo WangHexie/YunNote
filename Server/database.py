@@ -2,8 +2,7 @@ import threading
 import time
 import traceback
 
-
-from Server import basic_function
+import basic_function
 import pymysql
 
 lenth_of_username = 15
@@ -14,12 +13,15 @@ lenth_of_doc = 65536
 lenth_of_key = 70
 expire_time = 60 * 60 * 24 * 7
 
+
 def connect_database():
     return pymysql.connect(host="45.76.223.233", user="root",
-                          password="root", db="MobileAppDB", port=3306,  charset="utf8")
+                           password="root", db="MobileAppDB", port=3306, charset="utf8")
+
 
 def close_coonection_by_cursor(cursor):
     cursor.connection.close()
+
 
 def get_doc_from_database(key):
     with  connect_database().cursor() as cursor:
@@ -62,18 +64,16 @@ def part_key_to_full_key(part_key):
             return 0
 
 
-
 def store_full_key_and_part_key(full_key, part_key):
     with  connect_database().cursor() as cursor:
         try:
             sql = "INSERT INTO PARTKEY_FULLKEY  (FULL_KEY, PART_KEY) VALUES (%s,%s);"
-            cursor.execute(sql, [full_key,part_key])
+            cursor.execute(sql, [full_key, part_key])
             cursor.connection.commit()
             return 1
         except:
             print(traceback.format_exc())
             return 0
-
 
 
 #
@@ -119,7 +119,7 @@ def get_list_doc_by_uid(user_id):
                         doc_list.append(i[0])
                         time_list.append(i[1])
                         key_list.append(i[2])
-                    return doc_list,key_list,time_list
+                    return doc_list, key_list, time_list
                 else:
                     return 0
             except:
