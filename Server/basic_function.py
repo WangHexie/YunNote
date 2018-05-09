@@ -60,7 +60,7 @@ def hash_to_chinese_key(hash, lenth=5):
 def chinese_key_to_hash(chinese_key):
     hash = ""
     for i in chinese_key:
-        hash += get_two_hex(i.encode("utf-8"))
+        hash += get_two_hex(i)
     return hash
 
 
