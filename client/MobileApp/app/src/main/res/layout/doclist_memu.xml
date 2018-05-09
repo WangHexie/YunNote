@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.app.mobile.mobileapp.DocModifyActivity" android:layout_height="match_parent" android:layout_width="match_parent">
+    tools:context="com.app.mobile.mobileapp.doc_list_Activity" android:layout_height="match_parent" android:layout_width="match_parent">
     <item
         android:id="@+id/keydoc"
         android:orderInCategory="0"
@@ -9,7 +9,7 @@
         />
     <item
         android:id="@+id/logoutMenu"
-        android:orderInCategory="0"
+        android:orderInCategory="1"
         android:title="logout"
         />
 

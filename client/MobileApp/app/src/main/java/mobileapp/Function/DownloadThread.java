@@ -24,11 +24,18 @@ public class DownloadThread extends Thread {
     public void run() {
         List<String> resultDoc, resultKey;
         String jsonString = Network.getList(CookieIO.getCookie());
-        resultDoc = StringReformat.toDocList(jsonString);
-        resultKey = StringReformat.toKeyList(jsonString);
-        Map docAndKey = new HashMap();
-        docAndKey.put("doc", resultDoc);
-        docAndKey.put("key", resultKey);
-        mHandler.obtainMessage(SUCCESS_MSG, docAndKey).sendToTarget();
+        if (jsonString != "") {
+            resultDoc = StringReformat.toDocList(jsonString);
+            resultKey = StringReformat.toKeyList(jsonString);
+            Map docAndKey = new HashMap();
+            docAndKey.put("doc", resultDoc);
+            docAndKey.put("key", resultKey);
+            mHandler.obtainMessage(SUCCESS_MSG, docAndKey).sendToTarget();
+        }else
+            mHandler.sendEmptyMessage(0);
+
+
+
+
     }
 }

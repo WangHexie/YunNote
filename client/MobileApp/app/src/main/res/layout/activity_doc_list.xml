@@ -6,28 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".doc_list_Activity">
 
-    <android.support.design.widget.AppBarLayout
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content"></android.support.v7.widget.Toolbar>
 
-
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="55dp"
-            android:layout_height="56dp"
-            android:layout_gravity="end"
-            android:onClick="cleanCookiesAndGoToLogin"
-            android:clickable="true"
-            android:text="\nLogout   " />
-
-
-
-    </android.support.design.widget.AppBarLayout>
 
     <include
         android:id="@+id/include"
-        layout="@layout/content_doc_list_" />
+        layout="@layout/content_doc_list_"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -36,9 +27,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="?android:attr/fingerprintAuthDrawable" />
-
-
-
 
 
 </android.support.design.widget.CoordinatorLayout>

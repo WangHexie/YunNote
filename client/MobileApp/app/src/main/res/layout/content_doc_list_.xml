@@ -8,38 +8,41 @@
     tools:context=".doc_list_Activity"
     tools:showIn="@layout/activity_doc_list">
 
+
+
+
+
+
     <com.yalantis.phoenix.PullToRefreshView
         android:id="@+id/pull_to_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/scrollView3"
-        android:layout_width="368dp"
-        android:layout_height="511dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-
-        <LinearLayout
-            android:id="@+id/linearlay_1"
+        <ScrollView
+            android:id="@+id/scrollView3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="top"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="231dp">
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
+            <LinearLayout
+                android:id="@+id/linearlay_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="231dp">
 
-            <!--<android.support.v7.widget.CardView-->
+
+                <!--<android.support.v7.widget.CardView-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="match_parent"-->
                 <!--android:layout_marginEnd="24dp"-->
@@ -59,34 +62,36 @@
                 <!--tools:layout_editor_absoluteY="65dp">-->
 
                 <!--<android.support.constraint.ConstraintLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
 
-                    <!--<TextView-->
-                        <!--android:layout_width="246dp"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginBottom="8dp"-->
-                        <!--android:layout_marginEnd="16dp"-->
-                        <!--android:layout_marginStart="16dp"-->
-                        <!--android:layout_marginTop="8dp"-->
-                        <!--android:text="Loading"-->
-                        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                        <!--app:layout_constraintEnd_toEndOf="parent"-->
-                        <!--app:layout_constraintStart_toStartOf="parent"-->
-                        <!--app:layout_constraintTop_toTopOf="parent"-->
-                        <!--app:layout_constraintVertical_bias="0.0" />-->
+                <!--<TextView-->
+                <!--android:layout_width="246dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="8dp"-->
+                <!--android:layout_marginEnd="16dp"-->
+                <!--android:layout_marginStart="16dp"-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:text="Loading"-->
+                <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent"-->
+                <!--app:layout_constraintVertical_bias="0.0" />-->
                 <!--</android.support.constraint.ConstraintLayout>-->
 
                 <!--&lt;!&ndash;<item android:name="cardPreventCornerOverlap">false</item>&ndash;&gt;-->
 
                 <!--&lt;!&ndash;<item android:name="cardUseCompatPadding">true</item>&ndash;&gt;-->
 
-            <!--</android.support.v7.widget.CardView>-->
+                <!--</android.support.v7.widget.CardView>-->
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </ScrollView>
+        </ScrollView>
 
     </com.yalantis.phoenix.PullToRefreshView>
+
+
 
 </android.support.constraint.ConstraintLayout>

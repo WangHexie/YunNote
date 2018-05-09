@@ -1,15 +1,18 @@
 package com.app.mobile.mobileapp;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +28,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+
 import com.yalantis.phoenix.PullToRefreshView;
 
 import java.util.ArrayList;
@@ -36,7 +41,6 @@ import mobileapp.Function.CookieIO;
 import mobileapp.Function.DownloadThread;
 import mobileapp.Function.StringReformat;
 
-import static android.widget.Toast.LENGTH_LONG;
 
 public class doc_list_Activity extends AppCompatActivity {
 
@@ -50,7 +54,7 @@ public class doc_list_Activity extends AppCompatActivity {
     private PullToRefreshView mPullToRefreshView;
     private TextView tv_time;
     private Boolean pullToRefreshIsSuccess;
-    private ActionBar actionBar;
+
 
     private static final int MODIFY_COMPLETE = 1000;
     private boolean modifying = false;
@@ -210,7 +214,9 @@ public class doc_list_Activity extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        actionBar = getSupportActionBar();
+      Toolbar toolbar = findViewById(R.id.toolbar);
+       setSupportActionBar(toolbar);
+
 
 
 
@@ -241,6 +247,11 @@ public class doc_list_Activity extends AppCompatActivity {
                         if(msg.what == 1){
                             mPullToRefreshView.setRefreshing(false);
                             Toast.makeText(doc_list_Activity.this, "刷新成功", Toast.LENGTH_SHORT).show();
+                            pullToRefreshIsSuccess = true;
+                        }
+                        if (msg.what == 0){
+                            mPullToRefreshView.setRefreshing(false);
+                            Toast.makeText(doc_list_Activity.this, "请检查网络", Toast.LENGTH_SHORT).show();
                             pullToRefreshIsSuccess = true;
                         }
                     }
@@ -289,7 +300,7 @@ public class doc_list_Activity extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.keydoc){
-            Intent intent = new Intent(doc_list_Activity.this,)
+           // Intent intent = new Intent(doc_list_Activity.this,)
         }
 
         return super.onOptionsItemSelected(item);
@@ -422,12 +433,16 @@ public class doc_list_Activity extends AppCompatActivity {
                     }
                     handler.sendEmptyMessage(1);
                 }
+
+                if (msg.what == 0){
+                    handler.sendEmptyMessage(0);
+                }
             }
         };
 
         DownloadThread dt = new DownloadThread(mHandler);
         dt.start();
-        addProgress();
+
     }
 
 
