@@ -35,8 +35,9 @@ def get_doc_by_cnkey():
     try:
         part_key = basic_function.chinese_key_to_hash(cnkey)
     except:
-        print(traceback.format_exc())
+        # print(traceback.format_exc())
         return "0"
+
     full_key = database.part_key_to_full_key(part_key)
 
     if full_key == 0:
