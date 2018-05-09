@@ -31,4 +31,6 @@ if __name__ == '__main__':
 
     modify6 = "ALTER TABLE key_doc MODIFY MODIFY_TIME float;"
 
-    excute_sql(modify6)
+    create_chinese_table = "CREATE TABLE PARTKEY_FULLKEY (FULL_KEY VARCHAR(70) NOT NULL ,PART_KEY VARCHAR(70) NOT NULL,FOREIGN KEY(FULL_KEY) REFERENCES key_doc(key_hash))"
+
+    excute_sql(create_chinese_table)

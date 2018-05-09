@@ -1,8 +1,8 @@
 import json
 import threading
 
-import basic_function
-import database
+from Server import basic_function
+from Server import database
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
@@ -39,6 +39,7 @@ def store_doc_by_cnkey():
     doc = request.form['doc']
     key = database.store_doc_to_database(doc)
     cnk = basic_function.hash_to_chinese_key(key)
+    database.store_full_key_and_part_key(key,basic_function.chinese_key_to_hash(cnk))
     return cnk
 
 
@@ -86,7 +87,7 @@ def list():
     if uid == None:
         return '0'
     else:
-        list_doc, list_key,list_time = database.get_list_doc(uid)
+        list_doc, list_key,list_time = database.get_list_doc_by_uid(uid)
         re_dic = {"list": list_doc, "key": list_key,"time":list_time}
         return json.dumps(re_dic, ensure_ascii=False)
 
@@ -105,5 +106,5 @@ def delete():
 
 if __name__ == '__main__':
     threading.Thread(target=database.delete_useless_cookies).start()
-    app.run(host="::", threaded=True)
+    app.run(threaded=True)
 

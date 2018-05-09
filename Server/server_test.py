@@ -42,11 +42,21 @@ def server_test(server, case):
         x = json.loads(response.text)
         print(x)
 
+    if case == 6:
+        json1 = {'doc': '123'}
+        response = requests.post(server + "storeck", data=json1)
+        print("cnk", response.text)
+
+    if case == 7:
+        json1 = {'cnkey': '信次才最安'}
+        response = requests.get(server + "getbyck", params=json1)
+        print("doc", response.text)
+
 
 if __name__ == "__main__":
     url = "http://localhost:5000/"
     # url = "http://127.0.0.1:5000/"
     # url = "http://ipv4.dfen.xyz:5000/"
-    server_test(url, 5)
+    server_test(url, 7)
     # for i in range(6):
     #     server_test(url, i)

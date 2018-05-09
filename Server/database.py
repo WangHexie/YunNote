@@ -3,7 +3,7 @@ import time
 import traceback
 
 
-import basic_function
+from Server import basic_function
 import pymysql
 
 lenth_of_username = 15
@@ -34,7 +34,6 @@ def get_doc_from_database(key):
 
         except:
             print(traceback.format_exc())
-    close_coonection_by_cursor(cursor)
     return result
 
 
@@ -48,16 +47,33 @@ def store_doc_to_database(doc):
             connection.commit()
     finally:
         connection.close()
-    close_coonection_by_cursor(cursor)
     return key
 
 
 def part_key_to_full_key(part_key):
-    return 0
+    with  connect_database().cursor() as cursor:
+        try:
+            sql = "select FULL_KEY  from PARTKEY_FULLKEY where PART_KEY = %s;"
+            cursor.execute(sql, [part_key])
+            result = cursor.fetchone()
+            return result[0]
+        except:
+            print(traceback.format_exc())
+            return 0
+
 
 
 def store_full_key_and_part_key(full_key, part_key):
-    return 0
+    with  connect_database().cursor() as cursor:
+        try:
+            sql = "INSERT INTO PARTKEY_FULLKEY  (FULL_KEY, PART_KEY) VALUES (%s,%s);"
+            cursor.execute(sql, [full_key,part_key])
+            cursor.connection.commit()
+            return 1
+        except:
+            print(traceback.format_exc())
+            return 0
+
 
 
 #
@@ -88,7 +104,7 @@ def store_full_key_and_part_key(full_key, part_key):
 #             print(traceback.format_exc())
 #             return list_doc, list_key
 
-def get_list_doc(user_id):
+def get_list_doc_by_uid(user_id):
     doc_list = []
     time_list = []
     key_list = []
@@ -103,14 +119,11 @@ def get_list_doc(user_id):
                         doc_list.append(i[0])
                         time_list.append(i[1])
                         key_list.append(i[2])
-                    close_coonection_by_cursor(cursor)
                     return doc_list,key_list,time_list
                 else:
-                    close_coonection_by_cursor(cursor)
                     return 0
             except:
                 print(traceback.format_exc())
-                close_coonection_by_cursor(cursor)
                 return 0
     else:
         return 0
@@ -124,11 +137,9 @@ def add_cookies_live_time(cookies):
                     sql = "UPDATE COOKIES_LIST SET TIME=%s where COOKIES = %s;"
                     cursor.execute(sql, [str(int(basic_function.time_now()) + expire_time), cookies])
                     cursor.connection.commit()
-                    close_coonection_by_cursor(cursor)
                     return 1
                 except:
                     print(traceback.format_exc())
-                    close_coonection_by_cursor(cursor)
                     return 0
         else:
             return 0
@@ -144,9 +155,7 @@ def add_uid_and_cookies(uid, cookies):
             sql = "INSERT INTO COOKIES_LIST (USER_NAME, COOKIES, TIME) VALUES (%s, %s, %s);"
             cursor.execute(sql, [uid, cookies, str(int(basic_function.time_now()) + expire_time)])
             cursor.connection.commit()
-            close_coonection_by_cursor(cursor)
         except:
-            close_coonection_by_cursor(cursor)
             print(traceback.format_exc())
             return 0
         return 1
@@ -159,10 +168,8 @@ def check_user_exist(username):
                 sql = "select * from NOTE_ACCOUNT where USER_NAME = %s;"
                 cursor.execute(sql, [username])
                 if cursor.fetchone() != None:
-                    close_coonection_by_cursor(cursor)
                     return 1
                 else:
-                    close_coonection_by_cursor(cursor)
                     return 0
 
             except:
@@ -183,9 +190,7 @@ def add_user(username, password):
                 cursor.connection.commit()
             cookies = basic_function.create_cookies()
             if add_uid_and_cookies(username, cookies):
-                close_coonection_by_cursor(cursor)
                 return cookies
-            close_coonection_by_cursor(cursor)
             return 0
         except:
             print(traceback.format_exc())
@@ -207,13 +212,10 @@ def check_user_password(username, password):
                     # if password is right,then create cookies and save cookies
                     cookies = basic_function.create_cookies()
                     if add_uid_and_cookies(username, cookies):
-                        close_coonection_by_cursor(cursor)
                         return cookies
                     else:
-                        close_coonection_by_cursor(cursor)
                         return 0
                 else:
-                    close_coonection_by_cursor(cursor)
                     return 0
             except:
                 print(traceback.format_exc())
@@ -230,10 +232,8 @@ def get_user_by_cookies(cookies):
                 cursor.execute(sql, [cookies])
                 user_id = cursor.fetchone()
                 if user_id != None:
-                    close_coonection_by_cursor(cursor)
                     return user_id
                 else:
-                    close_coonection_by_cursor(cursor)
                     return None
             except:
                 print(traceback.format_exc())
@@ -253,10 +253,8 @@ def get_user_list(user_id):
                 if result != None:
                     for i in result:
                         key_list.append(i[0])
-                    close_coonection_by_cursor(cursor)
                     return key_list
                 else:
-                    close_coonection_by_cursor(cursor)
                     return 0
             except:
                 print(traceback.format_exc())
@@ -274,11 +272,9 @@ def add_into_list(user_id, doc):
                 sql = "INSERT INTO NOTE_LIST (USER_NAME, NOTE_KEY) VALUES (%s, %s);"
                 cursor.execute(sql, [user_id, key])
                 cursor.connection.commit()
-                close_coonection_by_cursor(cursor)
                 return key
             except:
                 print(traceback.format_exc())
-                close_coonection_by_cursor(cursor)
                 return 0
     else:
         return 0
@@ -294,11 +290,9 @@ def delete_form_list(user_id, key):
                 delete_from_key_doc = "DELETE FROM key_doc WHERE key_hash = %s"
                 cursor.execute(delete_from_key_doc, [key])
                 cursor.connection.commit()
-                close_coonection_by_cursor(cursor)
                 return 1
             except:
                 print(traceback.format_exc())
-                close_coonection_by_cursor(cursor)
                 return 0
     else:
         return 0
@@ -310,11 +304,9 @@ def delete_one_cookies(cookies):
             sql = "DELETE FROM COOKIES_LIST WHERE COOKIES = %s;"
             cursor.execute(sql, [cookies])
             cursor.connection.commit()
-            close_coonection_by_cursor(cursor)
             return 1
         except:
             print(traceback.format_exc())
-            close_coonection_by_cursor(cursor)
             return 0
 
 

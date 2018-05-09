@@ -26,7 +26,8 @@ def test_database(case):
         print(database.get_list_doc("123"))
     if case == 11:
         print(database.get_doc_from_database("50096d5f9a1c1eb7689acbb441dbd3d9c1053a02215893744544f46eca094bf9"))
-
+    if case == 12:
+        print(database.)
 
 if __name__ == "__main__":
     test_database(10)
