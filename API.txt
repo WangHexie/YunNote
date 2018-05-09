@@ -14,7 +14,7 @@
 		1.Get the document by using chinese_key
 		HTTP GET  */getbyck?cnkey=(Key)   
 		
-			return sentence||0
+			return json{"doc":sentence}||0
 			
 		2.Set the document and return a chinese_key
 		HTTP POST */storeck   {"doc":(document)}
