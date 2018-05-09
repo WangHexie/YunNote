@@ -1,5 +1,5 @@
 import database
-
+import basic_function
 
 def test_database(case):
     if case == 0:
@@ -26,10 +26,13 @@ def test_database(case):
         print(database.get_list_doc("123"))
     if case == 11:
         print(database.get_doc_from_database("50096d5f9a1c1eb7689acbb441dbd3d9c1053a02215893744544f46eca094bf9"))
-    if case == 12:
-        print(database.)
+    # if case == 12:
+    #     print(database.)
 
 if __name__ == "__main__":
-    test_database(10)
+    # test_database(10)
+    full_key = database.part_key_to_full_key("")
+    print(full_key)
+    print(database.get_doc_from_database(full_key))
     # for i in range(11):
     #     test_database(i)

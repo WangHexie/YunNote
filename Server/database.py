@@ -58,6 +58,8 @@ def part_key_to_full_key(part_key):
             sql = "select FULL_KEY  from PARTKEY_FULLKEY where PART_KEY = %s;"
             cursor.execute(sql, [part_key])
             result = cursor.fetchone()
+            if result == None:
+                return 0
             return result[0]
         except:
             print(traceback.format_exc())
