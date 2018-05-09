@@ -50,6 +50,9 @@ public class Network {
             e.printStackTrace();
         }
         String docJson = sendGet(url + "getbyck", "cnkey=" + encodedUrl);
+        if(docJson.equals("0")){
+            return "0";
+        }
         return StringReformat.toDoc(docJson);
     }
 
