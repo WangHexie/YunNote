@@ -43,12 +43,17 @@ def server_test(server, case):
         print(x)
 
     if case == 6:
-        json1 = {'doc': '123'}
+        longSentence = """
+        0
+        
+        0
+        """
+        json1 = {'doc': longSentence}
         response = requests.post(server + "storeck", data=json1)
         print("cnk", response.text)
 
     if case == 7:
-        json1 = {'cnkey': '信次才最安'}
+        json1 = {'cnkey': '才白以两名'}
         response = requests.get(server + "getbyck", params=json1)
         print("doc", response.text)
 
