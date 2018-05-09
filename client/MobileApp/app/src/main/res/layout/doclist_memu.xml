@@ -5,12 +5,12 @@
     <item
         android:id="@+id/keydoc"
         android:orderInCategory="0"
-        android:title="KeyDoc"
+        android:title="GetSharedNote"
         />
     <item
         android:id="@+id/logoutMenu"
         android:orderInCategory="1"
-        android:title="logout"
+        android:title="Logout"
         />
 
 </menu>

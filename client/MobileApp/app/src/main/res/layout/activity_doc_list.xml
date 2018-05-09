@@ -16,9 +16,12 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></android.support.v7.widget.Toolbar>
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@color/cardview_light_background"
+            app:titleTextColor="#FFFFFF"
+            app:title="YunNote"></android.support.v7.widget.Toolbar>
     <include
         android:id="@+id/include"
         layout="@layout/content_doc_list_"

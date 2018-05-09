@@ -1,6 +1,8 @@
 package com.app.mobile.mobileapp;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,7 +19,8 @@ public class dockey_inputKeyActivity extends AppCompatActivity {
 
     private EditText keyinput;
     private Button submit;
-
+    private Handler handler;
+    private String cnkeyResult;
 
 
 
@@ -35,21 +38,38 @@ public class dockey_inputKeyActivity extends AppCompatActivity {
 
         keyinput = findViewById(R.id.keyInput);
         submit.setOnClickListener(new View.OnClickListener(){
+
+
+
+
             @Override
             public void onClick(View view) {
+
+                handler = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        if (msg.what == 1){
+                            Intent intent = new Intent(dockey_inputKeyActivity.this,ShareDocDisplayAcitivity.class);
+                            intent.putExtra("doc",cnkeyResult);
+                            startActivity(intent);
+                        }
+                        if (msg.what == 0){
+                            Toast.makeText(dockey_inputKeyActivity.this, "Key无效", LENGTH_LONG).show();
+                        }
+                    }
+                };
+
+
                 final String inputKey = keyinput.getText().toString();
                 if(!inputKey.equals(""))
                 new Thread(){
                     @Override
                     public void run() {
-                        String cnkeyResult = Network.getDocByCnKey(inputKey);
-                        System.out.print(cnkeyResult);
+                        cnkeyResult = Network.getDocByCnKey(inputKey);
                         if (!cnkeyResult.equals("0")){
-                            Intent intent = new Intent(dockey_inputKeyActivity.this,ShareDocDisplayAcitivity.class);
-                            intent.putExtra("doc",cnkeyResult);
-                            startActivity(intent);
+                            handler.sendEmptyMessage(1);
                         }else {
-                            Toast.makeText(dockey_inputKeyActivity.this, "Key无效", LENGTH_LONG).show();
+                            handler.sendEmptyMessage(0);
                         }
 
                     }
