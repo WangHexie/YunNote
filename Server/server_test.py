@@ -54,9 +54,9 @@ def server_test(server, case):
 
 
 if __name__ == "__main__":
-    url = "http://localhost:5000/"
+    # url = "http://localhost:5000/"
     # url = "http://127.0.0.1:5000/"
-    # url = "http://ipv4.dfen.xyz:5000/"
+    url = "http://ipv4.dfen.xyz:5000/"
     server_test(url, 7)
     # for i in range(6):
     #     server_test(url, i)
