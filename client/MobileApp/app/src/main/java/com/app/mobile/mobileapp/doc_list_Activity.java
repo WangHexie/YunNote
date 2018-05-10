@@ -210,21 +210,17 @@ public class doc_list_Activity extends AppCompatActivity {
       Toolbar toolbar = findViewById(R.id.toolbar);
        setSupportActionBar(toolbar);
 
-
-
-
-
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (modifying()) {
                     return;
                 }
+                setID(0);
                 addCardViewToTop("");
                 addKey("", 0);
                 sendMessage(getTopCardView());
-            }
+                }
         });
         setAllCard();
 

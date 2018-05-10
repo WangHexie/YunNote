@@ -1,16 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.app.mobile.mobileapp.doc_list_Activity" android:layout_height="match_parent" android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:color="#FFFFFF"
+    tools:context="com.app.mobile.mobileapp.doc_list_Activity">
+
     <item
         android:id="@+id/keydoc"
         android:orderInCategory="0"
-        android:title="GetSharedNote"
-        />
+        android:title="GetSharedNote" />
+
     <item
         android:id="@+id/logoutMenu"
         android:orderInCategory="1"
-        android:title="Logout"
-        />
+        android:title="Logout" />
 
 </menu>

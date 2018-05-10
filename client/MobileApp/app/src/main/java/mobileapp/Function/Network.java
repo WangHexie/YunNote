@@ -248,7 +248,7 @@ public class Network {
 
     public static void main(String[] args) {
 //        print(setDocAndGetCnKey("123"));
-        print(getDocByCnKey("之比东平公"));
+        print(getDocByCnKey("1"));
 //        System.out.println(getDoc("6c253648e0dfff00d6aa44566f34dae651f0d2191d5bf59dd74d8ce7314cb3e7"));
 //        System.out.println(setDoc("23333"));
 //        System.out.println(addDocToList("big 2","002e7e436441939758c41ed393257d2cea503d0dfb234201af1bfc21bfbc6d55"));

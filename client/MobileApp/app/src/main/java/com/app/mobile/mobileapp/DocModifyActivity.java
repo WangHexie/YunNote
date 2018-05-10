@@ -201,6 +201,10 @@ public class DocModifyActivity extends AppCompatActivity {
                         yunNoteApplication.cleanList();
                         yunNoteApplication.ListAdd(textarea.getText().toString());
                         yunNoteApplication.ListAdd(Variable.getKey());
+                        if(getOldOne().equals("")){
+                            yunNoteApplication.getHandler().sendEmptyMessage(1001);
+                            return new HashMap<>();
+                        }
                         yunNoteApplication.getHandler().sendEmptyMessage(1000);
                     }else {
                         deleteReply = Network.deleteDoc(Variable.getKey(), CookieIO.getCookie());
@@ -215,9 +219,9 @@ public class DocModifyActivity extends AppCompatActivity {
                             }
                         }
                     }
-
-
                     return new HashMap<>();
+
+
 
                 }
 
