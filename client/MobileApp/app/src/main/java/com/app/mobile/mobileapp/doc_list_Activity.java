@@ -24,7 +24,9 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.yalantis.phoenix.PullToRefreshView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +65,7 @@ public class doc_list_Activity extends AppCompatActivity {
         keyList.add(x, key);
     }
 
-    public static void deleteXthkey(int x){
+    public static void deleteXthkey(int x) {
         List<String> keyList = (List<String>) getDocAndKey().get("key");
         keyList.remove(x);
     }
@@ -135,7 +137,7 @@ public class doc_list_Activity extends AppCompatActivity {
 
     }
 
-    private void removeXthCard(int x){
+    private void removeXthCard(int x) {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearlay_1);
         linearLayout.removeViewAt(x);
     }
@@ -173,15 +175,11 @@ public class doc_list_Activity extends AppCompatActivity {
                     changeXthKey(docAndKey.get(1), doc_list_Activity.getID());
                     modifyView(docAndKey.get(0), doc_list_Activity.getID());
                     blinkView(getXthCardView(doc_list_Activity.getID()));
-
-//                    TextView textV = (TextView) findViewById(doc_list_Activity.getID());
-////                    textV.setText();
-
                     Log.d("E", docAndKey.get(0));
                     cancelModifying();
                 }
 
-                if(msg.what == 1001){
+                if (msg.what == 1001) {
                     removeProgress();
                     removeXthCard(doc_list_Activity.getID());
                     deleteXthkey(doc_list_Activity.getID());
@@ -207,8 +205,8 @@ public class doc_list_Activity extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-      Toolbar toolbar = findViewById(R.id.toolbar);
-       setSupportActionBar(toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,7 +218,7 @@ public class doc_list_Activity extends AppCompatActivity {
                 addCardViewToTop("");
                 addKey("", 0);
                 sendMessage(getTopCardView());
-                }
+            }
         });
         setAllCard();
 
@@ -230,15 +228,15 @@ public class doc_list_Activity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 pullToRefreshIsSuccess = false;
-                Handler handler = new Handler(){
+                Handler handler = new Handler() {
                     @Override
                     public void handleMessage(Message msg) {
-                        if(msg.what == 1){
+                        if (msg.what == 1) {
                             mPullToRefreshView.setRefreshing(false);
                             Toast.makeText(doc_list_Activity.this, "刷新成功", Toast.LENGTH_SHORT).show();
                             pullToRefreshIsSuccess = true;
                         }
-                        if (msg.what == 0){
+                        if (msg.what == 0) {
                             mPullToRefreshView.setRefreshing(false);
                             Toast.makeText(doc_list_Activity.this, "请检查网络", Toast.LENGTH_SHORT).show();
                             pullToRefreshIsSuccess = true;
@@ -250,19 +248,12 @@ public class doc_list_Activity extends AppCompatActivity {
                 Toast.makeText(doc_list_Activity.this, "正在刷新", Toast.LENGTH_SHORT).show();
 
 
-
-
-
-
-
-
-
                 mPullToRefreshView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mPullToRefreshView.setRefreshing(false);
                         if (!pullToRefreshIsSuccess)
-                        Toast.makeText(doc_list_Activity.this, "刷新失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(doc_list_Activity.this, "刷新失败", Toast.LENGTH_SHORT).show();
 
                     }
                 }, 5000);
@@ -271,7 +262,6 @@ public class doc_list_Activity extends AppCompatActivity {
         });
 
     }
-
 
 
     @SuppressLint("ResourceType")
@@ -283,13 +273,13 @@ public class doc_list_Activity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.logoutMenu){
+        if (item.getItemId() == R.id.logoutMenu) {
             cleanCookiesAndGoToLogin();
             return true;
         }
 
-        if (item.getItemId() == R.id.keydoc){
-            Intent intent = new Intent(doc_list_Activity.this,dockey_inputKeyActivity.class);
+        if (item.getItemId() == R.id.keydoc) {
+            Intent intent = new Intent(doc_list_Activity.this, dockey_inputKeyActivity.class);
             startActivity(intent);
         }
 
@@ -398,7 +388,7 @@ public class doc_list_Activity extends AppCompatActivity {
         addProgress();
     }
 
-    private void PullToRefreshLoadList(Handler m){
+    private void PullToRefreshLoadList(Handler m) {
         final Handler handler = m;
         Handler mHandler = new Handler() {
             @Override
@@ -410,7 +400,7 @@ public class doc_list_Activity extends AppCompatActivity {
                     LinearLayout linear = (LinearLayout) findViewById(R.id.linearlay_1);
                     int index = linear.getChildCount();
 
-                    for (int i = 0;i<index;i++){
+                    for (int i = 0; i < index; i++) {
                         removeXthCard(0);
                     }
 
@@ -424,7 +414,7 @@ public class doc_list_Activity extends AppCompatActivity {
                     handler.sendEmptyMessage(1);
                 }
 
-                if (msg.what == 0){
+                if (msg.what == 0) {
                     handler.sendEmptyMessage(0);
                 }
             }

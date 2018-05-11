@@ -14,7 +14,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,8 +28,6 @@ import mobileapp.Function.CookieIO;
 import mobileapp.Function.Network;
 import mobileapp.Function.Variable;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 public class DocModifyActivity extends AppCompatActivity {
 
     private EditText textarea;
@@ -39,7 +36,7 @@ public class DocModifyActivity extends AppCompatActivity {
     private static String oldKey;
     private ActionBar actionBar;
 
-    public static String getOldOne(){
+    public static String getOldOne() {
         return oldOne;
     }
 
@@ -56,8 +53,6 @@ public class DocModifyActivity extends AppCompatActivity {
 
         textarea.setText(Variable.getDoc());
         actionBar = getSupportActionBar();
-
-
 
 
     }
@@ -103,20 +98,18 @@ public class DocModifyActivity extends AppCompatActivity {
             return true;
         }
 
-        if (item.getItemId() == R.id.share){
+        if (item.getItemId() == R.id.share) {
 
-            shareHandler = new Handler(){
+            shareHandler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    final String keyresult = (String)msg.obj;
+                    final String keyresult = (String) msg.obj;
                     final AlertDialog.Builder builder = new AlertDialog.Builder(DocModifyActivity.this);
                     builder.setTitle("Shared Key");
                     builder.setMessage(keyresult);
-                    builder.setPositiveButton("复制", new DialogInterface.OnClickListener()
-                    {
+                    builder.setPositiveButton("复制", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which)
-                        {
+                        public void onClick(DialogInterface dialog, int which) {
                             ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                             // 将文本内容放到系统剪贴板里。
                             ClipData clipData = ClipData.newPlainText(null, keyresult);
@@ -131,7 +124,7 @@ public class DocModifyActivity extends AppCompatActivity {
             };
 
 
-            new Thread(){
+            new Thread() {
                 @Override
                 public void run() {
                     String keyresult = Network.setDocAndGetCnKey(getIntent().getStringExtra("doc"));
@@ -145,8 +138,6 @@ public class DocModifyActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
 //   //废弃 public void delete(View view){
@@ -179,9 +170,6 @@ public class DocModifyActivity extends AppCompatActivity {
 //    }
 
 
-
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -195,46 +183,45 @@ public class DocModifyActivity extends AppCompatActivity {
                 public Map call() throws Exception {
                     SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
                     String deleteReply;
-                    if (getOldOne().equals(textarea.getText().toString())){
+                    if (getOldOne().equals("") & Variable.getKey().equals("")) { //判断是否是新添加的记录，并且没有添加内容
+                        YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
+                        yunNoteApplication.getHandler().sendEmptyMessage(1001);
+                        return new HashMap<>();
+                    }
+
+                    if (getOldOne().equals(textarea.getText().toString())) {  //判断是否有修改
                         deleteReply = "1";
                         YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
                         yunNoteApplication.cleanList();
                         yunNoteApplication.ListAdd(textarea.getText().toString());
                         yunNoteApplication.ListAdd(Variable.getKey());
-                        if(getOldOne().equals("")){
-                            yunNoteApplication.getHandler().sendEmptyMessage(1001);
-                            return new HashMap<>();
-                        }
                         yunNoteApplication.getHandler().sendEmptyMessage(1000);
-                    }else {
-                        deleteReply = Network.deleteDoc(Variable.getKey(), CookieIO.getCookie());
-                        if (deleteReply.equals("1")) {
-                            String newkey = Network.addDocToList(textarea.getText().toString(), CookieIO.getCookie());
-                            if (!newkey.equals("0")) {
-                                YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
-                                yunNoteApplication.cleanList();
-                                yunNoteApplication.ListAdd(textarea.getText().toString());
-                                yunNoteApplication.ListAdd(newkey);
-                                yunNoteApplication.getHandler().sendEmptyMessage(1000);
-                            }
-                        }
+                        return new HashMap<>();
                     }
+
+                    deleteReply = Network.deleteDoc(Variable.getKey(), CookieIO.getCookie());
+
+                    if (!deleteReply.equals("1")) {
+                        return new HashMap<>();
+                        //错误处理，待增加
+                    }
+
+                    String newkey = Network.addDocToList(textarea.getText().toString(), CookieIO.getCookie());
+                    if (newkey.equals("0")) {
+                        return new HashMap<>();
+                        //错误处理，待增加
+                    }
+                    YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
+                    yunNoteApplication.cleanList();
+                    yunNoteApplication.ListAdd(textarea.getText().toString());
+                    yunNoteApplication.ListAdd(newkey);
+                    yunNoteApplication.getHandler().sendEmptyMessage(1000);
                     return new HashMap<>();
-
-
 
                 }
 
             });
 
-//            boolean flag = true;
-//            while(flag){
-//                //异步任务完成并且未被取消，则获取返回的结果
-//                if(future.isDone() && !future.isCancelled()){
-//                    flag = false;
-//                    }
-//
-//                }
             //关闭线程池
             if (!threadPool.isShutdown()) {
                 threadPool.shutdown();
@@ -245,8 +232,6 @@ public class DocModifyActivity extends AppCompatActivity {
 
 
     }
-
-
 
 
 }

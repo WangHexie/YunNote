@@ -3,14 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.app.mobile.mobileapp.DocModifyActivity" android:layout_height="match_parent" android:layout_width="match_parent">
     <item
-        android:id="@+id/deleteMenuItem"
-        android:orderInCategory="0"
-        android:title="Delete"
-         />
-    <item
         android:id="@+id/share"
-        android:orderInCategory="1"
+        android:orderInCategory="0"
         android:title="Share"
         />
+    <item
+        android:id="@+id/deleteMenuItem"
+        android:orderInCategory="1"
+        android:title="Delete"
+         />
+
 
 </menu>
