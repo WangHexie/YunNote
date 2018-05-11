@@ -183,7 +183,7 @@ public class DocModifyActivity extends AppCompatActivity {
                 public Map call() throws Exception {
                     SharedPreferences preferences = getSharedPreferences("cookieRW", MODE_PRIVATE);
                     String deleteReply;
-                    if (getOldOne().equals("") & Variable.getKey().equals("")) { //判断是否是新添加的记录，并且没有添加内容
+                    if (getOldOne().equals("") & Variable.getKey().equals("") & getOldOne().equals(textarea.getText().toString())) { //判断是否是新添加的记录，并且没有添加内容
                         YunNoteApplication yunNoteApplication = (YunNoteApplication) getApplication();
                         yunNoteApplication.getHandler().sendEmptyMessage(1001);
                         return new HashMap<>();
