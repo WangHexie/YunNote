@@ -7,6 +7,7 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap.min.js@3.3.5/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap.min.js@3.3.5/bootstrap.min.js"></script>
     <script type="text/javascript">
+        var zzz;
         $(document).ready(function () {
             $("#docbody").hide();
             $("#go").bind("click", function () {
@@ -15,7 +16,7 @@
                     $("#input").css("border", "2px solid red");
                 } else {
                     $(function () {
-                        $.getJSON("http://ipv4.dfen.xyz:5000/getbyck?cnkey=" + $("#input").val(), function (data) {
+                        $.getJSON("http://127.0.0.1:5000/getbyck?cnkey=" + $("#input").val(), function (data) {
                             console.log(data);
                             if (data != 0) {
                                 $("#input").css("border", "2px solid green");

@@ -1,12 +1,12 @@
 import json
 import threading
-import traceback
+
 import basic_function
 import database
+import flask
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
-
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -29,43 +29,29 @@ def store_doc():
 
 @app.route('/getbyck', methods=['GET'])
 def get_doc_by_cnkey():
-    cnkey = request.args.get('cnkey')
-    print(cnkey)
-    if len(cnkey) > 60:
-        return "0"
-    try:
-        part_key = basic_function.chinese_key_to_hash(cnkey)
-    except:
-        # print(traceback.format_exc())
-        return "0"
+    def inner_function(request):
+        cnkey = request.args.get('cnkey')
+        if len(cnkey) > 60:
+            return "0"
+        try:
+            part_key = basic_function.chinese_key_to_hash(cnkey)
+        except:
+            # print(traceback.format_exc())
+            return "0"
 
-    full_key = database.part_key_to_full_key(part_key)
+        full_key = database.part_key_to_full_key(part_key)
 
-    if full_key == 0:
-        return "0"
-    doc = basic_function.check_result(database.get_doc_from_database(full_key))
-    re_dic = {"doc": doc}
-    result = json.dumps(re_dic, ensure_ascii=False)
-    return result
+        if full_key == 0:
+            return "0"
+        doc = basic_function.check_result(database.get_doc_from_database(full_key))
+        re_dic = {"doc": doc}
+        result = json.dumps(re_dic, ensure_ascii=False)
+        return result
 
-
-def getDocBycnkey(cnkey):
-    if len(cnkey) > 60:
-        return "0"
-    try:
-        part_key = basic_function.chinese_key_to_hash(cnkey)
-    except:
-        # print(traceback.format_exc())
-        return "0"
-
-    full_key = database.part_key_to_full_key(part_key)
-
-    if full_key == 0:
-        return "0"
-    doc = basic_function.check_result(database.get_doc_from_database(full_key))
-    re_dic = {"doc": doc}
-    result = json.dumps(re_dic, ensure_ascii=False)
-    return result
+    result = inner_function(request)
+    resp = flask.Response(result)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
 
 @app.route('/storeck', methods=['POST'])
@@ -145,5 +131,4 @@ def webhandle():
 
 if __name__ == '__main__':
     threading.Thread(target=database.delete_useless_cookies).start()
-    app.jinja_env.auto_reload = True
-    app.run(host="0.0.0.0", threaded=True, debug=False)
+    app.run(host="::",threaded=True, debug=False)
