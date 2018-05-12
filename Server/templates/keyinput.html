@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="stylesheet" href="static/css/bootstrap.min.css">
+    <script src="static/js/bootstrap.js"></script>
+    <script src="static/js/jquery-3.3.1.min%20(1).js"></script>
+    <script src="static/js/keyshare.js"></script>
+    <title>Title</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="row clearfix">
+                <div class="col-md-4 column">
+                </div>
+                <div class="col-md-4 column">
+                    <div class="page-header">
+                        <h1>YunNote Doc Share
+                            <small>Enter key please</small>
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-md-4 column">
+                </div>
+            </div>
+            <div class="row clearfix">
+
+                <div class="col-md-4 column">
+                </div>
+                <div class="col-md-4 column">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">Key</span>
+                        <input type="text" class="form-control" placeholder="enter key here"
+                               aria-describedby="basic-addon1" id="input">
+                        <span class="input-group-btn">
+        <button class="btn btn-default" type="button" id="go">Go!</button>
+      </span>
+                    </div>
+
+
+                </div>
+                <div class="col-md-4 column">
+                </div>
+            </div>
+            <div style="height: 50px;"></div>
+
+            <div class="row clearfix">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+
+                    <div class="panel panel-default" id="docbody">
+                        <div class="panel-heading">
+                           Shared doc :
+                        </div>
+                        <div class="panel-body" id="text">
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4"></div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.popover-show').popover('show');
+    });
+</script>
+
+</body>
+
+</html>
