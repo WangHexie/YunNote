@@ -16,7 +16,7 @@ if __name__ == '__main__':
     sql_list.append(create_account)
     create_note_list = "CREATE TABLE NOTE_LIST (USER_NAME VARCHAR(15) NOT NULL ,NOTE_KEY VARCHAR(70) NOT NULL,FOREIGN KEY (USER_NAME) REFERENCES NOTE_ACCOUNT(USER_NAME));"
     sql_list.append(create_note_list)
-    create_cookies_list = "CREATE TABLE COOKIES_LIST (USER_NAME VARCHAR(15) NOT NULL,COOKIES VARCHAR(70) NOT NULL,PRIMARY KEY (COOKIES),FOREIGN KEY (USER_NAME) REFERENCES NOTE_ACCOUNT(USER_NAME));"
+    create_cookies_list = "CREATE TABLE COOKIES_LIST (USER_NAME VARCHAR(15) NOT NULL,COOKIES VARCHAR(70) NOT NULL,TIME  VARCHAR(20) NOT NULL,PRIMARY KEY (COOKIES),FOREIGN KEY (USER_NAME) REFERENCES NOTE_ACCOUNT(USER_NAME));"
     sql_list.append(create_cookies_list)
 
     modify = "ALTER TABLE COOKIES_LIST MODIFY COLUMN COOKIES VARCHAR(70);"
@@ -31,4 +31,6 @@ if __name__ == '__main__':
 
     modify6 = "ALTER TABLE key_doc MODIFY MODIFY_TIME float;"
 
-    excute_sql(modify6)
+    create_chinese_table = "CREATE TABLE PARTKEY_FULLKEY (FULL_KEY VARCHAR(70) NOT NULL ,PART_KEY VARCHAR(70) NOT NULL,FOREIGN KEY(FULL_KEY) REFERENCES key_doc(key_hash))"
+
+    excute_sql(create_chinese_table)

@@ -13,8 +13,9 @@ def create_key():
 
 
 def set_dic():
-    with open("dic.txt", "r") as f:
+    with open("dic.txt", "r", encoding="utf-8") as f:
         dic_str = f.read()
+        dic_str = dic_str.encode('UTF-8')
     global dic
     dic = eval(dic_str)
 

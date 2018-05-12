@@ -2,7 +2,6 @@ import threading
 import time
 import traceback
 
-
 import basic_function
 import pymysql
 
@@ -14,12 +13,18 @@ lenth_of_doc = 65536
 lenth_of_key = 70
 expire_time = 60 * 60 * 24 * 7
 
-def connectDatabase():
+
+def connect_database():
     return pymysql.connect(host="45.76.223.233", user="root",
-                          password="root", db="MobileAppDB", port=3306,  charset="utf8")
+                           password="root", db="MobileAppDB", port=3306, charset="utf8")
+
+
+def close_coonection_by_cursor(cursor):
+    cursor.connection.close()
+
 
 def get_doc_from_database(key):
-    with  connectDatabase().cursor() as cursor:
+    with  connect_database().cursor() as cursor:
         try:
             sql = "SELECT doc FROM key_doc where key_hash=%s"
             cursor.execute(sql, [key])
@@ -28,14 +33,14 @@ def get_doc_from_database(key):
                 result = 0
             else:
                 result = fet[0]
+
         except:
             print(traceback.format_exc())
-
     return result
 
 
 def store_doc_to_database(doc):
-    connection = connectDatabase()
+    connection = connect_database()
     try:
         key = basic_function.create_key()
         with connection.cursor() as cursor:
@@ -48,11 +53,30 @@ def store_doc_to_database(doc):
 
 
 def part_key_to_full_key(part_key):
-    return 0
+    with  connect_database().cursor() as cursor:
+        try:
+            sql = "select FULL_KEY  from PARTKEY_FULLKEY where PART_KEY = %s;"
+            cursor.execute(sql, [part_key])
+            result = cursor.fetchone()
+            if result == None:
+                return 0
+            return result[0]
+        except:
+            print(traceback.format_exc())
+            return 0
 
 
 def store_full_key_and_part_key(full_key, part_key):
-    return 0
+    with  connect_database().cursor() as cursor:
+        try:
+            sql = "INSERT INTO PARTKEY_FULLKEY  (FULL_KEY, PART_KEY) VALUES (%s,%s);"
+            cursor.execute(sql, [full_key, part_key])
+            cursor.connection.commit()
+            return 1
+        except:
+            print(traceback.format_exc())
+            return 0
+
 
 #
 # def get_list_doc(list_keys):
@@ -82,14 +106,14 @@ def store_full_key_and_part_key(full_key, part_key):
 #             print(traceback.format_exc())
 #             return list_doc, list_key
 
-def get_list_doc(user_id):
+def get_list_doc_by_uid(user_id):
     doc_list = []
     time_list = []
     key_list = []
     if len(user_id) <= lenth_of_uid:
-        with  connectDatabase().cursor() as cursor:
+        with  connect_database().cursor() as cursor:
             try:
-                sql = "select  doc,MODIFY_TIME,key_hash from key_doc,NOTE_LIST where key_doc.key_hash = NOTE_LIST.NOTE_KEY and USER_NAME = %s"
+                sql = "select  doc,MODIFY_TIME,key_hash from key_doc,NOTE_LIST where key_doc.key_hash = NOTE_LIST.NOTE_KEY and USER_NAME = %s order by MODIFY_TIME desc "
                 cursor.execute(sql, [user_id])
                 result = cursor.fetchall()
                 if result != None:
@@ -97,7 +121,7 @@ def get_list_doc(user_id):
                         doc_list.append(i[0])
                         time_list.append(i[1])
                         key_list.append(i[2])
-                    return doc_list,key_list,time_list
+                    return doc_list, key_list, time_list
                 else:
                     return 0
             except:
@@ -106,10 +130,11 @@ def get_list_doc(user_id):
     else:
         return 0
 
+
 def add_cookies_live_time(cookies):
     def find_and_add_time(cookies):
         if len(cookies) <= lenth_of_cookies:
-            with  connectDatabase().cursor() as cursor:
+            with  connect_database().cursor() as cursor:
                 try:
                     sql = "UPDATE COOKIES_LIST SET TIME=%s where COOKIES = %s;"
                     cursor.execute(sql, [str(int(basic_function.time_now()) + expire_time), cookies])
@@ -127,7 +152,7 @@ def add_cookies_live_time(cookies):
 
 
 def add_uid_and_cookies(uid, cookies):
-    with  connectDatabase().cursor() as cursor:
+    with  connect_database().cursor() as cursor:
         try:
             sql = "INSERT INTO COOKIES_LIST (USER_NAME, COOKIES, TIME) VALUES (%s, %s, %s);"
             cursor.execute(sql, [uid, cookies, str(int(basic_function.time_now()) + expire_time)])
@@ -140,7 +165,7 @@ def add_uid_and_cookies(uid, cookies):
 
 def check_user_exist(username):
     if len(username) <= lenth_of_username:
-        with  connectDatabase().cursor() as cursor:
+        with  connect_database().cursor() as cursor:
             try:
                 sql = "select * from NOTE_ACCOUNT where USER_NAME = %s;"
                 cursor.execute(sql, [username])
@@ -148,6 +173,7 @@ def check_user_exist(username):
                     return 1
                 else:
                     return 0
+
             except:
                 print(traceback.format_exc())
                 return 1
@@ -159,7 +185,7 @@ def add_user(username, password):
     if len(username) <= lenth_of_username and len(password) <= lenth_of_password and not check_user_exist(username):
 
         try:
-            with  connectDatabase().cursor() as cursor:
+            with  connect_database().cursor() as cursor:
                 insert = "INSERT INTO NOTE_ACCOUNT (USER_NAME, USER_PASS) VALUES (%s, %s);"
                 ps_hash = basic_function.real_password(password)
                 cursor.execute(insert, (username, ps_hash))
@@ -177,7 +203,7 @@ def add_user(username, password):
 
 def check_user_password(username, password):
     if len(username) <= lenth_of_username and len(password) <= lenth_of_password:
-        with  connectDatabase().cursor() as cursor:
+        with  connect_database().cursor() as cursor:
             try:
                 # check user and password
                 sql = "select * from NOTE_ACCOUNT where USER_NAME = %s AND USER_PASS = %s;"
@@ -202,7 +228,7 @@ def check_user_password(username, password):
 
 def get_user_by_cookies(cookies):
     if len(cookies) <= lenth_of_cookies:
-        with  connectDatabase().cursor() as cursor:
+        with  connect_database().cursor() as cursor:
             try:
                 sql = "select USER_NAME from COOKIES_LIST where COOKIES = %s;"
                 cursor.execute(sql, [cookies])
@@ -221,7 +247,7 @@ def get_user_by_cookies(cookies):
 def get_user_list(user_id):
     key_list = []
     if len(user_id) <= lenth_of_uid:
-        with  connectDatabase().cursor() as cursor:
+        with  connect_database().cursor() as cursor:
             try:
                 sql = "select NOTE_KEY from NOTE_LIST where USER_NAME = %s;"
                 cursor.execute(sql, [user_id])
@@ -241,7 +267,7 @@ def get_user_list(user_id):
 
 def add_into_list(user_id, doc):
     if len(user_id) <= lenth_of_uid and len(doc) < lenth_of_doc:
-        with  connectDatabase().cursor() as cursor:
+        with  connect_database().cursor() as cursor:
             try:
                 key = store_doc_to_database(doc)
 
@@ -258,7 +284,7 @@ def add_into_list(user_id, doc):
 
 def delete_form_list(user_id, key):
     if len(user_id) <= lenth_of_uid and len(key) <= lenth_of_key:
-        with  connectDatabase().cursor() as cursor:
+        with  connect_database().cursor() as cursor:
             try:
                 sql = "DELETE FROM NOTE_LIST WHERE USER_NAME = %s AND NOTE_KEY = %s;"
                 cursor.execute(sql, [user_id, key])
@@ -275,7 +301,7 @@ def delete_form_list(user_id, key):
 
 
 def delete_one_cookies(cookies):
-    with  connectDatabase().cursor() as cursor:
+    with  connect_database().cursor() as cursor:
         try:
             sql = "DELETE FROM COOKIES_LIST WHERE COOKIES = %s;"
             cursor.execute(sql, [cookies])
@@ -288,7 +314,7 @@ def delete_one_cookies(cookies):
 
 def delete_useless_cookies():
     def delete_timeout_cookies():
-        with  connectDatabase().cursor() as cursor:
+        with  connect_database().cursor() as cursor:
             try:
                 sql = "SELECT COOKIES,TIME FROM COOKIES_LIST ;"
                 cursor.execute(sql)

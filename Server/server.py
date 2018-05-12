@@ -3,6 +3,7 @@ import threading
 
 import basic_function
 import database
+import flask
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
@@ -28,10 +29,29 @@ def store_doc():
 
 @app.route('/getbyck', methods=['GET'])
 def get_doc_by_cnkey():
-    cnkey = request.args.get('cnkey')
-    part_key = basic_function.chinese_key_to_hash(cnkey)
-    full_key = database.part_key_to_full_key(part_key)
-    return basic_function.check_result(database.get_doc_from_database(full_key))
+    def inner_function(request):
+        cnkey = request.args.get('cnkey')
+        if len(cnkey) > 60:
+            return "0"
+        try:
+            part_key = basic_function.chinese_key_to_hash(cnkey)
+        except:
+            # print(traceback.format_exc())
+            return "0"
+
+        full_key = database.part_key_to_full_key(part_key)
+
+        if full_key == 0:
+            return "0"
+        doc = basic_function.check_result(database.get_doc_from_database(full_key))
+        re_dic = {"doc": doc}
+        result = json.dumps(re_dic, ensure_ascii=False)
+        return result
+
+    result = inner_function(request)
+    resp = flask.Response(result)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
 
 @app.route('/storeck', methods=['POST'])
@@ -39,6 +59,7 @@ def store_doc_by_cnkey():
     doc = request.form['doc']
     key = database.store_doc_to_database(doc)
     cnk = basic_function.hash_to_chinese_key(key)
+    database.store_full_key_and_part_key(key, basic_function.chinese_key_to_hash(cnk))
     return cnk
 
 
@@ -86,8 +107,8 @@ def list():
     if uid == None:
         return '0'
     else:
-        list_doc, list_key,list_time = database.get_list_doc(uid)
-        re_dic = {"list": list_doc, "key": list_key,"time":list_time}
+        list_doc, list_key, list_time = database.get_list_doc_by_uid(uid)
+        re_dic = {"list": list_doc, "key": list_key, "time": list_time}
         return json.dumps(re_dic, ensure_ascii=False)
 
 
@@ -103,7 +124,11 @@ def delete():
         return basic_function.check_result(database.delete_form_list(user_id=uid, key=key))
 
 
+@app.route('/sharedoc', methods=['GET'])
+def webhandle():
+    return render_template("keyinput.html")
+
+
 if __name__ == '__main__':
     threading.Thread(target=database.delete_useless_cookies).start()
-    app.run(host="::", threaded=True)
-
+    app.run(host="::",threaded=True, debug=False)
