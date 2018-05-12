@@ -36,3 +36,4 @@ if __name__ == "__main__":
     print(database.get_doc_from_database(full_key))
     # for i in range(11):
     #     test_database(i)
+    print(database.get_doc_from_database("1f3c89247c595a4e95275c330d5c6dc5733ebffbd576b164f3bc6dc49bcbaeda"))

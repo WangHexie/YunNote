@@ -22,6 +22,9 @@ def connect_database():
 def close_coonection_by_cursor(cursor):
     cursor.connection.close()
 
+def connectDatabase():
+    return pymysql.connect(host="45.76.223.233", user="root",
+                          password="root", db="MobileAppDB", port=3306,  charset="utf8")
 
 def get_doc_from_database(key):
     with  connect_database().cursor() as cursor:
@@ -336,7 +339,6 @@ def delete_useless_cookies():
     while True:
         threading.Thread(target=delete_timeout_cookies).start()
         time.sleep(1200)
-
-
+		
 if __name__ == '__main__':
     delete_useless_cookies()
