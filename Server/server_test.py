@@ -36,7 +36,7 @@ def server_test(server, case):
         print("fail login test", response.text)
 
     if case == 5:
-        json1 = {'cookies': '002e7e436441939758c41ed393257d2cea503d0dfb234201af1bfc21bfbc6d55'}
+        json1 = {'cookies': 'e8a67a8ff8f7ab64e5b683f933f3caf6647a110c98f0a417aab0fb75f3fa19b5'}
         response = requests.post(server + "list", data=json1)
         import json
         x = json.loads(response.text)
@@ -61,7 +61,7 @@ def server_test(server, case):
 if __name__ == "__main__":
     # url = "http://localhost:5000/"
     # url = "http://127.0.0.1:5000/"
-    url = "http://ipv4.dfen.xyz:5000/"
-    server_test(url, 7)
+    url = "http://ipv6.dfen.xyz:5000/"
+    server_test(url, 5)
     # for i in range(6):
     #     server_test(url, i)

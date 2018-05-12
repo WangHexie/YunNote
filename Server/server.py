@@ -120,4 +120,4 @@ def delete():
 
 if __name__ == '__main__':
     threading.Thread(target=database.delete_useless_cookies).start()
-    app.run(host="::", threaded=True)
+    app.run(host="::", threaded=True,debug=False)
