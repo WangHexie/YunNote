@@ -1,5 +1,5 @@
-from Server import database
-
+import database
+import basic_function
 
 def test_database(case):
     if case == 0:
@@ -23,10 +23,16 @@ def test_database(case):
     if case == 9:
         print(database.delete_useless_cookies())
     if case == 10:
-        print(database.get_list_doc(database.get_user_list("123")))
+        print(database.get_list_doc("123"))
+    if case == 11:
+        print(database.get_doc_from_database("50096d5f9a1c1eb7689acbb441dbd3d9c1053a02215893744544f46eca094bf9"))
+    # if case == 12:
+    #     print(database.)
 
 if __name__ == "__main__":
     # test_database(10)
+    full_key = database.part_key_to_full_key("")
+    print(full_key)
+    print(database.get_doc_from_database(full_key))
     # for i in range(11):
     #     test_database(i)
-    print(database.get_doc_from_database("1f3c89247c595a4e95275c330d5c6dc5733ebffbd576b164f3bc6dc49bcbaeda"))

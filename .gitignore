@@ -2,3 +2,4 @@
 .idea/
 Server\__pycache__\
 Server/__pycache__/
+client/
