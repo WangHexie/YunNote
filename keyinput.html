@@ -21,8 +21,8 @@
                                 $("#input").css("border", "2px solid green");
                                 $("#docbody").show();
                                 var doc = data["doc"];
-                                doc = doc.replace(/\n/g, "<br/>")
-                                $("#text").html(doc)
+                                //doc = doc.replace(/\n/g, "<br/>")
+                                $("#text").innerText(doc);
                             }
                         });
                     });
