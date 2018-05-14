@@ -16,7 +16,6 @@
                 } else {
                     $(function () {
                         $.getJSON("http://ipv4.dfen.xyz:5000/getbyck?cnkey=" + $("#input").val(), function (data) {
-                            console.log(data);
                             if (data != 0) {
                                 $("#input").css("border", "2px solid green");
                                 $("#docbody").show();
@@ -71,6 +70,8 @@
                 <div class="col-md-4 column">
                 </div>
             </div>
+
+
             <div style="height: 50px;"></div>
 
             <div class="row clearfix">
@@ -96,11 +97,11 @@
         </div>
     </div>
 </div>
-<script>
-    $(function () {
-        $('.popover-show').popover('show');
-    });
-</script>
+<!--<script>-->
+    <!--$(function () {-->
+        <!--$('.popover-show').popover('show');-->
+    <!--});-->
+<!--</script>-->
 
 </body>
 
