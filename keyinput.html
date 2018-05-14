@@ -23,6 +23,10 @@
                                 var doc = data["doc"];
                                 //doc = doc.replace(/\n/g, "<br/>")
                                 $("#text").innerText(doc);
+                                var af = $("#text").innerHTML;
+                                $("#text").html(af);
+                                
+                              
                             }
                         });
                     });
