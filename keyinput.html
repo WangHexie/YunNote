@@ -15,7 +15,7 @@
                     $("#input").css("border", "2px solid red");
                 } else {
                     $(function () {
-                        $.getJSON("http://ipv4.dfen.xyz:5000/getbyck?cnkey=" + $("#input").val(), function (data) {
+                        $.getJSON("http://yourURL/getbyck?cnkey=" + $("#input").val(), function (data) {
                             if (data != 0) {
                                 $("#input").css("border", "2px solid green");
                                 $("#docbody").show();

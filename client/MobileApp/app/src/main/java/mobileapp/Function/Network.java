@@ -19,7 +19,7 @@ import okhttp3.Response;
 
 
 public class Network {
-    static String url = "http://ipv4.dfen.xyz:5000/";
+    static String url = "http://yourURL/";
 
     public static String getDoc(String key) {
         String doc = sendGet(url + "get", "key=" + key);
